@@ -11,9 +11,7 @@
       pkgs = import nixpkgs {
         system = system;
       };
-    in
-    {
-      devShells.${system}.default = pkgs.mkShell {
+      shell = pkgs.mkShell {
         buildInputs = [ pkgs.neovim ];
 
         shellHook = ''
@@ -21,5 +19,11 @@
           export NVIM_APPNAME=mbnvim
         '';
       };
+    in
+    {
+      devShells.aarch64-darwin.default = shell;
+      devShells.x86_64-darwin.default = shell;
+      devShells.aarch64-linux.default = shell;
+      devShells.x86_64-linux.default = shell;
     };
 }
