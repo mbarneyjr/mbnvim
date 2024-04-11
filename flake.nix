@@ -14,7 +14,16 @@
           };
         in
         pkgs.mkShell {
-          buildInputs = [ pkgs.neovim ];
+          buildInputs = [
+            pkgs.neovim
+            pkgs.gnumake
+            pkgs.nodejs_20
+            pkgs.python311Full
+            pkgs.go
+            pkgs.gopls
+            pkgs.cargo
+            pkgs.fzf
+          ];
 
           shellHook = ''
             ln -s $(pwd) ~/.config/mbnvim
