@@ -7,23 +7,25 @@
 
   outputs = { nixpkgs, ... }:
     let
-      system = "aarch64-darwin";
-      pkgs = import nixpkgs {
-        system = system;
-      };
-      shell = pkgs.mkShell {
-        buildInputs = [ pkgs.neovim ];
+      shell = { system }:
+        let
+          pkgs = import nixpkgs {
+            system = system;
+          };
+        in
+        pkgs.mkShell {
+          buildInputs = [ pkgs.neovim ];
 
-        shellHook = ''
-          ln -s $(pwd) ~/.config/mbnvim
-          export NVIM_APPNAME=mbnvim
-        '';
-      };
+          shellHook = ''
+            ln -s $(pwd) ~/.config/mbnvim
+            export NVIM_APPNAME=mbnvim
+          '';
+        };
     in
     {
-      devShells.aarch64-darwin.default = shell;
-      devShells.x86_64-darwin.default = shell;
-      devShells.aarch64-linux.default = shell;
-      devShells.x86_64-linux.default = shell;
+      devShells.aarch64-darwin.default = shell { system = "aarch64-darwin"; };
+      devShells.x86_64-darwin.default = shell { system = "x86_64-darwin"; };
+      devShells.aarch64-linux.default = shell { system = "aarch64-linux"; };
+      devShells.x86_64-linux.default = shell { system = "x86_64-linux"; };
     };
 }
