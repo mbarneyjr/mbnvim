@@ -26,7 +26,7 @@
           ];
 
           shellHook = ''
-            if ! test -f ~/.config/mbnvim; then
+            if ! test -d ~/.config/mbnvim; then
               ln -s $(pwd) ~/.config/mbnvim
             fi
             export NVIM_APPNAME=mbnvim
