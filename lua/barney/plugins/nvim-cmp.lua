@@ -85,6 +85,23 @@ return {
           "});",
         }),
       }),
+      -- a /** type comment snippet
+      luasnip.snippet("/**", {
+        luasnip.text_node({
+          "/** @type {",
+        }),
+        luasnip.insert_node(1),
+        luasnip.text_node({
+          "} */",
+        }),
+      }),
+      -- esmodules dirname snippet
+      luasnip.snippet("dirname", {
+        luasnip.text_node({
+          "import * as url from 'url';",
+          "const dirname = url.fileURLToPath(new URL('.', import.meta.url));",
+        }),
+      }),
       -- create a node:test individual test snippet
       luasnip.snippet("nodetest", {
         luasnip.text_node({
