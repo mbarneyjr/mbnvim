@@ -24,6 +24,8 @@ return {
           "docs/images/",
           "coverage",
           "cdk.out",
+          "*.local.ignore/",
+          "local.ignore/",
         },
         mappings = {
           i = {
