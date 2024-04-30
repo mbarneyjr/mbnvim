@@ -35,6 +35,13 @@ return {
           },
         },
       },
+      pickers = {
+        live_grep = {
+          additional_args = function(opts)
+            return { "--hidden" }
+          end,
+        },
+      },
     })
 
     telescope.load_extension("fzf")
@@ -45,9 +52,15 @@ return {
         no_ignore = true,
       })
     end
+    local function live_grep()
+      builtin.live_grep({
+        hidden = false,
+        no_ignore = false,
+      })
+    end
 
     key.nmap("<leader>ff", find_files, "[f]ind [f]iles")
-    key.nmap("<leader>fs", builtin.live_grep, "[f]ind grep [s]earch")
+    key.nmap("<leader>fs", live_grep, "[f]ind grep [s]earch")
     key.nmap("<C-p>", builtin.commands, "Open commands")
   end,
 }
