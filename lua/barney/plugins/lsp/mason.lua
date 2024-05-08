@@ -70,6 +70,7 @@ return {
 
     mason_tool_installer.setup({
       ensure_installed = {
+        "actionlint",
         "prettier",
         "stylua",
         "eslint-lsp",
