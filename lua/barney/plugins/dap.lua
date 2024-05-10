@@ -11,6 +11,9 @@ return {
       opts = {
         debugger_path = string.format("%s/vscode-js-debug/", vim.fn.stdpath("data") .. "/lazy"),
         adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost", "node" },
+        config = {
+          node_path = "node",
+        },
       },
     },
     {
