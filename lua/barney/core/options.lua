@@ -25,7 +25,7 @@ vim.opt.colorcolumn = "120"
 
 vim.opt.completeopt = "menuone,noselect"
 
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = "unnamed,unnamedplus"
 vim.opt.splitright = true
 
 vim.g.do_filetype_lua = true
