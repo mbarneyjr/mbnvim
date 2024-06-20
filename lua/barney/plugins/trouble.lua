@@ -15,6 +15,6 @@ return {
       },
       use_diagnostic_signs = false,
     })
-    key.nmap("<leader>dl", "<cmd>TroubleToggle<cr>", "[d]iagnostics [l]ist")
+    key.nmap("<leader>dl", "<cmd>Trouble<cr>", "[d]iagnostics [l]ist")
   end,
 }
