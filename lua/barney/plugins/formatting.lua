@@ -28,7 +28,7 @@ return {
         if bufname:match("/node_modules/") then
           return
         end
-        return { timeout_ms = 500, lsp_fallback = true }
+        return { timeout_ms = 1000, lsp_fallback = true }
       end,
     })
 
@@ -36,7 +36,7 @@ return {
       conform.format({
         lsp_fallback = true,
         -- async = false,
-        timeout_ms = 500,
+        timeout_ms = 1000,
       })
     end
     vim.api.nvim_create_user_command("Format", format, { desc = "Format buffer with Conform" })
