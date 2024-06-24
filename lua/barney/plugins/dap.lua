@@ -89,25 +89,6 @@ return {
     })
 
     require("dapui").setup({
-      -- simple icons
-      controls = {
-        icons = {
-          disconnect = "⏏",
-          pause = "⏸",
-          play = "⏵",
-          run_last = "⏭",
-          step_back = "⏴",
-          step_into = "▼",
-          step_out = "▲",
-          step_over = "▶",
-          terminate = "×",
-        },
-      },
-      icons = {
-        expanded = "▾",
-        collapsed = "▸",
-        current_frame = "●",
-      },
       layouts = {
         {
           elements = {

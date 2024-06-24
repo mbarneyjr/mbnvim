@@ -13,13 +13,6 @@ return {
       timeout = 600,
       fps = 60,
       max_width = 80,
-      icons = {
-        ERROR = "‼",
-        WARN = "⚠",
-        INFO = "ℹ",
-        DEBUG = ">",
-        TRACE = "⌕",
-      },
       stages = "fade",
     })
     vim.notify = notify
