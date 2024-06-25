@@ -1,5 +1,14 @@
 return {
   "nvim-tree/nvim-tree.lua",
+  dependencies = {
+    {
+      "nvim-tree/nvim-web-devicons",
+      event = "VeryLazy",
+      config = function()
+        require("nvim-web-devicons").setup({ default = true })
+      end,
+    },
+  },
   config = function()
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
@@ -35,6 +44,11 @@ return {
         highlight_diagnostics = false,
         highlight_opened_files = "none",
         highlight_modified = "none",
+        icons = {
+          show = {
+            diagnostics = false,
+          },
+        },
       },
       update_focused_file = {
         enable = true,
