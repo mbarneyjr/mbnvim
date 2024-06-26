@@ -15,6 +15,7 @@ return {
         html = { "prettier" },
         markdown = { "prettier" },
         terraform = { "terraform_fmt" },
+        python = { "black" },
         ["*"] = { "trim_whitespace" },
       },
 

@@ -76,6 +76,7 @@ return {
         "eslint-lsp",
         "eslint_d",
         "nixpkgs-fmt",
+        "black",
       },
     })
 
