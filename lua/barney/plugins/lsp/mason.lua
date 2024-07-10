@@ -22,6 +22,7 @@ return {
       ensure_installed = {
         "tsserver",
         "html",
+        "gopls",
         "cssls",
         "lua_ls",
         "docker_compose_language_service",
