@@ -2,25 +2,26 @@ return {
   "zbirenbaum/copilot.lua",
   dependencies = {
     "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "canary",
     "nvim-lua/plenary.nvim",
+    "zbirenbaum/copilot-cmp",
   },
   config = function()
     require("copilot").setup({
       panel = { enabled = false },
-      suggestion = {
-        enabled = true,
-        auto_trigger = true,
-        debounce = 75,
-        keymap = {
-          accept = "<c-l>",
-          accept_word = false,
-          accept_line = false,
-          next = "<c-N>",
-          prev = "<c-P>",
-          dismiss = "<c-esc>",
-        },
-      },
+      suggestion = { enabled = false },
+      -- suggestion = {
+      --   enabled = true,
+      --   auto_trigger = true,
+      --   debounce = 75,
+      --   keymap = {
+      --     accept = "<c-l>",
+      --     accept_word = false,
+      --     accept_line = false,
+      --     next = "<c-N>",
+      --     prev = "<c-P>",
+      --     dismiss = "<c-esc>",
+      --   },
+      -- },
       filetypes = {
         ["*"] = true,
       },
@@ -28,7 +29,10 @@ return {
       server_opts_overrides = {},
     })
     require("CopilotChat").setup({
-      debug = true, -- Enable debugging
+      debug = true,
     })
+    require("copilot_cmp").setup()
+    local keys = require("barney.lib.keymap")
+    keys.imap("<c-l>", "")
   end,
 }
