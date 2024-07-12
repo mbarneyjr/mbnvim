@@ -37,6 +37,7 @@ return {
         { name = "nvim_lsp", priority = 100 },
         { name = "path", priority = 90 },
         { name = "copilot", priority = 70 },
+        { name = "supermaven", priority = 60 },
         { name = "luasnip", priority = 50 },
         { name = "buffer", priority = 10 },
       }),
