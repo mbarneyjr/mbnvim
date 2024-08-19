@@ -1,6 +1,7 @@
 return {
   "stevearc/conform.nvim",
   event = { "BufReadPre", "BufNewFile" },
+  branch = "nvim-0.9",
   config = function()
     local conform = require("conform")
     local key = require("barney.lib.keymap")
