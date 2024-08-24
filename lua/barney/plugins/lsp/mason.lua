@@ -63,6 +63,7 @@ return {
         )
         lspconfig[server_name].setup({
           capabilities = capabilities,
+          init_options = lsp_settings[server_name] and lsp_settings[server_name].init_options,
           settings = lsp_settings[server_name] and lsp_settings[server_name].settings,
           on_attach = lsp_settings[server_name] and lsp_settings[server_name].on_attach,
         })

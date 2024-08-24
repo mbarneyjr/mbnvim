@@ -11,12 +11,9 @@ return {
     },
   },
   tsserver = {
-    settings = {
-      diagnostics = {
-        ignoredCodes = {
-          -- ignore "All imports are unused"
-          6192,
-        },
+    init_options = {
+      preferences = {
+        disableSuggestions = true,
       },
     },
     on_attach = function(client, bufnr)
