@@ -24,6 +24,7 @@ return {
           "docs/images/",
           "coverage",
           "cdk.out",
+          ".aws-sam",
           "local.ignore/",
         },
         mappings = {
