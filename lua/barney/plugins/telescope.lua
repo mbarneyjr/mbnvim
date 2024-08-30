@@ -15,18 +15,17 @@ return {
     local builtin = require("telescope.builtin")
     local key = require("barney.lib.keymap")
 
-    vim.print("setting up telescope")
     telescope.setup({
       defaults = {
         file_ignore_patterns = {
           "node_modules",
-          ".git/",
-          ".terraform/",
-          "docs/images/",
+          ".git",
+          ".terraform",
+          "docs/images",
           "coverage",
           "cdk.out",
           ".aws%-sam",
-          "local.ignore/",
+          "local.ignore",
         },
         mappings = {
           i = {
