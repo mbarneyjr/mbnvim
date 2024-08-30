@@ -15,6 +15,7 @@ return {
     local builtin = require("telescope.builtin")
     local key = require("barney.lib.keymap")
 
+    vim.print("setting up telescope")
     telescope.setup({
       defaults = {
         file_ignore_patterns = {
