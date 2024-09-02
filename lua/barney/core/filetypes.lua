@@ -9,6 +9,9 @@ vim.filetype.add({
       function(_, bufnr)
         -- check for github actions
         local path = vim.api.nvim_buf_get_name(bufnr)
+        if string.find(path, "docker%-compose") then
+          return "yaml.docker-compose"
+        end
         if string.find(path, ".github/") then
           return "yaml.github_actions"
         end
