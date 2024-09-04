@@ -18,14 +18,14 @@ return {
     telescope.setup({
       defaults = {
         file_ignore_patterns = {
-          "node_modules",
-          "%.git",
-          "%.venv",
-          "%.terraform",
-          "docs/images",
-          "coverage",
+          "node_modules/",
+          "%.git/",
+          "%.venv/",
+          "%.terraform/",
+          "docs/images/",
+          "coverage/",
           "cdk%.out",
-          "%.aws%-sam",
+          "%.aws%-sam/",
           "local%.ignore",
         },
         mappings = {
