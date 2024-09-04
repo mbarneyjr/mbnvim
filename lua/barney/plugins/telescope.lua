@@ -19,14 +19,14 @@ return {
       defaults = {
         file_ignore_patterns = {
           "node_modules",
-          ".git",
-          ".venv",
-          ".terraform",
+          "%.git",
+          "%.venv",
+          "%.terraform",
           "docs/images",
           "coverage",
-          "cdk.out",
-          ".aws%-sam",
-          "local.ignore",
+          "cdk%.out",
+          "%.aws%-sam",
+          "local%.ignore",
         },
         mappings = {
           i = {
