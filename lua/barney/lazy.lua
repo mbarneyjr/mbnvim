@@ -14,6 +14,9 @@ require("lazy").setup({
   { import = "barney.plugins" },
   { import = "barney.plugins.lsp" },
 }, {
+  git = {
+    timeout = 900, -- 15 minutes
+  },
   -- install = { colorscheme = { "tokyonight" } },
   ui = {
     border = "rounded",

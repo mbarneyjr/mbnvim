@@ -9,6 +9,12 @@ vim.filetype.add({
       function(_, bufnr)
         -- check for github actions
         local path = vim.api.nvim_buf_get_name(bufnr)
+        if string.find(path, ".asl.yml") or string.find(path, ".asl.yaml") then
+          return "yaml.states"
+        end
+        if string.find(path, ".asl.json") then
+          return "json.states"
+        end
         if string.find(path, "docker%-compose") then
           return "yaml.docker-compose"
         end
@@ -25,6 +31,17 @@ vim.filetype.add({
           or vim.filetype.matchregex(line2, [[["']AWSTemplateFormatVersion]])
         then
           return "json.cloudformation"
+        end
+        -- check for amazon-states-language
+        if vim.filetype.matchregex(line1, [[^StartsAt]]) or vim.filetype.matchregex(line1, [[^Comment]]) then
+          return "yaml.states"
+        elseif
+          vim.filetype.matchregex(line1, [[["']StartsAt]])
+          or vim.filetype.matchregex(line1, [[["']Comment]])
+          or vim.filetype.matchregex(line2, [[["']StartsAt]])
+          or vim.filetype.matchregex(line2, [[["']Comment]])
+        then
+          return "json.states"
         end
       end,
     },

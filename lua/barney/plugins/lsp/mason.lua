@@ -5,6 +5,10 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     "marilari88/twoslash-queries.nvim",
     { "folke/neodev.nvim", config = true },
+    {
+      "aws/aws-toolkit-vscode",
+      build = "npm ci", -- this project has a postinstall that does the build
+    },
   },
   config = function()
     local neodev = require("neodev")
@@ -82,6 +86,44 @@ return {
       },
     })
 
+    -- setup amazon-states-language-service
+    if not configs["amazon-states-language-service"] then
+      configs["amazon-states-language-service"] = {
+        default_config = {
+          cmd = {
+            "node",
+            vim.fn.stdpath("data") .. "/lazy/aws-toolkit-vscode/packages/core/dist/src/stepFunctions/asl/aslServer.js",
+            "--stdio",
+          },
+          filetypes = { "yaml.states", "json.states" },
+          root_dir = function(fname)
+            return lspconfig.util.find_git_ancestor(fname)
+          end,
+          settings = { validate = false },
+        },
+      }
+    end
+    lspconfig["amazon-states-language-service"].setup({
+      get_language_id = function(_, ftype)
+        if ftype == "yaml.states" then
+          return "asl-yaml"
+        else
+          return "asl"
+        end
+      end,
+      capabilities = {
+        textDocument = {
+          completion = {
+            completionItem = {
+              snippetSupport = true,
+            },
+          },
+          rangeFormatting = {
+            dynamicRegistration = true,
+          },
+        },
+      },
+    })
     -- setup cfn-lsp-extra
     if not configs["cfn-lsp-extra"] then
       configs["cfn-lsp-extra"] = {
