@@ -17,6 +17,7 @@ return {
     {
       "microsoft/vscode-js-debug",
       build = "npm ci --legacy-peer-deps && npx gulp vsDebugServerBundle && rm -rf out && mv dist out",
+      tag = "v1.93.0",
     },
   },
   config = function()
