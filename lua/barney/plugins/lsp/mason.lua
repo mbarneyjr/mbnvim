@@ -8,7 +8,7 @@ return {
     {
       "aws/aws-toolkit-vscode",
       build = "npm ci", -- this project has a postinstall that does the build
-      tag = "v3.0.0",
+      tag = "toolkit/v3.25.0",
     },
   },
   config = function()
