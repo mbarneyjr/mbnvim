@@ -18,7 +18,7 @@ vim.filetype.add({
         if string.find(path, "docker%-compose") then
           return "yaml.docker-compose"
         end
-        if string.find(path, "%.github/workflows") == 1 then
+        if string.find(path, "%.github/workflows") then
           return "yaml.github_actions"
         end
         -- check for cloudformation
