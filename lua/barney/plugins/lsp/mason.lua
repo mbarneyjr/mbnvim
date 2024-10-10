@@ -53,10 +53,11 @@ return {
     mason_lspconfig.setup_handlers({
       function(server_name)
         local default_capabilities = cmp_nvim_lsp.default_capabilities()
+        local settings = lsp_settings[server_name]
         local capabilities = vim.tbl_extend(
           "force",
           default_capabilities,
-          lsp_settings[server_name] and lsp_settings[server_name].capabilities or {},
+          settings and settings.capabilities or {},
           -- fsevents high cpu bug
           {
             workspace = {
@@ -67,10 +68,29 @@ return {
           }
         )
         lspconfig[server_name].setup({
+          -- vim.lsp.start_client options
+          cmd = settings and settings.cmd,
+          cmd_cwd = settings and settings.cmd_cwd,
+          cmd_env = settings and settings.cmd_env,
+          detached = settings and settings.detached,
+          workspace_folders = settings and settings.workspace_folders,
           capabilities = capabilities,
-          init_options = lsp_settings[server_name] and lsp_settings[server_name].init_options,
-          settings = lsp_settings[server_name] and lsp_settings[server_name].settings,
-          on_attach = lsp_settings[server_name] and lsp_settings[server_name].on_attach,
+          handlers = settings and settings.handlers,
+          settings = settings and settings.settings,
+          commands = settings and settings.commands,
+          init_options = settings and settings.init_options,
+          on_error = settings and settings.on_error,
+          before_init = settings and settings.before_init,
+          on_init = settings and settings.on_init,
+          on_exit = settings and settings.on_exit,
+          on_attach = settings and settings.on_attach,
+          flags = settings and settings.flags,
+          -- lspconfig.setup options
+          root_dir = settings and settings.root_dir,
+          filetypes = settings and settings.filetypes,
+          autostart = settings and settings.autostart,
+          single_file_support = settings and settings.single_file_support,
+          on_new_config = settings and settings.on_new_config,
         })
       end,
     })

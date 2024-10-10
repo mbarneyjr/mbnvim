@@ -21,4 +21,11 @@ return {
       client.server_capabilities.documentFormattingProvider = false
     end,
   },
+  pyright = {
+    root_dir = function(fname)
+      local root_dir = require("lspconfig").util.root_pattern("pyrightconfig.json", "requirements.txt")(fname)
+        or vim.fn.getcwd()
+      return root_dir
+    end,
+  },
 }
