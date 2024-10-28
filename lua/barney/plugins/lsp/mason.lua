@@ -38,6 +38,7 @@ return {
         "pyright",
         "templ",
         "nil_ls",
+        "bashls",
       },
       automatic_installation = true,
     })
