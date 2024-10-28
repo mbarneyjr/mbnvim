@@ -1,3 +1,7 @@
+local function starts_with(String, Start)
+  return string.sub(String, 1, string.len(Start)) == Start
+end
+
 vim.filetype.add({
   extension = {
     jsonl = "json",
@@ -24,22 +28,19 @@ vim.filetype.add({
         -- check for cloudformation
         local line1 = vim.filetype.getlines(bufnr, 1)
         local line2 = vim.filetype.getlines(bufnr, 2)
-        if vim.filetype.matchregex(line1, [[^AWSTemplateFormatVersion]]) then
+        if starts_with(line1, "AWSTemplateFormatVersion") then
           return "yaml.cloudformation"
-        elseif
-          vim.filetype.matchregex(line1, [[["']AWSTemplateFormatVersion]])
-          or vim.filetype.matchregex(line2, [[["']AWSTemplateFormatVersion]])
-        then
+        elseif starts_with(line1, '"AWSTemplateFormatVersion"') or starts_with(line2, '"AWSTemplateFormatVersion"') then
           return "json.cloudformation"
         end
         -- check for amazon-states-language
-        if vim.filetype.matchregex(line1, [[^StartsAt]]) or vim.filetype.matchregex(line1, [[^Comment]]) then
+        if starts_with(line1, "StartsAt") or starts_with(line1, "Comment") then
           return "yaml.states"
         elseif
-          vim.filetype.matchregex(line1, [[["']StartsAt]])
-          or vim.filetype.matchregex(line1, [[["']Comment]])
-          or vim.filetype.matchregex(line2, [[["']StartsAt]])
-          or vim.filetype.matchregex(line2, [[["']Comment]])
+          starts_with(line1, '"StartsAt"')
+          or starts_with(line1, '"Comment"')
+          or starts_with(line2, '"StartsAt"')
+          or starts_with(line2, '"Comment"')
         then
           return "json.states"
         end

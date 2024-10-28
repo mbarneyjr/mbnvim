@@ -151,6 +151,6 @@ return {
     key.nmap("<leader>dh", widgets.hover, "[d]ebug [h]over")
     key.nmap("<leader>dH", widgets.preview, "[d]ebug [p]review")
     key.nmap("<leader>df", dapui.float_element, "[d]ebug ui [f]float")
-    key.nmap("<leader>du", dapui.toggle, { desc = "toggle [d]ebgger [u]ser interface" })
+    key.nmap("<leader>du", dapui.toggle, "toggle [d]ebgger [u]ser interface")
   end,
 }
