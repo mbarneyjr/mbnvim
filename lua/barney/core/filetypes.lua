@@ -26,8 +26,8 @@ vim.filetype.add({
           return "yaml.github_actions"
         end
         -- check for cloudformation
-        local line1 = vim.filetype.getlines(bufnr, 1)
-        local line2 = vim.filetype.getlines(bufnr, 2)
+        local line1 = vim.fn.getline(1)
+        local line2 = vim.fn.getline(2)
         if starts_with(line1, "AWSTemplateFormatVersion") then
           return "yaml.cloudformation"
         elseif starts_with(line1, '"AWSTemplateFormatVersion"') or starts_with(line2, '"AWSTemplateFormatVersion"') then
