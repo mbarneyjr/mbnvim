@@ -9,9 +9,6 @@ return {
     -- define github actions file type
     vim.filetype.add({})
     lint.linters_by_ft = {
-      javascript = { "eslint_d" },
-      typescript = { "eslint_d" },
-      -- ["yaml.cloudformation"] = { "cfn_lint" },
       ["yaml.github_actions"] = { "actionlint" },
     }
 
