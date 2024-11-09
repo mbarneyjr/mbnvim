@@ -25,6 +25,7 @@ return {
           "docs/images/",
           "coverage/",
           "cdk%.out",
+          "%.sst/",
           "%.aws%-sam/",
           "local%.ignore",
         },
