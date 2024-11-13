@@ -23,23 +23,24 @@ return {
         border = "rounded",
       },
     })
+    local lsp_servers = {
+      "ts_ls",
+      "html",
+      "gopls",
+      "cssls",
+      "lua_ls",
+      "docker_compose_language_service",
+      "dockerls",
+      "dotls",
+      "jsonls",
+      "terraformls",
+      "pyright",
+      "templ",
+      "nil_ls",
+      "bashls",
+    }
     mason_lspconfig.setup({
-      ensure_installed = {
-        "ts_ls",
-        "html",
-        "gopls",
-        "cssls",
-        "lua_ls",
-        "docker_compose_language_service",
-        "dockerls",
-        "dotls",
-        "jsonls",
-        "terraformls",
-        "pyright",
-        "templ",
-        "nil_ls",
-        "bashls",
-      },
+      ensure_installed = lsp_servers,
       automatic_installation = true,
     })
 
@@ -50,59 +51,55 @@ return {
 
     neodev.setup()
 
-    -- setup mason-managed servers
-    mason_lspconfig.setup_handlers({
-      function(server_name)
-        local default_capabilities = cmp_nvim_lsp.default_capabilities()
-        local settings = lsp_settings[server_name]
-        local capabilities = vim.tbl_extend(
-          "force",
-          default_capabilities,
-          settings and settings.capabilities or {},
-          -- fsevents high cpu bug
-          {
-            workspace = {
-              didChangeWatchedFiles = {
-                dynamicRegistration = false,
-              },
+    -- for each server, setup the server with the settings from the lsp_settings table
+    for _, server_name in ipairs(lsp_servers) do
+      local default_capabilities = cmp_nvim_lsp.default_capabilities()
+      local settings = lsp_settings[server_name]
+      local capabilities = vim.tbl_extend(
+        "force",
+        default_capabilities,
+        settings and settings.capabilities or {},
+        -- fsevents high cpu bug
+        {
+          workspace = {
+            didChangeWatchedFiles = {
+              dynamicRegistration = false,
             },
-          }
-        )
-        lspconfig[server_name].setup({
-          -- vim.lsp.start_client options
-          cmd = settings and settings.cmd,
-          cmd_cwd = settings and settings.cmd_cwd,
-          cmd_env = settings and settings.cmd_env,
-          detached = settings and settings.detached,
-          workspace_folders = settings and settings.workspace_folders,
-          capabilities = capabilities,
-          handlers = settings and settings.handlers,
-          settings = settings and settings.settings,
-          commands = settings and settings.commands,
-          init_options = settings and settings.init_options,
-          on_error = settings and settings.on_error,
-          before_init = settings and settings.before_init,
-          on_init = settings and settings.on_init,
-          on_exit = settings and settings.on_exit,
-          on_attach = settings and settings.on_attach,
-          flags = settings and settings.flags,
-          -- lspconfig.setup options
-          root_dir = settings and settings.root_dir,
-          filetypes = settings and settings.filetypes,
-          autostart = settings and settings.autostart,
-          single_file_support = settings and settings.single_file_support,
-          on_new_config = settings and settings.on_new_config,
-        })
-      end,
-    })
+          },
+        }
+      )
+      lspconfig[server_name].setup({
+        -- vim.lsp.start_client options
+        cmd = settings and settings.cmd,
+        cmd_cwd = settings and settings.cmd_cwd,
+        cmd_env = settings and settings.cmd_env,
+        detached = settings and settings.detached,
+        workspace_folders = settings and settings.workspace_folders,
+        capabilities = capabilities,
+        handlers = settings and settings.handlers,
+        settings = settings and settings.settings,
+        commands = settings and settings.commands,
+        init_options = settings and settings.init_options,
+        on_error = settings and settings.on_error,
+        before_init = settings and settings.before_init,
+        on_init = settings and settings.on_init,
+        on_exit = settings and settings.on_exit,
+        on_attach = settings and settings.on_attach,
+        flags = settings and settings.flags,
+        -- lspconfig.setup options
+        root_dir = settings and settings.root_dir,
+        filetypes = settings and settings.filetypes,
+        autostart = settings and settings.autostart,
+        single_file_support = settings and settings.single_file_support,
+        on_new_config = settings and settings.on_new_config,
+      })
+    end
 
     mason_tool_installer.setup({
       ensure_installed = {
         "actionlint",
         "prettier",
         "stylua",
-        "eslint-lsp",
-        "eslint_d",
         "nixpkgs-fmt",
         "black",
       },
