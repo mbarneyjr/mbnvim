@@ -66,6 +66,15 @@ return {
       {
         type = "pwa-node",
         request = "launch",
+        name = "TSX: Launch file",
+        program = "${file}",
+        runtimeExecutable = "npx",
+        runtimeArgs = { "tsx" },
+        cwd = "${workspaceFolder}",
+      },
+      {
+        type = "pwa-node",
+        request = "launch",
         name = "TS: Launch file",
         program = "${file}",
         runtimeArgs = { "--require", "ts-node/register" },
