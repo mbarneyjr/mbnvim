@@ -23,6 +23,8 @@
             pkgs.gopls
             pkgs.cargo
             pkgs.fzf
+            pkgs.coreutils
+            pkgs.readline
           ];
 
           shellHook = ''
