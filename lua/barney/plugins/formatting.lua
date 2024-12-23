@@ -10,6 +10,8 @@ return {
         lua = { "stylua" },
         javascript = { "prettier" },
         typescript = { "prettier" },
+        javascriptreact = { "prettier" },
+        typescriptreact = { "prettier" },
         json = { "prettier" },
         jsonc = { "prettier" },
         css = { "prettier" },
