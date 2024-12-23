@@ -38,6 +38,7 @@ return {
       "templ",
       "nil_ls",
       "bashls",
+      "tailwindcss",
     }
     mason_lspconfig.setup({
       ensure_installed = lsp_servers,
