@@ -11,8 +11,14 @@ return {
 
     local ts_context_commentstring = require("ts_context_commentstring")
 
-    ts_context_commentstring.setup({})
+    ts_context_commentstring.setup({
+      enable_autocmd = true,
+    })
 
-    comment.setup({})
+    comment.setup({
+      pre_hook = function()
+        return vim.bo.commentstring
+      end,
+    })
   end,
 }
