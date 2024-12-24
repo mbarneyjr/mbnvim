@@ -32,6 +32,7 @@ return {
         "javascript",
         "jsdoc",
         "typescript",
+        "tsx",
         "html",
         "python",
         "css",
