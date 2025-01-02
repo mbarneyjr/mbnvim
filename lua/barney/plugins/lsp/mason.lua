@@ -39,6 +39,7 @@ return {
       "nil_ls",
       "bashls",
       "tailwindcss",
+      "glsl_analyzer",
     }
     mason_lspconfig.setup({
       ensure_installed = lsp_servers,

@@ -50,6 +50,7 @@ return {
         "ini",
         "mermaid",
         "nix",
+        "glsl",
       },
       incremental_selection = {
         enable = false,
