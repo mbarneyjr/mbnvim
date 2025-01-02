@@ -17,18 +17,6 @@ return {
 
     telescope.setup({
       defaults = {
-        file_ignore_patterns = {
-          "node_modules/",
-          "%.git/",
-          "%.venv/",
-          "%.terraform/",
-          "docs/images/",
-          "coverage/",
-          "cdk%.out",
-          "%.sst/",
-          "%.aws%-sam/",
-          "local%.ignore",
-        },
         mappings = {
           i = {
             ["<C-k>"] = actions.move_selection_previous,
@@ -58,8 +46,23 @@ return {
 
     local function find_files()
       builtin.find_files({
-        hidden = true,
-        no_ignore = true,
+        -- stylua: ignore
+        find_command = {
+          "rg",
+          "--files",
+          "--hidden",
+          "--no-ignore",
+          "-g", "!node_modules/",
+          "-g", "!.git/",
+          "-g", "!.venv/",
+          "-g", "!.terraform/",
+          "-g", "!docs/images/",
+          "-g", "!coverage/",
+          "-g", "!cdk.out",
+          "-g", "!.sst/",
+          "-g", "!.aws.sam/",
+          "-g", "!local.ignore",
+        },
       })
     end
     local function live_grep()
