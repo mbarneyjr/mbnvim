@@ -54,14 +54,14 @@ return {
           "--no-ignore",
           "-g", "!node_modules/",
           "-g", "!.git/",
+          "-g", "!local.ignore",
           "-g", "!.venv/",
           "-g", "!.terraform/",
           "-g", "!docs/images/",
           "-g", "!coverage/",
           "-g", "!cdk.out",
           "-g", "!.sst/",
-          "-g", "!.aws.sam/",
-          "-g", "!local.ignore",
+          "-g", "!.aws-sam/",
         },
       })
     end
