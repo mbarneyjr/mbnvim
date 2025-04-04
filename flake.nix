@@ -2,7 +2,7 @@
   description = "A flake for the mbnvim configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
   };
 
   outputs = { nixpkgs, ... }:
