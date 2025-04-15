@@ -104,6 +104,7 @@ return {
         "stylua",
         "nixpkgs-fmt",
         "black",
+        "js-debug-adapter",
       },
     })
 

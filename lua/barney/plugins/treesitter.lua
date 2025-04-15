@@ -51,6 +51,7 @@ return {
         "mermaid",
         "nix",
         "glsl",
+        "diff",
       },
       incremental_selection = {
         enable = false,

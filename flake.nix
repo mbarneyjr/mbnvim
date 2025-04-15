@@ -3,19 +3,23 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   };
 
-  outputs = { nixpkgs, ... }:
+  outputs = { nixpkgs, nixpkgs-unstable, ... }:
     let
       shell = { system }:
         let
           pkgs = import nixpkgs {
             system = system;
           };
+          unstable = import nixpkgs-unstable {
+            system = system;
+          };
         in
         pkgs.mkShell {
           buildInputs = [
-            pkgs.neovim
+            unstable.neovim
             pkgs.gnumake
             pkgs.nodejs_20
             pkgs.python311Full

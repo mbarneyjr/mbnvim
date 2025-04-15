@@ -1,3 +1,16 @@
+--- Gets a path to a package in the Mason registry.
+--- Prefer this to `get_package`, since the package might not always be
+--- available yet and trigger errors.
+---@param pkg string
+---@param path? string
+local function get_pkg_path(pkg, path)
+  pcall(require, "mason")
+  local root = vim.env.MASON or (vim.fn.stdpath("data") .. "/mason")
+  path = path or ""
+  local ret = root .. "/packages/" .. pkg .. "/" .. path
+  return ret
+end
+
 return {
   "mfussenegger/nvim-dap",
   dependencies = {
@@ -6,19 +19,19 @@ return {
     "theHamsta/nvim-dap-virtual-text",
     "nvim-telescope/telescope-dap.nvim",
     "nvim-neotest/nvim-nio",
-    {
-      "mxsdev/nvim-dap-vscode-js",
-      opts = {
-        debugger_path = string.format("%s/vscode-js-debug/", vim.fn.stdpath("data") .. "/lazy"),
-        adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost", "node" },
-        node_path = "node",
-      },
-    },
-    {
-      "microsoft/vscode-js-debug",
-      build = "npm ci --legacy-peer-deps && npx gulp vsDebugServerBundle && rm -rf out && mv dist out",
-      tag = "v1.93.0",
-    },
+    -- {
+    --   "mxsdev/nvim-dap-vscode-js",
+    --   opts = {
+    --     debugger_path = string.format("%s/vscode-js-debug/", vim.fn.stdpath("data") .. "/lazy"),
+    --     adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost", "node" },
+    --     node_path = "node",
+    --   },
+    -- },
+    -- {
+    --   "microsoft/vscode-js-debug",
+    --   build = "npm ci --legacy-peer-deps && npx gulp vsDebugServerBundle && rm -rf out && mv dist out",
+    --   tag = "v1.97.1",
+    -- },
   },
   config = function()
     local dap = require("dap")
@@ -42,6 +55,18 @@ return {
       },
     })
 
+    dap.adapters["pwa-node"] = {
+      type = "server",
+      host = "localhost",
+      port = "${port}",
+      executable = {
+        command = "node",
+        args = {
+          get_pkg_path("js-debug-adapter", "/js-debug/src/dapDebugServer.js"),
+          "${port}",
+        },
+      },
+    }
     dap.configurations.javascript = {
       {
         type = "pwa-node",
