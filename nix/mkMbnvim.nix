@@ -95,6 +95,7 @@ mkNeovim {
     CopilotChat-nvim
     copilot-cmp
     avante-nvim
+    codecompanion-nvim
   ];
   extraPackages = [
     pkgs.imagemagick
