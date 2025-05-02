@@ -104,6 +104,8 @@ mkNeovim {
     pkgs.nodePackages.prettier
     pkgs.black
     pkgs.actionlint
+    pkgs.tflint
+    pkgs.terraform-ls
     pkgs.nixfmt-rfc-style
     pkgs.vscode-js-debug
     pkgs.typescript-language-server
