@@ -26,8 +26,25 @@ local function toggle_fugitive()
   -- close fugitive buffer
   vim.api.nvim_buf_delete(bufnr, { force = true })
 end
+
 key.nmap("gD", ":Gvdiffsplit!<CR>", "git diff conflict")
 key.nmap("<c-g>", toggle_fugitive, "Toggle vim-fugitive")
-vim.cmd("set diffopt=filler,context:1000000")
+key.nmap("<leader>gs", toggle_fugitive, "Toggle vim-fugitive")
+key.nmap("<leader>gl", ":Flog<CR>", "Toggle vim-fugitive")
+vim.cmd(":set diffopt=filler,context:1000000,vertical")
 vim.cmd(":set fillchars=diff:\\ ")
-vim.cmd(":set diffopt+=vertical")
+vim.cmd(":autocmd FileType git set foldmethod=syntax")
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "floggraph",
+  callback = function(event)
+    vim.keymap.set("n", "<CR>", ":Flogsplitcommit<CR> | :resize 10<CR>", { buffer = event.buf })
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "floggraph",
+  callback = function(event)
+    vim.keymap.set("n", "<CR>", ":Flogsplitcommit<CR> | :resize 10<CR>", { buffer = event.buf })
+  end,
+})
