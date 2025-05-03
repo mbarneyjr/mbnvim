@@ -26,4 +26,8 @@ local function toggle_fugitive()
   -- close fugitive buffer
   vim.api.nvim_buf_delete(bufnr, { force = true })
 end
+key.nmap("gD", ":Gvdiffsplit!<CR>", "git diff conflict")
 key.nmap("<c-g>", toggle_fugitive, "Toggle vim-fugitive")
+vim.cmd("set diffopt=filler,context:1000000")
+vim.cmd(":set fillchars=diff:\\ ")
+vim.cmd(":set diffopt+=vertical")

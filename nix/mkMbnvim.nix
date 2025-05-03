@@ -65,6 +65,7 @@ mkNeovim {
     vim-fugitive
     vim-rhubarb
     gitsigns-nvim
+    vim-flog
     # code
     trouble-nvim
     nvim-coverage
