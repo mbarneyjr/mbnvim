@@ -1,6 +1,7 @@
 { system, inputs }:
 
 let
+  gh-actions-language-service-overlay = import ./overlays/gh-actions-language-server;
   cfn-lsp-extra-overlay = import ./overlays/cfn-lsp-extra.nix {
     cfn-lsp-extra = inputs.cfn-lsp-extra;
   };
@@ -16,6 +17,7 @@ let
       cfn-lsp-extra-overlay
       twoslash-queries-overlay
       ts-error-translator-overlay
+      gh-actions-language-service-overlay
     ];
   };
   mkNeovim = pkgs.callPackage ./mkNeovim.nix { };
@@ -124,6 +126,7 @@ mkNeovim {
     pkgs.tailwindcss-language-server
     pkgs.glsl_analyzer
     pkgs.python3Packages.cfn-lsp-extra
+    pkgs.gh-actions-language-service
   ];
   extraLuaPackages =
     luaPkgs: with luaPkgs; [

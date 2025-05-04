@@ -13,8 +13,8 @@ let
 
     doCheck = false;
   });
-  cfn-lint =
-    (prev.python3Packages.cfn-lint.overridePythonAttrs (old: rec {
+  cfn-lint = (
+    prev.python3Packages.cfn-lint.overridePythonAttrs (old: rec {
       version = "1.34.2";
 
       src = prev.fetchFromGitHub {
@@ -38,7 +38,8 @@ let
         final.python3Packages.sympy
       ];
       doCheck = false;
-    }));
+    })
+  );
 in
 {
   python3Packages = prev.python3Packages // {
