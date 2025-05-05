@@ -1,5 +1,5 @@
 vim.lsp.config("gh_actions_ls", {
-  filetypes = { "yaml", "yaml.github_actions" },
+  filetypes = { "yaml.github_actions" },
   capabilities = {
     workspace = {
       didChangeWorkspaceFolders = {
