@@ -122,6 +122,7 @@ mkNeovim {
     pkgs.pyright
     pkgs.templ
     pkgs.nil
+    pkgs.nixd
     pkgs.bash-language-server
     pkgs.tailwindcss-language-server
     pkgs.glsl_analyzer
