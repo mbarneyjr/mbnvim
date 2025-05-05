@@ -6,6 +6,7 @@ vim.g.maplocalleader = " "
 key.nmap("<leader>sv", "<C-w>v", "Split window vertically")
 key.nmap("<leader>sh", "<C-w>s", "Split window horizontally")
 key.nmap("<leader>se", "<C-w>=", "Make splits equal size")
+key.nmap("<leader>st", ":tab split<CR>", "Copy window to new tab")
 key.nmap("<leader>sx", "<cmd>close<CR>", "Close current split")
 
 key.nmap("<c-_>", "<cmd>noh<cr>", "Clear search highlight")
