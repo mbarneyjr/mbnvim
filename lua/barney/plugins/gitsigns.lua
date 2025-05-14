@@ -15,3 +15,6 @@ require("gitsigns").setup({
     ignore_whitespace = false,
   },
 })
+
+local keymap = require("barney.lib.keymap")
+keymap.nmap("<leader>gb", ":Gitsigns toggle_current_line_blame<CR>", { desc = "Disable inline git blame" })
