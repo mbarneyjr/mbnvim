@@ -9,6 +9,7 @@ vim.filetype.add({
   extension = {
     jsonl = "json",
     tf = "terraform",
+    cfnlintrc = "yaml",
   },
   pattern = {
     [".*"] = {
