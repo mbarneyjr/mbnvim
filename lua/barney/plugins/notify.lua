@@ -1,4 +1,5 @@
 local notify = require("notify")
+local keys = require("barney.lib.keymap")
 
 notify.setup({
   timeout = 600,
@@ -10,3 +11,9 @@ notify.setup({
   end,
 })
 vim.notify = notify
+
+local dismiss = function()
+  notify.dismiss()
+end
+
+keys.nmap("<leader>nd", dismiss, "dismiss all notifications")
