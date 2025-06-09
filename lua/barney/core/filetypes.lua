@@ -12,6 +12,7 @@ vim.filetype.add({
     cfnlintrc = "yaml",
   },
   pattern = {
+    [".env.*"] = "sh",
     [".*"] = {
       priority = math.huge,
       function(_, bufnr)
