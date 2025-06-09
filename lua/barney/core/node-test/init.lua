@@ -19,8 +19,11 @@ local function node_test()
     end
   end
 
-  local reporter = vim.fn.stdpath("config") .. "/lua/barney/core/node-test/reporter.mjs"
-  vim.print(reporter)
+  -- Get the path of the current Lua file and construct reporter path relative to it
+  local current_file = debug.getinfo(1, "S").source:sub(2) -- Remove '@' prefix
+  local current_dir = vim.fn.fnamemodify(current_file, ":h")
+  local reporter = current_dir .. "/reporter.mjs"
+  vim.print("Using reporter at: " .. reporter)
   local command = "npm run test "
     .. workspace_args
     .. " -- --test-reporter "

@@ -1,3 +1,5 @@
 result
 .direnv
 .luarc.json
+*.local
+*.local.*
