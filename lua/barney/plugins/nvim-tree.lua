@@ -9,6 +9,27 @@ local api = require("nvim-tree.api")
 local function on_attach(bufnr)
   api.config.mappings.default_on_attach(bufnr)
   vim.keymap.del("n", "<C-K>", { buffer = bufnr })
+
+  -- Import compare functionality
+  local compare = require("barney.core.compare")
+
+  -- Custom compare keymaps
+  vim.keymap.set("n", "mc", function()
+    local node = api.tree.get_node_under_cursor()
+    if node and node.type == "file" then
+      compare.mark_file_for_compare(node.absolute_path)
+    else
+      vim.notify("Please select a file to mark for comparison", vim.log.levels.WARN)
+    end
+  end, { buffer = bufnr, desc = "Mark file for comparison" })
+
+  vim.keymap.set("n", "gc", function()
+    compare.compare_marked_files()
+  end, { buffer = bufnr, desc = "Compare marked files" })
+
+  vim.keymap.set("n", "gs", function()
+    vim.notify(compare.get_compare_status())
+  end, { buffer = bufnr, desc = "Show compare status" })
 end
 
 nvim_tree.setup({
