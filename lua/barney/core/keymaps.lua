@@ -20,6 +20,10 @@ key.nmap("<leader>qc", "<cmd>cclose<CR>", "Close quickfix list")
 key.nmap("<leader>qn", "<cmd>cnext<CR>", "Next quickfix item")
 key.nmap("<leader>qp", "<cmd>cprev<CR>", "Previous quickfix item")
 
+-- tab navigation
+key.nmap("<C-M-h>", "<cmd>tabprevious<CR>", "Previous tab")
+key.nmap("<C-M-l>", "<cmd>tabnext<CR>", "Next tab")
+
 -- git diff
 key.nmap("<leader>GD", function()
   vim.ui.input({ prompt = "Merge Branch: " }, function(value)
