@@ -88,7 +88,7 @@ nvim_tree.setup({
     dotfiles = false,
     git_clean = false,
     no_buffer = false,
-    custom = {},
+    custom = { "^.git$" },
     exclude = {},
   },
   log = {
