@@ -42,6 +42,17 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Add gitcommit keymap for claude-commit
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gitcommit",
+  callback = function(event)
+    vim.keymap.set("n", "cc", function()
+      local output = vim.fn.system("git claude-commit")
+      vim.api.nvim_buf_set_lines(event.buf, 0, 1, false, { vim.split(output, "\n")[1] })
+    end, { buffer = event.buf, desc = "Use claude-commit to generate commit message" })
+  end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "floggraph",
   callback = function(event)
