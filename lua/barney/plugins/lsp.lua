@@ -30,10 +30,11 @@ vim.lsp.config("*", {
 })
 
 require("barney.plugins.lsp.bash")
+require("barney.plugins.lsp.cedar")
 require("barney.plugins.lsp.cfn")
 require("barney.plugins.lsp.css")
-require("barney.plugins.lsp.docker-compose")
 require("barney.plugins.lsp.docker")
+require("barney.plugins.lsp.docker-compose")
 require("barney.plugins.lsp.dot")
 require("barney.plugins.lsp.github")
 require("barney.plugins.lsp.glsl")

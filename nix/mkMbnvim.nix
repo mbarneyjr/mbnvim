@@ -2,6 +2,7 @@
 
 let
   gh-actions-language-service-overlay = import ./overlays/gh-actions-language-server;
+  cedar-language-server = import ./overlays/cedar-language-server.nix;
   cfn-lsp-extra-overlay = import ./overlays/cfn-lsp-extra.nix {
     cfn-lsp-extra = inputs.cfn-lsp-extra;
   };
@@ -18,6 +19,7 @@ let
       twoslash-queries-overlay
       ts-error-translator-overlay
       gh-actions-language-service-overlay
+      cedar-language-server
     ];
   };
   mkNeovim = pkgs.callPackage ./mkNeovim.nix { };
@@ -128,6 +130,7 @@ mkNeovim {
     pkgs.glsl_analyzer
     pkgs.python3Packages.cfn-lsp-extra
     pkgs.gh-actions-language-service
+    pkgs.cedar-language-server
   ];
   extraLuaPackages =
     luaPkgs: with luaPkgs; [
