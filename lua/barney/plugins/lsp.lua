@@ -48,3 +48,11 @@ require("barney.plugins.lsp.tailwindcss")
 require("barney.plugins.lsp.templ")
 require("barney.plugins.lsp.terraform")
 require("barney.plugins.lsp.ts")
+
+vim.api.nvim_create_user_command("LspFullRestart", function()
+  vim.cmd("LspStop")
+  vim.defer_fn(function()
+    vim.cmd("LspRestart")
+    vim.cmd("e!")
+  end, 1000) -- Wait 1 second for LSP servers to stop
+end, {})
