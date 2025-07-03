@@ -21,29 +21,30 @@ jobs:
           role-to-assume: arn:aws:iam::792172458894:role/github-actions
           role-session-name: GitHubActions-${{ github.run_id }}
       - name: get signing key
-        uses: aws-actions/aws-secretsmanager-get-secrets@v2
-        with:
-          secret-ids: |
-            SIGNING_KEY, /nix/cache/signing-key
-          name-transformation: uppercase
-          parse-json-secrets: true
+        run: |
+          secret=$(aws secretsmanager get-secret-value \
+            --secret-id /nix/cache/signing-key \
+            --query SecretString \
+            --output text)
+          private_key=$(echo "$secret" | jq -r '.privateKey')
+          public_key=$(echo "$secret" | jq -r '.publicKey')
+          echo "::add-mask::${private_key}"
+          echo "$private_key" > private-key
+          chmod 600 private-key
+          echo "public key: ${public_key}"
+          echo "PUBLIC_KEY=${public_key}" >> "$GITHUB_ENV"
       - name: install nix
         uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
           extra_nix_config: |
-            trusted-public-keys = ${{ env.SIGNING_KEY_PUBLICKEY }} cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://nix.barney.dev https://cache.nixos.org/
-      - name: save signing key
-        run: |
-          echo "$SIGNING_KEY_PRIVATEKEY" > private-key
-          echo "$SIGNING_KEY_PUBLICKEY" > public-key
-          chmod 600 private-key
+            trusted-public-keys = ${{ env.PUBLICKEY }} cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://nix.barney.dev/ https://cache.nixos.org/
       - name: build mbnvim
         run: |
           nix build --quiet
       - name: sign and upload to cache
         run: |
-          nix store sign --key-file ./private-key --recursive ./result
-          nix copy --to "s3://nix.barney.dev?region=us-east-2" ./result
+          nix store sign --verbose --key-file ./private-key --recursive ./result
+          nix copy --quiet --max-jobs auto --to "s3://nix.barney.dev?region=us-east-2" ./result
           echo "successfully uploaded to cache at s3://nix.barney.dev"
