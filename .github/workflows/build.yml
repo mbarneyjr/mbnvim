@@ -32,7 +32,7 @@ jobs:
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
           extra_nix_config: |
-            trusted-public-keys = ${SIGNING_KEY_PUBLICKEY} cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            trusted-public-keys = ${{ env.SIGNING_KEY_PUBLICKEY }} cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://nix.barney.dev https://cache.nixos.org/
       - name: save signing key
         run: |
