@@ -39,11 +39,17 @@ jobs:
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
           extra_nix_config: |
-            trusted-public-keys = ${{ env.PUBLICKEY }} cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            trusted-public-keys = ${{ env.PUBLIC_KEY }} cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://nix.barney.dev/ https://cache.nixos.org/
       - name: build mbnvim
         run: |
           nix build --quiet
+      - name: assume role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-2
+          role-to-assume: arn:aws:iam::792172458894:role/github-actions
+          role-session-name: GitHubActions-${{ github.run_id }}
       - name: sign and upload to cache
         run: |
           nix store sign --verbose --key-file ./private-key --recursive ./result
