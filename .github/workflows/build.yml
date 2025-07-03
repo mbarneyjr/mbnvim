@@ -1,0 +1,49 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: assume role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-2
+          role-to-assume: arn:aws:iam::792172458894:role/github-actions
+          role-session-name: GitHubActions-${{ github.run_id }}
+      - name: get signing key
+        uses: aws-actions/aws-secretsmanager-get-secrets@v2
+        with:
+          secret-ids: |
+            SIGNING_KEY, /nix/cache/signing-key
+          name-transformation: uppercase
+          parse-json-secrets: true
+      - name: install nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          extra_nix_config: |
+            trusted-public-keys = ${SIGNING_KEY_PUBLICKEY} cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://nix.barney.dev https://cache.nixos.org/
+      - name: save signing key
+        run: |
+          echo "$SIGNING_KEY_PRIVATEKEY" > private-key
+          echo "$SIGNING_KEY_PUBLICKEY" > public-key
+          chmod 600 private-key
+      - name: build mbnvim
+        run: |
+          nix build --verbose
+      - name: sign and upload to cache
+        run: |
+          nix store sign --key-file ./private-key --recursive ./result
+          nix copy --to "s3://nix.barney.dev?region=us-east-2" ./result
+          echo "successfully uploaded to cache at s3://nix.barney.dev"
