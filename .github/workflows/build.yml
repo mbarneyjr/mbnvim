@@ -41,7 +41,7 @@ jobs:
           chmod 600 private-key
       - name: build mbnvim
         run: |
-          nix build --verbose
+          nix build
       - name: sign and upload to cache
         run: |
           nix store sign --key-file ./private-key --recursive ./result
