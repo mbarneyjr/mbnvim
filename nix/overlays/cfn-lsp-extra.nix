@@ -3,7 +3,7 @@ final: prev: {
   python3Packages = prev.python3Packages // {
     cfn-lsp-extra = final.python3Packages.buildPythonApplication {
       pname = "cfn-lsp-extra";
-      version = "0.7.3";
+      version = "0.7.4";
       src = cfn-lsp-extra;
       pyproject = true;
       build-system = [

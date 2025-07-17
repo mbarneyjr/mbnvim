@@ -3,11 +3,11 @@
     "cfn-lsp-extra": {
       "flake": false,
       "locked": {
-        "lastModified": 1745660970,
-        "narHash": "sha256-XBdYn3XqE30lE7VZ/Hw1sSRKuSLdjoGcVWXYDFvFsLQ=",
+        "lastModified": 1752401482,
+        "narHash": "sha256-zCC2aP3Z4yrM+TrnNXo+3OACezgSGoQqEPS4QU8qVX8=",
         "owner": "LaurenceWarne",
         "repo": "cfn-lsp-extra",
-        "rev": "36b1eccc9ebe338c9e0de982c9e7e4437a1eca0c",
+        "rev": "539365e3a7e5cfe13b6889460872f38c736d3bfb",
         "type": "github"
       },
       "original": {
@@ -36,11 +36,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1751498133,
-        "narHash": "sha256-QWJ+NQbMU+NcU2xiyo7SNox1fAuwksGlQhpzBl76g1I=",
+        "lastModified": 1752683762,
+        "narHash": "sha256-CVC4bpthYhKk4Qb4mt00SqfJ7CJ4vfTX06pLN2OHa1c=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d55716bb59b91ae9d1ced4b1ccdea7a442ecbfdb",
+        "rev": "fa64ec5c1ca6f17746f3defedb988b9248e97616",
         "type": "github"
       },
       "original": {
