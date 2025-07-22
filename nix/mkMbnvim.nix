@@ -14,6 +14,9 @@ let
   };
   pkgs = import inputs.nixpkgs {
     system = system;
+    config = {
+      allowUnfree = true;
+    };
     overlays = [
       cfn-lsp-extra-overlay
       twoslash-queries-overlay
@@ -53,6 +56,7 @@ mkNeovim {
     # nvim-tree
     nvim-tree-lua
     nvim-web-devicons
+    mini-icons
     # comment
     comment-nvim
     nvim-ts-context-commentstring
@@ -103,7 +107,11 @@ mkNeovim {
     codecompanion-nvim
   ];
   extraPackages = [
+    pkgs.pngpaste
+    pkgs.tree-sitter
     pkgs.imagemagick
+    pkgs.lynx
+    pkgs.terraform
     pkgs.fzf
     pkgs.stylua
     pkgs.nodePackages.prettier
@@ -135,5 +143,6 @@ mkNeovim {
   extraLuaPackages =
     luaPkgs: with luaPkgs; [
       magick
+      tiktoken_core
     ];
 }
