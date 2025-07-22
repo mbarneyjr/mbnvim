@@ -5,10 +5,10 @@ final: prev: {
     src = prev.pkgs.fetchFromGitHub {
       owner = "cedar-policy";
       repo = "cedar";
-      rev = "1d81204095e1c8d830b07555028e6a2dee301799";
-      sha256 = "sha256-JAvQlVOs6GHikh8jZt/y4CBU7fDHC899HZKC7xzFeY8=";
+      rev = "1475ea3b1f79e2f14fb05e95aab0d51f0ea1af5a";
+      sha256 = "sha256-ETYr7cKdrGenoPbZ/09vdY0sJzFPjk32KO/dwUOSlhc=";
     };
-    cargoHash = "sha256-uJdjTDLcHkoSh4EMI1SLfS/iRPM0FpKzWtdLZLAkLv4=";
+    cargoHash = "sha256-qDbVmmtDVd10jNmFTvVnji0yaMeEerVpMipe2gGsWP8=";
     buildAndTestSubdir = "cedar-language-server";
   };
 }
