@@ -3,6 +3,7 @@
 let
   gh-actions-language-service-overlay = import ./overlays/gh-actions-language-server;
   cedar-language-server = import ./overlays/cedar-language-server.nix;
+  cfn-lint-overlay = import ./overlays/cfn-lint.nix;
   cfn-lsp-extra-overlay = import ./overlays/cfn-lsp-extra.nix {
     cfn-lsp-extra = inputs.cfn-lsp-extra;
   };
@@ -18,6 +19,7 @@ let
       allowUnfree = true;
     };
     overlays = [
+      cfn-lint-overlay
       cfn-lsp-extra-overlay
       twoslash-queries-overlay
       ts-error-translator-overlay
