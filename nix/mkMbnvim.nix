@@ -67,6 +67,7 @@ mkNeovim {
     # telescope
     telescope-nvim
     telescope-fzf-native-nvim
+    fzf-lua
     # harpoon
     harpoon2
     # images
@@ -145,6 +146,11 @@ mkNeovim {
   extraLuaPackages =
     luaPkgs: with luaPkgs; [
       magick
+<<<<<<< HEAD
       tiktoken_core
+||||||| parent of 9f2cfb0 (fix(nix): install fzf-lua for vim plugin require checks)
+=======
+      fzf-lua
+>>>>>>> 9f2cfb0 (fix(nix): install fzf-lua for vim plugin require checks)
     ];
 }
