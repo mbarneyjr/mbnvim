@@ -38,6 +38,7 @@ jobs:
         uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          install_url: https://releases.nixos.org/nix/nix-2.28.4/install
           extra_nix_config: |
             trusted-public-keys = ${{ env.PUBLIC_KEY }} cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://nix.barney.dev/ https://cache.nixos.org/
