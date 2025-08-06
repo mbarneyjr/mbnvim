@@ -146,11 +146,7 @@ mkNeovim {
   extraLuaPackages =
     luaPkgs: with luaPkgs; [
       magick
-<<<<<<< HEAD
       tiktoken_core
-||||||| parent of 9f2cfb0 (fix(nix): install fzf-lua for vim plugin require checks)
-=======
       fzf-lua
->>>>>>> 9f2cfb0 (fix(nix): install fzf-lua for vim plugin require checks)
     ];
 }
