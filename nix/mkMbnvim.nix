@@ -108,6 +108,7 @@ mkNeovim {
     copilot-cmp
     avante-nvim
     codecompanion-nvim
+    opencode-nvim
   ];
   extraPackages = [
     pkgs.pngpaste
