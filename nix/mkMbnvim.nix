@@ -126,7 +126,9 @@ mkNeovim {
     pkgs.vscode-js-debug
     pkgs.typescript-language-server
     pkgs.vscode-langservers-extracted
+    pkgs.go
     pkgs.gopls
+    pkgs.golangci-lint
     pkgs.lua-language-server
     pkgs.docker-language-server
     pkgs.dockerfile-language-server-nodejs

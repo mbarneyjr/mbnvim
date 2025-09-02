@@ -3,6 +3,7 @@ local key = require("barney.lib.keymap")
 conform.setup({
   formatters_by_ft = {
     lua = { "stylua" },
+    go = { "golangci-lint" },
     javascript = { "prettier" },
     typescript = { "prettier" },
     javascriptreact = { "prettier" },
