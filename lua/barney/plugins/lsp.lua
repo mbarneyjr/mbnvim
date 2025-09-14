@@ -30,6 +30,7 @@ vim.lsp.config("*", {
 })
 
 require("barney.plugins.lsp.bash")
+require("barney.plugins.lsp.biome")
 require("barney.plugins.lsp.cedar")
 require("barney.plugins.lsp.cfn")
 require("barney.plugins.lsp.css")

@@ -125,6 +125,7 @@ mkNeovim {
     pkgs.nixfmt-rfc-style
     pkgs.vscode-js-debug
     pkgs.typescript-language-server
+    pkgs.biome
     pkgs.vscode-langservers-extracted
     pkgs.go
     pkgs.gopls
