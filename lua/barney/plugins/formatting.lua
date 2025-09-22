@@ -1,5 +1,10 @@
 local conform = require("conform")
 local key = require("barney.lib.keymap")
+
+require("conform").formatters["biome-check"] = {
+  append_args = { "--indent-style", "space" },
+}
+
 conform.setup({
   formatters_by_ft = {
     lua = { "stylua" },
