@@ -23,6 +23,7 @@ dap.configurations.javascript = {
     request = "launch",
     name = "JS: Launch file",
     program = "${file}",
+    outputCapture = "std",
     cwd = "${workspaceFolder}",
   },
   {
@@ -34,6 +35,7 @@ dap.configurations.javascript = {
         filter = "--inspect",
       })
     end,
+    outputCapture = "std",
     cwd = "${workspaceFolder}",
   },
 }
@@ -43,6 +45,7 @@ dap.configurations.typescript = {
     request = "launch",
     name = "TSX: Launch file",
     program = "${file}",
+    outputCapture = "std",
     runtimeExecutable = "npx",
     runtimeArgs = { "tsx" },
     cwd = "${workspaceFolder}",
@@ -52,6 +55,7 @@ dap.configurations.typescript = {
     request = "launch",
     name = "TS: Launch file",
     program = "${file}",
+    outputCapture = "std",
     runtimeArgs = { "--require", "ts-node/register" },
     cwd = "${workspaceFolder}",
   },
@@ -64,6 +68,7 @@ dap.configurations.typescript = {
         filter = "--inspect",
       })
     end,
+    outputCapture = "std",
     cwd = "${workspaceFolder}",
   },
 }
