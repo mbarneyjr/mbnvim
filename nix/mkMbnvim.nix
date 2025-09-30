@@ -132,7 +132,7 @@ mkNeovim {
     pkgs.golangci-lint
     pkgs.lua-language-server
     pkgs.docker-language-server
-    pkgs.dockerfile-language-server-nodejs
+    pkgs.dockerfile-language-server
     pkgs.docker-compose-language-service
     pkgs.dot-language-server
     pkgs.pyright
