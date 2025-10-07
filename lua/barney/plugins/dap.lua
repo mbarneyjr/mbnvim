@@ -54,6 +54,7 @@ dapview.setup({
     sections = { "watches", "scopes", "exceptions", "breakpoints", "threads", "repl", "console" },
     default_section = "scopes",
   },
+  auto_toggle = true,
 })
 
 dap_virtual_text.setup()
