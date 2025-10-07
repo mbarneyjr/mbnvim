@@ -1,7 +1,7 @@
 local key = require("barney.lib.keymap")
 local dap = require("dap")
 local dap_utils = require("dap.utils")
-local dapui = require("dapui")
+local dapview = require("dap-view")
 local widgets = require("dap.ui.widgets")
 local vscode = require("dap.ext.vscode")
 local dap_virtual_text = require("nvim-dap-virtual-text")
@@ -39,61 +39,20 @@ dap.configurations.javascript = {
     cwd = "${workspaceFolder}",
   },
 }
-dap.configurations.typescript = {
-  {
-    type = "pwa-node",
-    request = "launch",
-    name = "TSX: Launch file",
-    program = "${file}",
-    outputCapture = "std",
-    runtimeExecutable = "npx",
-    runtimeArgs = { "tsx" },
-    cwd = "${workspaceFolder}",
-  },
-  {
-    type = "pwa-node",
-    request = "launch",
-    name = "TS: Launch file",
-    program = "${file}",
-    outputCapture = "std",
-    runtimeArgs = { "--require", "ts-node/register" },
-    cwd = "${workspaceFolder}",
-  },
-  {
-    type = "pwa-node",
-    request = "attach",
-    name = "TS: Attach",
-    processId = function()
-      return dap_utils.pick_process({
-        filter = "--inspect",
-      })
-    end,
-    outputCapture = "std",
-    cwd = "${workspaceFolder}",
-  },
-}
+dap.configurations.typescript = dap.configurations.javascript
 
 vscode.load_launchjs(nil, {
   ["pwa-node"] = { "javascript", "typescript" },
   ["node"] = { "javascript", "typescript" },
 })
 
-require("dapui").setup({
-  layouts = {
-    {
-      elements = {
-        { id = "scopes", size = 1 },
-      },
-      size = 0.25,
-      position = "right",
+dapview.setup({
+  winbar = {
+    controls = {
+      enabled = true,
     },
-    {
-      elements = {
-        { id = "repl", size = 1 },
-      },
-      size = 0.27,
-      position = "bottom",
-    },
+    sections = { "watches", "scopes", "exceptions", "breakpoints", "threads", "repl", "console" },
+    default_section = "watches",
   },
 })
 
@@ -139,5 +98,4 @@ key.nmap("<leader>dO", dap.step_out, "[d]ebugger step [O]ut")
 key.nmap("<Leader>dr", dap.repl.toggle, "[d]ebugger [r]epl")
 key.nmap("<leader>dh", widgets.hover, "[d]ebug [h]over")
 key.nmap("<leader>dH", widgets.preview, "[d]ebug [p]review")
-key.nmap("<leader>df", dapui.float_element, "[d]ebug ui [f]float")
-key.nmap("<leader>du", dapui.toggle, "toggle [d]ebgger [u]ser interface")
+key.nmap("<leader>du", dapview.toggle, "toggle [d]ebgger [u]ser interface")

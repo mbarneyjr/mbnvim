@@ -81,7 +81,7 @@ mkNeovim {
     trouble-nvim
     nvim-coverage
     nvim-dap
-    nvim-dap-ui
+    nvim-dap-view
     nvim-nio
     nvim-dap-virtual-text
     conform-nvim
