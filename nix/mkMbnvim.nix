@@ -40,6 +40,8 @@ mkNeovim {
   plugins = with pkgs.vimPlugins; [
     # notify
     nvim-notify
+    # fold
+    nvim-ufo
     # colorscheme
     tokyonight-nvim
     # lualine
