@@ -30,6 +30,8 @@ local function on_attach(bufnr)
   vim.keymap.set("n", "gs", function()
     vim.notify(compare.get_compare_status())
   end, { buffer = bufnr, desc = "Show compare status" })
+
+  vim.keymap.set("n", "d", api.fs.trash, { buffer = bufnr, desc = "Trash a file" })
 end
 
 nvim_tree.setup({
@@ -56,9 +58,13 @@ nvim_tree.setup({
     highlight_diagnostics = false,
     highlight_opened_files = "none",
     highlight_modified = "none",
+    indent_markers = {
+      enable = true,
+    },
     icons = {
       show = {
         diagnostics = false,
+        git = false,
       },
     },
   },
