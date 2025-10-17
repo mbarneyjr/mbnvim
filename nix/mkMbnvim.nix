@@ -120,7 +120,7 @@ mkNeovim {
     pkgs.fzf
     pkgs.stylua
     pkgs.nodePackages.prettier
-    pkgs.black
+    pkgs.ufmt
     pkgs.actionlint
     pkgs.tflint
     pkgs.terraform-ls
