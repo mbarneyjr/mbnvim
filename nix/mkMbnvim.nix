@@ -142,6 +142,8 @@ mkNeovim {
     pkgs.nil
     pkgs.nixd
     pkgs.bash-language-server
+    pkgs.shellcheck
+    pkgs.shfmt
     pkgs.tailwindcss-language-server
     pkgs.glsl_analyzer
     pkgs.python3Packages.cfn-lsp-extra

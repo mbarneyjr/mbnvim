@@ -21,6 +21,7 @@ conform.setup({
     terraform = { "terraform_fmt" },
     python = { "black" },
     ["*"] = { "trim_whitespace", "trim_newlines" },
+    -- sh = { "shfmt" },
     nix = { "nixfmt" },
   },
 
@@ -31,17 +32,23 @@ conform.setup({
     end
     -- Disable autoformat for files in a certain path
     local bufname = vim.api.nvim_buf_get_name(bufnr)
+    if bufname:match("/.venv/") then
+      return
+    end
     if bufname:match("/node_modules/") then
       return
     end
-    return { timeout_ms = 1000, lsp_fallback = true }
+    return {
+      lsp_format = "first",
+      timeout_ms = 1000,
+    }
   end,
 })
 
 local format = function()
+  vim.notify("Formatted file")
   conform.format({
-    lsp_fallback = true,
-    -- async = false,
+    lsp_format = "first",
     timeout_ms = 1000,
   })
 end
