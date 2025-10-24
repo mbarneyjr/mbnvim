@@ -19,7 +19,7 @@ conform.setup({
     html = { "prettier", "biome-check" },
     markdown = { "prettier" },
     terraform = { "terraform_fmt" },
-    python = { "ufmt" },
+    python = { "black", "usort" },
     ["*"] = { "trim_whitespace", "trim_newlines" },
     nix = { "nixfmt" },
   },
