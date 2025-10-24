@@ -36,8 +36,6 @@ require("barney.plugins.coverage")
 require("barney.plugins.dap")
 require("barney.plugins.formatting")
 require("barney.plugins.linting")
--- language-specific tools
-require("barney.plugins.tailwind")
 -- require("barney.plugins.tsc")
 -- cmp, snippets
 require("barney.plugins.nvim-cmp")

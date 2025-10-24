@@ -89,7 +89,6 @@ mkNeovim {
     conform-nvim
     nvim-lint
     # language-specific tools
-    tailwind-tools-nvim
     tsc-nvim
     ts-error-translator
     # cmp, snippets
