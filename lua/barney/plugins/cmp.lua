@@ -23,6 +23,11 @@ blink.setup({
     documentation = {
       auto_show = true,
     },
+    menu = {
+      draw = {
+        columns = { { "label", "kind", gap = 1 } },
+      },
+    },
   },
   signature = {
     enabled = true,
