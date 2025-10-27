@@ -7,6 +7,10 @@ blink.setup({
     ["<C-k>"] = { "select_prev" },
     ["<C-l>"] = { "accept", "fallback" },
   },
+  cmdline = {
+    keymap = { preset = "inherit" },
+    completion = { menu = { auto_show = true } },
+  },
   snippets = { preset = "luasnip" },
   sources = {
     default = { "lsp", "path", "snippets", "copilot" },
