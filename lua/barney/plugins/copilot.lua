@@ -17,12 +17,8 @@ require("copilot").setup({
   filetypes = {
     ["*"] = true,
   },
-  copilot_node_command = "node", -- Node.js version must be > 16.x
+  copilot_node_command = "node",
   server_opts_overrides = {},
 })
-require("CopilotChat").setup({
-  debug = true,
-})
-require("copilot_cmp").setup()
 local keys = require("barney.lib.keymap")
 keys.imap("<c-l>", "")

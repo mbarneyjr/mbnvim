@@ -92,21 +92,15 @@ mkNeovim {
     tsc-nvim
     ts-error-translator
     # cmp, snippets
-    nvim-cmp
-    cmp-buffer
-    cmp-path
+    blink-cmp
+    blink-copilot
     luasnip
-    cmp_luasnip
-    friendly-snippets
     # lsp
     nvim-lspconfig
-    cmp-nvim-lsp
     nvim-lsp-file-operations
     twoslash-queries
     # ai
     copilot-lua
-    CopilotChat-nvim
-    copilot-cmp
     avante-nvim
     codecompanion-nvim
   ];

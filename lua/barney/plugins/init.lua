@@ -27,6 +27,10 @@ require("barney.plugins.telescope")
 require("barney.plugins.harpoon")
 -- images
 require("barney.plugins.image")
+-- snippets
+require("barney.plugins.snippets")
+-- cmp
+require("barney.plugins.cmp")
 -- git
 require("barney.plugins.fugitive")
 require("barney.plugins.gitsigns")
@@ -37,8 +41,6 @@ require("barney.plugins.dap")
 require("barney.plugins.formatting")
 require("barney.plugins.linting")
 -- require("barney.plugins.tsc")
--- cmp, snippets
-require("barney.plugins.nvim-cmp")
 -- lsp
 require("barney.plugins.lsp")
 -- ai

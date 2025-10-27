@@ -19,6 +19,11 @@ vim.api.nvim_create_autocmd("LspAttach", { callback = lsp_attach })
 
 lsp_file_operations.setup()
 
+vim.diagnostic.config({
+  virtual_text = true,
+  underline = true,
+})
+
 vim.lsp.config("*", {
   capabilities = {
     workspace = {
