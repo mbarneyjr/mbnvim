@@ -1,17 +1,18 @@
 { system, inputs }:
 
 let
-  gh-actions-language-service-overlay = import ./overlays/gh-actions-language-server;
   cedar-language-server = import ./overlays/cedar-language-server.nix;
   cfn-lint-overlay = import ./overlays/cfn-lint.nix;
   cfn-lsp-extra-overlay = import ./overlays/cfn-lsp-extra.nix {
     cfn-lsp-extra = inputs.cfn-lsp-extra;
   };
-  twoslash-queries-overlay = import ./overlays/twoslash-queries.nix {
-    twoslash-queries-src = inputs.twoslash-queries-src;
-  };
+  gh-actions-language-service-overlay = import ./overlays/gh-actions-language-server;
+  tmux-language-server-overlay = import ./overlays/tmux-language-server.nix;
   ts-error-translator-overlay = import ./overlays/ts-error-translator.nix {
     ts-error-translator-src = inputs.ts-error-translator-src;
+  };
+  twoslash-queries-overlay = import ./overlays/twoslash-queries.nix {
+    twoslash-queries-src = inputs.twoslash-queries-src;
   };
   pkgs = import inputs.nixpkgs {
     system = system;
@@ -19,12 +20,13 @@ let
       allowUnfree = true;
     };
     overlays = [
+      cedar-language-server
       cfn-lint-overlay
       cfn-lsp-extra-overlay
-      twoslash-queries-overlay
-      ts-error-translator-overlay
       gh-actions-language-service-overlay
-      cedar-language-server
+      tmux-language-server-overlay
+      ts-error-translator-overlay
+      twoslash-queries-overlay
     ];
   };
   mkNeovim = pkgs.callPackage ./mkNeovim.nix { };
@@ -138,6 +140,7 @@ mkNeovim {
     pkgs.python3Packages.cfn-lsp-extra
     pkgs.gh-actions-language-service
     pkgs.cedar-language-server
+    pkgs.tmux-language-server
   ];
   extraLuaPackages =
     luaPkgs: with luaPkgs; [

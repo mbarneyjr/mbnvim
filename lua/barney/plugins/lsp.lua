@@ -53,6 +53,7 @@ require("barney.plugins.lsp.python")
 require("barney.plugins.lsp.tailwindcss")
 require("barney.plugins.lsp.templ")
 require("barney.plugins.lsp.terraform")
+require("barney.plugins.lsp.tmux")
 require("barney.plugins.lsp.ts")
 
 vim.api.nvim_create_user_command("LspFullRestart", function()
