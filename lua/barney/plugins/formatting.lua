@@ -39,7 +39,7 @@ conform.setup({
     end
     return {
       lsp_format = "first",
-      timeout_ms = 1000,
+      timeout_ms = 2000,
     }
   end,
 })
