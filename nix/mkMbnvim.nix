@@ -31,12 +31,6 @@ let
 in
 
 mkNeovim {
-  withPython3 = true;
-  withRuby = true;
-  withNodeJs = true;
-  withSqlite = true;
-  viAlias = true;
-  vimAlias = true;
   plugins = with pkgs.vimPlugins; [
     # notify
     nvim-notify
@@ -105,6 +99,7 @@ mkNeovim {
     codecompanion-nvim
   ];
   extraPackages = [
+    pkgs.sqlite
     pkgs.pngpaste
     pkgs.tree-sitter
     pkgs.imagemagick
