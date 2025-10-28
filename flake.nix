@@ -5,19 +5,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
-
-    cfn-lsp-extra = {
-      url = "github:LaurenceWarne/cfn-lsp-extra";
-      flake = false;
-    };
-    twoslash-queries-src = {
-      url = "github:marilari88/twoslash-queries.nvim";
-      flake = false;
-    };
-    ts-error-translator-src = {
-      url = "github:dmmulroy/ts-error-translator.nvim";
-      flake = false;
-    };
   };
 
   outputs =

@@ -1,10 +1,14 @@
-{ cfn-lsp-extra }:
 final: prev: {
   python3Packages = prev.python3Packages // {
-    cfn-lsp-extra = final.python3Packages.buildPythonApplication {
+    cfn-lsp-extra = final.python3Packages.buildPythonApplication rec {
       pname = "cfn-lsp-extra";
       version = "0.7.4";
-      src = cfn-lsp-extra;
+      src = prev.fetchFromGitHub {
+        owner = "LaurenceWarne";
+        repo = "cfn-lsp-extra";
+        rev = "v${version}";
+        sha256 = "sha256-oP7uH6xPJtUDf1QlbEvitR0lF9iyGGhDdEOrvS7f+n8=";
+      };
       pyproject = true;
       build-system = [
         prev.python3Packages.poetry-core

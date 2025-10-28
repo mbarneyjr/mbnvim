@@ -1,5 +1,5 @@
 final: prev: {
-  gh-actions-language-service = prev.buildNpmPackage rec {
+  gh-actions-language-service = prev.buildNpmPackage {
     name = "gh-actions-language-service";
     src = prev.fetchFromGitHub {
       owner = "lttb";

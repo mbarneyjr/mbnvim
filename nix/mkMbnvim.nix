@@ -1,38 +1,13 @@
 { system, inputs }:
 
 let
-  cedar-language-server = import ./overlays/cedar-language-server.nix;
-  cfn-lint-overlay = import ./overlays/cfn-lint.nix;
-  cfn-lsp-extra-overlay = import ./overlays/cfn-lsp-extra.nix {
-    cfn-lsp-extra = inputs.cfn-lsp-extra;
-  };
-  gh-actions-language-service-overlay = import ./overlays/gh-actions-language-server;
-  tmux-language-server-overlay = import ./overlays/tmux-language-server.nix;
-  ts-error-translator-overlay = import ./overlays/ts-error-translator.nix {
-    ts-error-translator-src = inputs.ts-error-translator-src;
-  };
-  twoslash-queries-overlay = import ./overlays/twoslash-queries.nix {
-    twoslash-queries-src = inputs.twoslash-queries-src;
-  };
   pkgs = import inputs.nixpkgs {
     system = system;
     config = {
       allowUnfree = true;
     };
-    overlays = [
-      cedar-language-server
-      cfn-lint-overlay
-      cfn-lsp-extra-overlay
-      gh-actions-language-service-overlay
-      tmux-language-server-overlay
-      ts-error-translator-overlay
-      twoslash-queries-overlay
-    ];
+    overlays = import ./overlays;
   };
-  mkNeovim = pkgs.callPackage ./mkNeovim.nix { };
-in
-
-mkNeovim {
   plugins = with pkgs.vimPlugins; [
     # notify
     nvim-notify
@@ -142,10 +117,61 @@ mkNeovim {
     pkgs.cedar-language-server
     pkgs.tmux-language-server
   ];
-  extraLuaPackages =
-    luaPkgs: with luaPkgs; [
-      magick
-      tiktoken_core
-      fzf-lua
-    ];
+  extraLuaPackages = with pkgs.neovim-unwrapped.lua.pkgs; [
+    magick
+    tiktoken_core
+    fzf-lua
+  ];
+  defaultPlugin = {
+    plugin = null;
+    config = null;
+    optional = false;
+    runtime = { };
+  };
+  normalizedPlugins = map (x: defaultPlugin // (if x ? plugin then x else { plugin = x; })) plugins;
+  neovimConfig = pkgs.neovimUtils.makeNeovimConfig {
+    withNodeJs = true;
+    withRuby = true;
+    withPython3 = true;
+    viAlias = false;
+    vimAlias = false;
+    plugins = normalizedPlugins;
+  };
+
+  luaCPaths =
+    pkgs.lib.concatMapStringsSep ";" pkgs.neovim-unwrapped.lua.pkgs.getLuaCPath
+      extraLuaPackages;
+  luaPaths =
+    pkgs.lib.concatMapStringsSep ";" pkgs.neovim-unwrapped.lua.pkgs.getLuaPath
+      extraLuaPackages;
+  neovimBase = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
+    neovimConfig
+    // {
+      wrapperArgs = builtins.concatStringsSep " " [
+        (pkgs.lib.escapeShellArgs neovimConfig.wrapperArgs)
+        ''--prefix PATH : "${pkgs.lib.makeBinPath extraPackages}"''
+        ''--set LIBSQLITE_CLIB_PATH "${pkgs.sqlite.out}/lib/libsqlite3.so"''
+        ''--set LIBSQLITE "${pkgs.sqlite.out}/lib/libsqlite3.so"''
+        ''--suffix LUA_CPATH ";" "${luaCPaths}"''
+        ''--suffix LUA_PATH ";" "${luaPaths}"''
+      ];
+    }
+  );
+
+  initLua = pkgs.writeText "init.lua" ''
+    vim.opt.rtp:prepend('${../.}')
+    ${builtins.readFile ../init.lua}
+  '';
+in
+
+pkgs.stdenvNoCC.mkDerivation {
+  pname = "mbnvim";
+  version = "1.0";
+  nativeBuildInputs = [ pkgs.makeWrapper ];
+  dontUnpack = true;
+  installPhase = ''
+    mkdir -p $out/bin
+    makeWrapper ${neovimBase}/bin/nvim $out/bin/nvim \
+      --set VIMINIT "lua dofile('${initLua}')"
+  '';
 }
