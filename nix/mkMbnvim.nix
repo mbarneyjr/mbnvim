@@ -103,7 +103,7 @@ let
     pkgs.dockerfile-language-server
     pkgs.docker-compose-language-service
     pkgs.dot-language-server
-    pkgs.pyright
+    pkgs.basedpyright
     pkgs.templ
     pkgs.nil
     pkgs.nixd
