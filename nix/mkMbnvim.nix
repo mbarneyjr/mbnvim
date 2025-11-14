@@ -73,7 +73,6 @@ let
     # ai
     copilot-lua
     avante-nvim
-    codecompanion-nvim
   ];
   extraPackages = [
     pkgs.sqlite

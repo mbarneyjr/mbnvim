@@ -46,4 +46,3 @@ require("barney.plugins.lsp")
 -- ai
 require("barney.plugins.copilot")
 require("barney.plugins.avante")
-require("barney.plugins.codecompanion")
