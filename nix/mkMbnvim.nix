@@ -75,6 +75,7 @@ let
     avante-nvim
   ];
   extraPackages = [
+    pkgs.curl
     pkgs.sqlite
     pkgs.pngpaste
     pkgs.tree-sitter
