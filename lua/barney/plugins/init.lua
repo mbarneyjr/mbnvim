@@ -44,4 +44,4 @@ require("barney.plugins.linting")
 -- lsp
 require("barney.plugins.lsp")
 -- ai
-require("lua.barney.plugins.ai")
+require("barney.plugins.ai")
