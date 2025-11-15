@@ -71,6 +71,7 @@ let
     nvim-lsp-file-operations
     twoslash-queries
     # ai
+    claudecode-nvim
     copilot-lua
     avante-nvim
   ];

@@ -39,3 +39,5 @@ key.nmap("<leader>GD", function()
     vim.api.nvim_command("Git difftool -y " .. value)
   end)
 end, "Git difftool -y <branch>")
+
+key.tmap("<esc>", "<C-\\><C-n>", "Exit terminal mode")

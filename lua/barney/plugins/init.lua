@@ -44,5 +44,4 @@ require("barney.plugins.linting")
 -- lsp
 require("barney.plugins.lsp")
 -- ai
-require("barney.plugins.copilot")
-require("barney.plugins.avante")
+require("lua.barney.plugins.ai")
