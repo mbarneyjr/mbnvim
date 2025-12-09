@@ -5,8 +5,13 @@ require("conform").formatters["biome-check"] = {
   append_args = { "--indent-style", "space" },
 }
 
+local disable_filetypes = {
+  html = true,
+}
+
 conform.setup({
   formatters_by_ft = {
+    ["*"] = { "trim_whitespace", "trim_newlines" },
     lua = { "stylua" },
     go = { "golangci-lint" },
     javascript = { "biome-check" },
@@ -19,11 +24,13 @@ conform.setup({
     markdown = { "prettier" },
     terraform = { "terraform_fmt" },
     python = { "black", "usort" },
-    ["*"] = { "trim_whitespace", "trim_newlines" },
     nix = { "nixfmt" },
   },
 
   format_on_save = function(bufnr)
+    if disable_filetypes[vim.bo[bufnr].filetype] then
+      return false
+    end
     -- Disable with a global or buffer-local variable
     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
       return
@@ -44,6 +51,10 @@ conform.setup({
 })
 
 local format = function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  if disable_filetypes[vim.bo[bufnr].filetype] then
+    return
+  end
   vim.notify("Formatted file")
   conform.format({
     lsp_format = "first",
