@@ -16,7 +16,6 @@ conform.setup({
     json = { "biome-check" },
     jsonc = { "biome-check" },
     css = { "biome-check" },
-    html = { "biome-check" },
     markdown = { "prettier" },
     terraform = { "terraform_fmt" },
     python = { "black", "usort" },
