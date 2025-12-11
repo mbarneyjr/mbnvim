@@ -19,3 +19,5 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
 
 vim.api.nvim_create_user_command("Lint", try_lint, { desc = "Lint the current buffer" })
 key.nmap("<leader>l", try_lint, "[l]int")
+
+vim.api.nvim_create_user_command("Biome", ':cgetexpr system("npx @biomejs/biome check")', { desc = "Run biome" })
