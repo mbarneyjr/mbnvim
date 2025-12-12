@@ -24,7 +24,6 @@ keys.imap("<c-l>", "")
 
 require("claudecode").setup({})
 keys.nmap("<leader>ac", ":ClaudeCode<CR>", "Toggle Claude")
-keys.tmap("<leader>ac", ":ClaudeCode<CR>", "Toggle Claude")
 keys.nmap("<leader>aC", ":ClaudeCode --continue<CR>", "Toggle Claude")
 keys.vmap("<leader>as", ":ClaudeCodeSend<CR>", "Send to Claude")
 keys.nmap("<leader>as", ":ClaudeCodeTreeAdd<CR>", "Add file")
