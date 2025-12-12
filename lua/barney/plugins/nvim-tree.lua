@@ -48,7 +48,7 @@ nvim_tree.setup({
   filesystem_watchers = {
     enable = true,
     debounce_delay = 50,
-    ignore_dirs = { "node_modules", ".git" },
+    ignore_dirs = { "node_modules", ".git", ".worktree" },
   },
   renderer = {
     add_trailing = true,
@@ -94,7 +94,7 @@ nvim_tree.setup({
     dotfiles = false,
     git_clean = false,
     no_buffer = false,
-    custom = { "^.git$" },
+    custom = { "^.git$", "^.worktree$" },
     exclude = {},
   },
   log = {

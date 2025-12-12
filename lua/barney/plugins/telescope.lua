@@ -42,6 +42,7 @@ local function find_files()
       "--no-ignore",
       "-g", "!node_modules/",
       "-g", "!.git/",
+      "-g", "!.worktree/",
       "-g", "!local.ignore",
       "-g", "!.venv/",
       "-g", "!.terraform/",
