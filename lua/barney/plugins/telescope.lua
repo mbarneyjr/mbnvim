@@ -5,6 +5,30 @@ local key = require("barney.lib.keymap")
 
 telescope.setup({
   defaults = {
+    -- stylua: ignore
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+      "--hidden",
+      "--no-ignore",
+      "-g", "!node_modules/",
+      "-g", "!.direnv/",
+      "-g", "!.git/",
+      "-g", "!.worktree/",
+      "-g", "!local.ignore",
+      "-g", "!.venv/",
+      "-g", "!.terraform/",
+      "-g", "!docs/images/",
+      "-g", "!coverage/",
+      "-g", "!cdk.out",
+      "-g", "!.sst/",
+      "-g", "!.aws-sam/",
+    },
     mappings = {
       i = {
         ["<C-k>"] = actions.move_selection_previous,
@@ -54,13 +78,7 @@ local function find_files()
     },
   })
 end
-local function live_grep()
-  builtin.live_grep({
-    hidden = false,
-    no_ignore = false,
-  })
-end
 
 key.nmap("<leader>ff", find_files, "[f]ind [f]iles")
-key.nmap("<leader>fs", live_grep, "[f]ind grep [s]earch")
+key.nmap("<leader>fs", builtin.live_grep, "[f]ind grep [s]earch")
 key.nmap("<C-p>", builtin.commands, "Open commands")
