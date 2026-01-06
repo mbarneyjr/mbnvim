@@ -113,7 +113,8 @@ let
     pkgs.shfmt
     pkgs.tailwindcss-language-server
     pkgs.glsl_analyzer
-    pkgs.python3Packages.cfn-lsp-extra
+    # pkgs.python3Packages.cfn-lsp-extra
+    pkgs.cloudformation-languageserver
     pkgs.gh-actions-language-service
     pkgs.cedar-language-server
     pkgs.tmux-language-server
