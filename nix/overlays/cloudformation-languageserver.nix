@@ -43,7 +43,7 @@ final: prev: {
       # Patch the standalone.js file to use a fixed directory
       substituteInPlace $out/lib/${pname}/cfn-lsp-server-standalone.js \
         --replace-fail "const dir = (0, path_1.resolve)(__dirname);" \
-                       "const dir = '~/.local/state/cloudformation-languageserver'"
+                       "const dir = '/tmp/.local/state/cloudformation-languageserver'"
 
       mkdir -p $out/bin
       makeWrapper ${prev.nodejs}/bin/node $out/bin/cfn-lsp-server-standalone \
