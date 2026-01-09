@@ -1,5 +1,5 @@
 vim.lsp.config("cfn-lsp-server", {
-  cmd = { "cfn-lsp-server-standalone", "--stdio" },
+  cmd = { "cfn-lsp-server", "--stdio" },
   filetypes = { "yaml.cloudformation", "json.cloudformation" },
   root_markers = { ".git" },
   settings = { validate = false },
