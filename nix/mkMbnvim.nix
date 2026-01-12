@@ -83,6 +83,7 @@ let
     pkgs.imagemagick
     pkgs.lynx
     pkgs.terraform
+    pkgs.tree-sitter
     pkgs.fzf
     pkgs.stylua
     pkgs.nodePackages.prettier
