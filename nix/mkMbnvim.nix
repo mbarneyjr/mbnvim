@@ -92,7 +92,7 @@ let
     pkgs.actionlint
     pkgs.tflint
     pkgs.terraform-ls
-    pkgs.nixfmt-rfc-style
+    pkgs.nixfmt
     pkgs.vscode-js-debug
     pkgs.typescript-language-server
     pkgs.biome
