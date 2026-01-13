@@ -3,7 +3,9 @@ local function starts_with(String, Start)
 end
 
 vim.treesitter.language.register("yaml", "asl-yaml")
+vim.treesitter.language.register("yaml", "yaml.cloudformation")
 vim.treesitter.language.register("json", "asl")
+vim.treesitter.language.register("json", "json.cloudformation")
 
 vim.filetype.add({
   extension = {
