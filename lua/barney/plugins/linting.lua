@@ -1,10 +1,15 @@
 local lint = require("lint")
+local cfn_lint = require("barney.plugins.lint.cfn-lint")
 local key = require("barney.lib.keymap")
 
 -- define github actions file type
 lint.linters_by_ft = {
   ["yaml.github_actions"] = { "actionlint" },
+  ["yaml.cloudformation"] = { "cfn_lint" },
+  ["json.cloudformation"] = { "cfn_lint" },
 }
+
+lint.linters.cfn_lint = cfn_lint
 
 local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
