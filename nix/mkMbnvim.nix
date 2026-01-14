@@ -25,9 +25,7 @@ let
     # tmux
     vim-tmux-navigator
     # treesitter
-    nvim-treesitter.withAllGrammars
-    nvim-treesitter-textobjects
-    nvim-ts-autotag
+    nvim-treesitter
     # nvim-tree
     nvim-tree-lua
     nvim-web-devicons
@@ -116,6 +114,7 @@ let
     pkgs.glsl_analyzer
     pkgs.python3Packages.cfn-lint
     # pkgs.python3Packages.cfn-lsp-extra
+    pkgs.copilot-language-server
     pkgs.cloudformation-languageserver
     pkgs.gh-actions-language-service
     pkgs.cedar-language-server
