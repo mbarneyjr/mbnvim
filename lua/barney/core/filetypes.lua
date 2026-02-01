@@ -11,6 +11,7 @@ vim.filetype.add({
   extension = {
     jsonl = "json",
     tf = "terraform",
+    tofu = "terraform",
     cfnlintrc = "yaml",
   },
   pattern = {
