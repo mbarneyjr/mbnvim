@@ -1,4 +1,14 @@
-require("nvim-web-devicons").setup({ default = true })
+require("nvim-web-devicons").setup({
+  default = true,
+  override_by_extension = {
+    ["tofu"] = {
+      icon = "",
+      color = "#5f43e9",
+      cterm_color = "98",
+      name = "Terraform",
+    },
+  },
+})
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.nvim_tree_disable_netrw = 0
