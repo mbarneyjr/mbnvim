@@ -80,6 +80,7 @@ let
     pkgs.wl-clipboard
   ];
   extraPackages = [
+    pkgs.git
     pkgs.curl
     pkgs.sqlite
     pkgs.tree-sitter
@@ -124,8 +125,9 @@ let
     pkgs.gh-actions-language-service
     pkgs.cedar-language-server
     pkgs.tmux-language-server
-  ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin darwinPackages
-    ++ pkgs.lib.optionals pkgs.stdenv.isLinux linuxPackages;
+  ]
+  ++ pkgs.lib.optionals pkgs.stdenv.isDarwin darwinPackages
+  ++ pkgs.lib.optionals pkgs.stdenv.isLinux linuxPackages;
   extraLuaPackages = with pkgs.neovim-unwrapped.lua.pkgs; [
     magick
     tiktoken_core
