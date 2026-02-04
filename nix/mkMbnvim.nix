@@ -73,10 +73,15 @@ let
     copilot-lua
     avante-nvim
   ];
+  darwinPackages = [
+    pkgs.pngpaste
+  ];
+  linuxPackages = [
+    pkgs.wl-clipboard
+  ];
   extraPackages = [
     pkgs.curl
     pkgs.sqlite
-    pkgs.pngpaste
     pkgs.tree-sitter
     pkgs.imagemagick
     pkgs.lynx
@@ -119,7 +124,8 @@ let
     pkgs.gh-actions-language-service
     pkgs.cedar-language-server
     pkgs.tmux-language-server
-  ];
+  ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin darwinPackages
+    ++ pkgs.lib.optionals pkgs.stdenv.isLinux linuxPackages;
   extraLuaPackages = with pkgs.neovim-unwrapped.lua.pkgs; [
     magick
     tiktoken_core
