@@ -81,6 +81,7 @@ let
     pkgs.xclip
   ];
   extraPackages = [
+    pkgs.gcc
     pkgs.git
     pkgs.ripgrep
     pkgs.fd
