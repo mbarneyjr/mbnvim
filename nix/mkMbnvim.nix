@@ -78,9 +78,12 @@ let
   ];
   linuxPackages = [
     pkgs.wl-clipboard
+    pkgs.xclip
   ];
   extraPackages = [
     pkgs.git
+    pkgs.ripgrep
+    pkgs.fd
     pkgs.curl
     pkgs.sqlite
     pkgs.tree-sitter
