@@ -26,15 +26,9 @@ final: prev: {
         mkdir -p $out/lib/${pname}
         cp -r . $out/lib/${pname}/
 
-        # Patch the standalone.js file to use a fixed directory
-        substituteInPlace $out/lib/${pname}/cfn-lsp-server-standalone.js \
-          --replace-fail "const dir = (0, path_1.resolve)(__dirname);" \
-                         "const dir = process.env.HOME + '/.local/state/cloudformation-languageserver'"
-
         mkdir -p $out/bin
         makeWrapper ${prev.nodejs}/bin/node $out/bin/cfn-lsp-server \
-          --add-flags "$out/lib/${pname}/cfn-lsp-server-standalone.js" \
-          --run 'export CFN_LSP_STORAGE_DIR="''${XDG_STATE_HOME:-$HOME/.local/state}/cloudformation-languageserver"'
+          --add-flags "$out/lib/${pname}/cfn-lsp-server-standalone.js"
 
         runHook postInstall
       '';

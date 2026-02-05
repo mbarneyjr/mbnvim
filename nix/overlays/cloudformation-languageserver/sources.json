@@ -1,19 +1,19 @@
 {
-  "version": "1.3.1",
+  "version": "1.4.0-beta",
   "aarch64-darwin": {
-    "url": "https://github.com/aws-cloudformation/cloudformation-languageserver/releases/download/v1.3.1/cloudformation-languageserver-1.3.1-darwin-arm64-node22.zip",
-    "sha256": "sha256-8AT1Tcet2fTk9/VXRQAj7/R6Vkburn6XTDlgnya08DM="
+    "url": "https://github.com/aws-cloudformation/cloudformation-languageserver/releases/download/v1.4.0-beta/cloudformation-languageserver-1.4.0-beta-darwin-arm64-node22.zip",
+    "sha256": "sha256-TmV8PXdcxlxwynblF6tesqWwvn06o7gYJkmTHp7fhXM="
   },
   "aarch64-linux": {
-    "url": "https://github.com/aws-cloudformation/cloudformation-languageserver/releases/download/v1.3.1/cloudformation-languageserver-1.3.1-linux-arm64-node22.zip",
-    "sha256": "sha256-vY1wuyNgxXY2G2iLOGRPtr6ddbj1Nov55QFYtf8Jhio="
+    "url": "https://github.com/aws-cloudformation/cloudformation-languageserver/releases/download/v1.4.0-beta/cloudformation-languageserver-1.4.0-beta-linux-arm64-node22.zip",
+    "sha256": "sha256-xpII8m14IjsdKBhpn/n0Hp4bTUwQFdby4G1ngescJz4="
   },
   "x86_64-darwin": {
-    "url": "https://github.com/aws-cloudformation/cloudformation-languageserver/releases/download/v1.3.1/cloudformation-languageserver-1.3.1-darwin-x64-node22.zip",
-    "sha256": "sha256-zZzxO3/G/9G3d6DQP1UHLXy7gSuDx4K44YAmC0wXbuA="
+    "url": "https://github.com/aws-cloudformation/cloudformation-languageserver/releases/download/v1.4.0-beta/cloudformation-languageserver-1.4.0-beta-darwin-x64-node22.zip",
+    "sha256": "sha256-e+Uts/dqDQr4mwlrBIKntdo4e4f9JF2FF2C76V6usFc="
   },
   "x86_64-linux": {
-    "url": "https://github.com/aws-cloudformation/cloudformation-languageserver/releases/download/v1.3.1/cloudformation-languageserver-1.3.1-linux-x64-node22.zip",
-    "sha256": "sha256-K64fC2vDxjx2D8NKFYfv5FyjqZ7+cRm8IsEAEOhWryE="
+    "url": "https://github.com/aws-cloudformation/cloudformation-languageserver/releases/download/v1.4.0-beta/cloudformation-languageserver-1.4.0-beta-linux-x64-node22.zip",
+    "sha256": "sha256-pHJveLtynCDRGYR14mC5aEv+5SEdMZHDC7jWfuFSLBU="
   }
 }
