@@ -46,6 +46,9 @@ end
 
 nvim_tree.setup({
   on_attach = on_attach,
+  hijack_directories = {
+    enable = false,
+  },
   notify = {
     threshold = vim.log.levels.WARN,
     absolute_path = true,
