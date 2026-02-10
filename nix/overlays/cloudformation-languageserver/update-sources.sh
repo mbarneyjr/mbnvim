@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-VERSION="${1:?Usage: $0 <version> (e.g., 1.3.1)}"
+VERSION=$(curl -s https://api.github.com/repos/aws-cloudformation/cloudformation-languageserver/releases/latest | jq -r '.tag_name | ltrimstr("v")')
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 OUT_FILE="${SCRIPT_DIR}/sources.json"
 WORK_DIR=$(mktemp -d)
@@ -25,8 +25,6 @@ for pair in "${PLATFORMS[@]}"; do
     HASH=$(nix store prefetch-file --unpack --json "$URL" | jq -r .hash)
     echo "Prefetched $SYSTEM"
 
-    # jq --arg s "$SYSTEM" --arg u "$URL" --arg h "$HASH" \
-    #   '.[$s] = {url: $u, sha256: $h}' "$OUT_FILE" >"$tmp" && mv "$tmp" "$OUT_FILE"
     jq -n \
       --arg s "$SYSTEM" \
       --arg u "$URL" \

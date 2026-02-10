@@ -184,6 +184,7 @@ pkgs.stdenvNoCC.mkDerivation {
   version = "1.0";
   nativeBuildInputs = [ pkgs.makeWrapper ];
   dontUnpack = true;
+  dontFixup = true;
   installPhase = ''
     mkdir -p $out/bin
     makeWrapper ${neovimBase}/bin/nvim $out/bin/nvim \

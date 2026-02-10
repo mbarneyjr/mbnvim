@@ -8,7 +8,6 @@ final: prev: {
       version = sources.version;
       src =
         let
-          # 3. Pick the source for the current system
           currentSystemSrc =
             sources.${prev.stdenv.hostPlatform.system}
               or (throw "Unsupported system: ${prev.stdenv.hostPlatform.system}");
@@ -17,19 +16,15 @@ final: prev: {
           inherit (currentSystemSrc) url sha256;
           stripRoot = false;
         };
-
+      dontFixup = true;
       nativeBuildInputs = [ prev.makeWrapper ];
-
       installPhase = ''
         runHook preInstall
-
         mkdir -p $out/lib/${pname}
         cp -r . $out/lib/${pname}/
-
         mkdir -p $out/bin
         makeWrapper ${prev.nodejs}/bin/node $out/bin/cfn-lsp-server \
           --add-flags "$out/lib/${pname}/cfn-lsp-server-standalone.js"
-
         runHook postInstall
       '';
 
