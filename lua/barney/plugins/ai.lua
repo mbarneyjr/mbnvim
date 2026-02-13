@@ -22,9 +22,11 @@ require("avante").setup({
 local keys = require("barney.lib.keymap")
 keys.imap("<c-l>", "")
 
-require("claudecode").setup({})
-keys.nmap("<leader>ac", ":ClaudeCode<CR>", "Toggle Claude")
-keys.nmap("<leader>aC", ":ClaudeCode --continue<CR>", "Toggle Claude")
+require("claudecode").setup({
+  terminal = {
+    provider = "none",
+  },
+})
 keys.vmap("<leader>as", ":ClaudeCodeSend<CR>", "Send to Claude")
 keys.nmap("<leader>as", ":ClaudeCodeTreeAdd<CR>", "Add file")
 keys.nmap("<leader>aa", ":ClaudeCodeDiffAccept<CR>", "Accept diff")
