@@ -3,7 +3,6 @@ local dap = require("dap")
 local dap_utils = require("dap.utils")
 local dapview = require("dap-view")
 local widgets = require("dap.ui.widgets")
-local vscode = require("dap.ext.vscode")
 local dap_virtual_text = require("nvim-dap-virtual-text")
 
 dap.adapters["pwa-node"] = {
@@ -40,11 +39,6 @@ dap.configurations.javascript = {
   },
 }
 dap.configurations.typescript = dap.configurations.javascript
-
-vscode.load_launchjs(nil, {
-  ["pwa-node"] = { "javascript", "typescript" },
-  ["node"] = { "javascript", "typescript" },
-})
 
 dapview.setup({
   winbar = {
