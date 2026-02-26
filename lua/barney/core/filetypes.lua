@@ -6,8 +6,8 @@ local function json_root_keys(bufnr)
     return {}
   end
   local keys = {}
-  for k in pairs(decoded) do
-    keys[k] = true
+  for k, v in pairs(decoded) do
+    keys[k] = v
   end
   return keys
 end
@@ -27,14 +27,22 @@ local function yaml_root_keys(bufnr)
   local query_ok, query = pcall(
     vim.treesitter.query.parse,
     "yaml",
-    "(stream (document (block_node (block_mapping (block_mapping_pair key: (_) @key)))))"
+    "(stream (document (block_node (block_mapping (block_mapping_pair key: (_) @key value: (_) @value)))))"
   )
   if not query_ok then
     return {}
   end
   local keys = {}
-  for _, node in query:iter_captures(root, content) do
-    keys[vim.treesitter.get_node_text(node, content)] = true
+  local pending_key = nil
+  for id, node in query:iter_captures(root, content) do
+    local name = query.captures[id]
+    if name == "key" then
+      pending_key = vim.treesitter.get_node_text(node, content)
+    elseif name == "value" and pending_key then
+      local val = vim.treesitter.get_node_text(node, content)
+      keys[pending_key] = val:gsub("^[\"'](.-)[\"']$", "%1")
+      pending_key = nil
+    end
   end
   return keys
 end
@@ -73,7 +81,7 @@ vim.filetype.add({
         local ext = vim.fn.fnamemodify(path, ":e")
         if ext == "json" then
           local keys = json_root_keys(bufnr)
-          if keys["AWSTemplateFormatVersion"] then
+          if keys["AWSTemplateFormatVersion"] == "2010-09-09" then
             return "json.cloudformation"
           end
           if keys["StartsAt"] or keys["Comment"] then
@@ -81,7 +89,7 @@ vim.filetype.add({
           end
         elseif ext == "yaml" or ext == "yml" then
           local keys = yaml_root_keys(bufnr)
-          if keys["AWSTemplateFormatVersion"] then
+          if keys["AWSTemplateFormatVersion"] == "2010-09-09" then
             return "yaml.cloudformation"
           end
           if keys["StartsAt"] or keys["Comment"] then
