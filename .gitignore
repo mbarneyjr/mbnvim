@@ -3,3 +3,4 @@ result
 .luarc.json
 *.local
 *.local.*
+node_modules

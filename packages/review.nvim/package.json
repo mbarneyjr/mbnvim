@@ -1,0 +1,19 @@
+{
+  "name": "review.nvim",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MCP server that publishes code review diagnostics to Neovim via file-based IPC",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "node src/index.ts",
+    "types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "typescript": "^5.8.3"
+  }
+}

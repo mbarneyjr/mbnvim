@@ -72,6 +72,8 @@ let
     claudecode-nvim
     copilot-lua
     avante-nvim
+    # review
+    review-nvim
   ];
   darwinPackages = [
     pkgs.pngpaste

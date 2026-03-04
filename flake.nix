@@ -23,13 +23,24 @@
         }:
         let
           mkMbnvim = import ./nix/mkMbnvim.nix;
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            overlays = import ./nix/overlays;
+          };
         in
         {
           packages = {
             mbnvim = mkMbnvim {
               inherit system inputs;
             };
-            default = self'.packages.mbnvim;
+            review-nvim-mcp = pkgs.review-nvim-mcp;
+            default = pkgs.symlinkJoin {
+              name = "mbnvim-full";
+              paths = [
+                self'.packages.mbnvim
+                self'.packages.review-nvim-mcp
+              ];
+            };
           };
           apps = {
             mbnvim = {
@@ -37,6 +48,11 @@
               program = "${self'.packages.mbnvim}/bin/nvim";
             };
             default = self'.apps.mbnvim;
+          };
+          devShells.default = pkgs.mkShell {
+            packages = [
+              pkgs.nodejs_24
+            ];
           };
         };
     };

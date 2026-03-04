@@ -7,4 +7,5 @@
   (import ./tmux-language-server.nix)
   (import ./ts-error-translator.nix)
   (import ./twoslash-queries.nix)
+  (import ./review.nvim)
 ]

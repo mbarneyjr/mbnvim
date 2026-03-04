@@ -27,6 +27,7 @@ require("claudecode").setup({
     provider = "none",
   },
 })
+require("barney.plugins.review")
 keys.vmap("<leader>as", ":ClaudeCodeSend<CR>", "Send to Claude")
 keys.nmap("<leader>as", ":ClaudeCodeTreeAdd<CR>", "Add file")
 keys.nmap("<leader>aa", ":ClaudeCodeDiffAccept<CR>", "Accept diff")
