@@ -5,6 +5,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+
+    fff-nvim = {
+      url = "github:dmtrKovalenko/fff.nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -32,6 +37,7 @@
           packages = {
             mbnvim = mkMbnvim {
               inherit system inputs;
+              fff-nvim-plugin = inputs.fff-nvim.packages.${system}.fff-nvim;
             };
             review-nvim-mcp = pkgs.review-nvim-mcp;
             default = pkgs.symlinkJoin {

@@ -1,4 +1,4 @@
-{ system, inputs }:
+{ system, inputs, fff-nvim-plugin }:
 
 let
   pkgs = import inputs.nixpkgs {
@@ -35,10 +35,9 @@ let
     nvim-ts-context-commentstring
     # undotree
     undotree
-    # telescope
+    # telescope (kept for commands picker)
     telescope-nvim
     telescope-fzf-native-nvim
-    fzf-lua
     # harpoon
     harpoon2
     # images
@@ -74,6 +73,9 @@ let
     avante-nvim
     # review
     review-nvim
+  ] ++ [
+    # fff (from flake input, requires nightly Rust)
+    fff-nvim-plugin
   ];
   darwinPackages = [
     pkgs.pngpaste
@@ -137,7 +139,6 @@ let
   extraLuaPackages = with pkgs.neovim-unwrapped.lua.pkgs; [
     magick
     tiktoken_core
-    fzf-lua
   ];
   defaultPlugin = {
     plugin = null;

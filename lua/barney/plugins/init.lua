@@ -21,8 +21,10 @@ require("barney.plugins.nvim-tree")
 require("barney.plugins.comment")
 -- undotree
 require("barney.plugins.undotree")
--- telescope
+-- telescope (commands picker)
 require("barney.plugins.telescope")
+-- fff
+require("barney.plugins.fff")
 -- harpoon
 require("barney.plugins.harpoon")
 -- images
