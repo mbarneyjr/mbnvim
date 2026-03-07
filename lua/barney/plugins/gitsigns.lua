@@ -1,3 +1,5 @@
+local large_repo = vim.g.large_repo == true
+
 require("gitsigns").setup({
   signs = {
     add = { text = "+" },
@@ -7,11 +9,11 @@ require("gitsigns").setup({
     changedelete = { text = "~" },
     untracked = { text = "+" },
   },
-  current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame = not large_repo, -- Toggle with `:Gitsigns toggle_current_line_blame`
   current_line_blame_opts = {
     virt_text = true,
     virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
-    delay = 50,
+    delay = 500,
     ignore_whitespace = false,
   },
 })

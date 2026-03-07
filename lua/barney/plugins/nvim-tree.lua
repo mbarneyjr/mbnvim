@@ -44,6 +44,8 @@ local function on_attach(bufnr)
   vim.keymap.set("n", "d", api.fs.trash, { buffer = bufnr, desc = "Trash a file" })
 end
 
+local large_repo = vim.g.large_repo == true
+
 nvim_tree.setup({
   on_attach = on_attach,
   notify = {
@@ -56,15 +58,15 @@ nvim_tree.setup({
     side = "right",
   },
   filesystem_watchers = {
-    enable = true,
-    debounce_delay = 50,
+    enable = not large_repo,
+    debounce_delay = 500,
     ignore_dirs = { "node_modules", ".git", ".worktree" },
   },
   renderer = {
     add_trailing = true,
     symlink_destination = false,
     special_files = {},
-    highlight_git = true,
+    highlight_git = false,
     highlight_diagnostics = false,
     highlight_opened_files = "none",
     highlight_modified = "none",
@@ -84,7 +86,7 @@ nvim_tree.setup({
     ignore_list = {},
   },
   diagnostics = {
-    enable = true,
+    enable = not large_repo,
     show_on_dirs = true,
     show_on_open_dirs = true,
     debounce_delay = 50,
@@ -94,9 +96,12 @@ nvim_tree.setup({
     },
   },
   modified = {
-    enable = true,
+    enable = not large_repo,
     show_on_dirs = true,
     show_on_open_dirs = true,
+  },
+  git = {
+    enable = not large_repo,
   },
   actions = { open_file = { quit_on_open = true } },
   filters = {
