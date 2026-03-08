@@ -40,6 +40,7 @@
               fff-nvim-plugin = inputs.fff-nvim.packages.${system}.fff-nvim;
             };
             review-nvim-mcp = pkgs.review-nvim-mcp;
+            cloudformation-languageserver = pkgs.cloudformation-languageserver;
             default = pkgs.symlinkJoin {
               name = "mbnvim-full";
               paths = [
