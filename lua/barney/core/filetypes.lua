@@ -65,6 +65,14 @@ vim.filetype.add({
       priority = math.huge,
       function(_, bufnr)
         local path = vim.api.nvim_buf_get_name(bufnr)
+        -- AWS config and credentials files
+        local aws_dir = vim.env.HOME .. "/.aws/"
+        if path:find(aws_dir, 1, true) then
+          local basename = path:sub(#aws_dir + 1)
+          if basename:find("^config") or basename:find("^credentials") then
+            return "ini"
+          end
+        end
         if string.find(path, ".asl.yml") or string.find(path, ".asl.yaml") then
           return "yaml.states"
         end
