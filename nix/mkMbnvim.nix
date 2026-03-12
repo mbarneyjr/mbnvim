@@ -3,6 +3,7 @@
   inputs,
   fff-nvim-plugin,
   review-nvim-plugin,
+  iam-legend-lsp,
 }:
 
 let
@@ -138,6 +139,7 @@ let
     # pkgs.python3Packages.cfn-lsp-extra
     pkgs.copilot-language-server
     pkgs.cloudformation-languageserver
+    iam-legend-lsp
     pkgs.gh-actions-language-service
     pkgs.cedar-language-server
     pkgs.tmux-language-server

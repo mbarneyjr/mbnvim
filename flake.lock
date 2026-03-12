@@ -74,6 +74,29 @@
         "type": "github"
       }
     },
+    "iam-legend-lsp": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1773343005,
+        "narHash": "sha256-3rU1knmtrQprbQGtyo9CGpFhJalcGa95uTbPkXwCbQk=",
+        "owner": "mbarneyjr",
+        "repo": "iam-legend-lsp",
+        "rev": "08b84fd5e494ef7cec6ebab4dc581ca586096088",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mbarneyjr",
+        "repo": "iam-legend-lsp",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1771177547,
@@ -109,6 +132,7 @@
       "inputs": {
         "fff-nvim": "fff-nvim",
         "flake-parts": "flake-parts",
+        "iam-legend-lsp": "iam-legend-lsp",
         "nixpkgs": "nixpkgs"
       }
     },

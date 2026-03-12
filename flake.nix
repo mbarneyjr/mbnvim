@@ -10,6 +10,11 @@
       url = "github:dmtrKovalenko/fff.nvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    iam-legend-lsp = {
+      url = "github:mbarneyjr/iam-legend-lsp";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
   };
 
   outputs =
@@ -39,6 +44,7 @@
             review-nvim-claude-plugin = pkgs.callPackage ./packages/review.nvim/claudePlugin.nix { };
             mbnvim = mkMbnvim {
               inherit system inputs;
+              iam-legend-lsp = inputs.iam-legend-lsp.packages.${system}.default;
               fff-nvim-plugin = inputs.fff-nvim.packages.${system}.fff-nvim;
               review-nvim-plugin = self'.packages.review-nvim-vim-plugin;
             };
