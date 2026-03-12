@@ -35,17 +35,18 @@
         in
         {
           packages = {
+            review-nvim-vim-plugin = pkgs.callPackage ./packages/review.nvim/vimPlugin.nix { };
+            review-nvim-claude-plugin = pkgs.callPackage ./packages/review.nvim/claudePlugin.nix { };
             mbnvim = mkMbnvim {
               inherit system inputs;
               fff-nvim-plugin = inputs.fff-nvim.packages.${system}.fff-nvim;
+              review-nvim-plugin = self'.packages.review-nvim-vim-plugin;
             };
-            review-nvim-mcp = pkgs.review-nvim-mcp;
-            cloudformation-languageserver = pkgs.cloudformation-languageserver;
             default = pkgs.symlinkJoin {
               name = "mbnvim-full";
               paths = [
                 self'.packages.mbnvim
-                self'.packages.review-nvim-mcp
+                self'.packages.review-nvim-claude-plugin
               ];
             };
           };

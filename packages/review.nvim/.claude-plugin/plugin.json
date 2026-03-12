@@ -1,0 +1,8 @@
+{
+  "name": "review.nvim",
+  "description": "Perform local code review and emit diagnostics neovim can consume",
+  "version": "0.0.0",
+  "author": {
+    "name": "Michael Barney"
+  }
+}

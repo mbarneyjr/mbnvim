@@ -1,4 +1,9 @@
-{ system, inputs, fff-nvim-plugin }:
+{
+  system,
+  inputs,
+  fff-nvim-plugin,
+  review-nvim-plugin,
+}:
 
 let
   pkgs = import inputs.nixpkgs {
@@ -8,75 +13,78 @@ let
     };
     overlays = import ./overlays;
   };
-  plugins = with pkgs.vimPlugins; [
-    # notify
-    nvim-notify
-    # fold
-    nvim-ufo
-    # colorscheme
-    tokyonight-nvim
-    # lualine
-    lualine-nvim
-    # which-key
-    which-key-nvim
-    # file handling
-    bigfile-nvim
-    hex-nvim
-    # tmux
-    vim-tmux-navigator
-    # treesitter
-    nvim-treesitter
-    # nvim-tree
-    nvim-tree-lua
-    nvim-web-devicons
-    mini-icons
-    # comment
-    comment-nvim
-    nvim-ts-context-commentstring
-    # undotree
-    undotree
-    # telescope (kept for commands picker)
-    telescope-nvim
-    telescope-fzf-native-nvim
-    # harpoon
-    harpoon2
-    # images
-    image-nvim
-    # git
-    vim-fugitive
-    vim-rhubarb
-    gitsigns-nvim
-    vim-flog
-    # code
-    trouble-nvim
-    nvim-coverage
-    nvim-dap
-    nvim-dap-view
-    nvim-nio
-    nvim-dap-virtual-text
-    conform-nvim
-    nvim-lint
-    # language-specific tools
-    tsc-nvim
-    ts-error-translator
-    # cmp, snippets
-    blink-cmp
-    blink-copilot
-    luasnip
-    # lsp
-    nvim-lspconfig
-    nvim-lsp-file-operations
-    twoslash-queries
-    # ai
-    claudecode-nvim
-    copilot-lua
-    avante-nvim
-    # review
-    review-nvim
-  ] ++ [
-    # fff (from flake input, requires nightly Rust)
-    fff-nvim-plugin
-  ];
+  plugins =
+    with pkgs.vimPlugins;
+    [
+      # notify
+      nvim-notify
+      # fold
+      nvim-ufo
+      # colorscheme
+      tokyonight-nvim
+      # lualine
+      lualine-nvim
+      # which-key
+      which-key-nvim
+      # file handling
+      bigfile-nvim
+      hex-nvim
+      # tmux
+      vim-tmux-navigator
+      # treesitter
+      nvim-treesitter
+      # nvim-tree
+      nvim-tree-lua
+      nvim-web-devicons
+      mini-icons
+      # comment
+      comment-nvim
+      nvim-ts-context-commentstring
+      # undotree
+      undotree
+      # telescope (kept for commands picker)
+      telescope-nvim
+      telescope-fzf-native-nvim
+      # harpoon
+      harpoon2
+      # images
+      image-nvim
+      # git
+      vim-fugitive
+      vim-rhubarb
+      gitsigns-nvim
+      vim-flog
+      # code
+      trouble-nvim
+      nvim-coverage
+      nvim-dap
+      nvim-dap-view
+      nvim-nio
+      nvim-dap-virtual-text
+      conform-nvim
+      nvim-lint
+      # language-specific tools
+      tsc-nvim
+      ts-error-translator
+      # cmp, snippets
+      blink-cmp
+      blink-copilot
+      luasnip
+      # lsp
+      nvim-lspconfig
+      nvim-lsp-file-operations
+      twoslash-queries
+      # ai
+      claudecode-nvim
+      copilot-lua
+      avante-nvim
+      # review
+      review-nvim-plugin
+    ]
+    ++ [
+      # fff (from flake input, requires nightly Rust)
+      fff-nvim-plugin
+    ];
   darwinPackages = [
     pkgs.pngpaste
   ];
