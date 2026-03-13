@@ -66,7 +66,7 @@ nvim_tree.setup({
     add_trailing = true,
     symlink_destination = false,
     special_files = {},
-    highlight_git = false,
+    highlight_git = not large_repo,
     highlight_diagnostics = false,
     highlight_opened_files = "none",
     highlight_modified = "none",
@@ -76,7 +76,7 @@ nvim_tree.setup({
     icons = {
       show = {
         diagnostics = false,
-        git = false,
+        git = not large_repo,
       },
     },
   },
