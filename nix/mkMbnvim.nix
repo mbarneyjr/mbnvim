@@ -154,7 +154,6 @@ let
     plugin = null;
     config = null;
     optional = false;
-    runtime = { };
   };
   normalizedPlugins = map (x: defaultPlugin // (if x ? plugin then x else { plugin = x; })) plugins;
   neovimConfig = pkgs.neovimUtils.makeNeovimConfig {
