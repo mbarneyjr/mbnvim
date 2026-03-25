@@ -34,6 +34,7 @@ vim.lsp.config("*", {
   },
 })
 
+require("barney.plugins.lsp.aws-iam")
 require("barney.plugins.lsp.bash")
 require("barney.plugins.lsp.biome")
 require("barney.plugins.lsp.cedar")
@@ -46,7 +47,6 @@ require("barney.plugins.lsp.github")
 require("barney.plugins.lsp.glsl")
 require("barney.plugins.lsp.go")
 require("barney.plugins.lsp.html")
-require("barney.plugins.lsp.iam-legend")
 require("barney.plugins.lsp.json")
 require("barney.plugins.lsp.lua")
 require("barney.plugins.lsp.nix")

@@ -1,7 +1,6 @@
-vim.lsp.config("iam-legend", {
-  cmd = { "iam-legend-lsp", "--stdio" },
+vim.lsp.config("aws-iam-ls", {
+  cmd = { "aws-iam-ls", "--stdio" },
   filetypes = { "yaml", "yaml.cloudformation", "json", "json.cloudformation", "typescript", "terraform" },
   root_markers = { ".git" },
-  -- settings = { validate = false },
 })
-vim.lsp.enable("iam-legend")
+vim.lsp.enable("aws-iam-ls")
