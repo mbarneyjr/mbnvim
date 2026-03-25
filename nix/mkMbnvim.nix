@@ -3,7 +3,7 @@
   inputs,
   fff-nvim-plugin,
   review-nvim-plugin,
-  aws-iam-ls,
+  aws-iam-language-server,
 }:
 
 let
@@ -139,7 +139,7 @@ let
     # pkgs.python3Packages.cfn-lsp-extra
     pkgs.copilot-language-server
     pkgs.cloudformation-languageserver
-    aws-iam-ls
+    aws-iam-language-server
     pkgs.gh-actions-language-service
     pkgs.cedar-language-server
     pkgs.tmux-language-server

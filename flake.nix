@@ -10,8 +10,8 @@
       url = "github:dmtrKovalenko/fff.nvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    aws-iam-ls = {
-      url = "github:mbarneyjr/aws-iam-ls";
+    aws-iam-language-server = {
+      url = "github:mbarneyjr/aws-iam-language-server";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
@@ -44,7 +44,7 @@
             review-nvim-claude-plugin = pkgs.callPackage ./packages/review.nvim/claudePlugin.nix { };
             mbnvim = mkMbnvim {
               inherit system inputs;
-              aws-iam-ls = inputs.aws-iam-ls.packages.${system}.default;
+              aws-iam-language-server = inputs.aws-iam-language-server.packages.${system}.default;
               fff-nvim-plugin = inputs.fff-nvim.packages.${system}.fff-nvim;
               review-nvim-plugin = self'.packages.review-nvim-vim-plugin;
             };

@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "aws-iam-ls": {
+    "aws-iam-language-server": {
       "inputs": {
         "flake-parts": [
           "flake-parts"
@@ -10,16 +10,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1774406350,
-        "narHash": "sha256-nMhkOEFbu4HlgYyQGlH8dCNDGZYqj/8XT7xys9vLQYs=",
+        "lastModified": 1774469630,
+        "narHash": "sha256-ERwnpL2UDcY4c50RuGj8TcYzDP5pBS+nqu7tMIL+VBc=",
         "owner": "mbarneyjr",
-        "repo": "aws-iam-ls",
-        "rev": "dbabc8d56ee318662f87cc207e2b5c603251e1e8",
+        "repo": "aws-iam-language-server",
+        "rev": "c8b0b8b0c45dbdc758bdfcc4e4bec6a203133d63",
         "type": "github"
       },
       "original": {
         "owner": "mbarneyjr",
-        "repo": "aws-iam-ls",
+        "repo": "aws-iam-language-server",
         "type": "github"
       }
     },
@@ -130,7 +130,7 @@
     },
     "root": {
       "inputs": {
-        "aws-iam-ls": "aws-iam-ls",
+        "aws-iam-language-server": "aws-iam-language-server",
         "fff-nvim": "fff-nvim",
         "flake-parts": "flake-parts",
         "nixpkgs": "nixpkgs"
