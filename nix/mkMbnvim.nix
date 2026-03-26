@@ -103,7 +103,7 @@ let
     pkgs.tree-sitter
     pkgs.imagemagick
     pkgs.lynx
-    pkgs.terraform
+    pkgs.opentofu
     pkgs.tree-sitter
     pkgs.fzf
     pkgs.stylua
@@ -112,7 +112,7 @@ let
     pkgs.usort
     pkgs.actionlint
     pkgs.tflint
-    pkgs.terraform-ls
+    pkgs.tofu-ls
     pkgs.nixfmt
     pkgs.vscode-js-debug
     pkgs.typescript-language-server
