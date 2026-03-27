@@ -3,7 +3,7 @@ local key = require("barney.lib.keymap")
 local function scratch_buffer()
   vim.cmd("vnew")
   vim.cmd("setlocal buftype=nofile")
-  vim.cmd("setlocal bufhidden=hide")
+  vim.cmd("setlocal bufhidden=delete")
   vim.cmd("setlocal noswapfile")
   vim.cmd("setlocal nobuflisted")
 end
