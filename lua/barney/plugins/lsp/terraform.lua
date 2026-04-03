@@ -1,5 +1,5 @@
 vim.lsp.config("tflint", {
-  cmd = { "tflint", "serve" },
+  cmd = { "tflint", "--langserver" },
   filetypes = { "opentofu", "opentofu-vars", "terraform", "terraform-vars" },
   root_markers = { ".terraform", ".git" },
 })
