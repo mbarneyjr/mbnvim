@@ -40,7 +40,17 @@ let
       mini-icons
       # comment
       comment-nvim
-      nvim-ts-context-commentstring
+      # nvim-ts-context-commentstring
+      (pkgs.vimUtils.buildVimPlugin {
+        pname = "nvim-ts-context-commentstring";
+        version = "2025-03-26";
+        src = pkgs.fetchFromGitHub {
+          owner = "JoosepAlviste";
+          repo = "nvim-ts-context-commentstring";
+          rev = "a681c2114cbe52e9a6878d09c9d41c35b800ce5a";
+          sha256 = "sha256-W213Sr6o7AV0NlsoI00MShkwINn1CP0hhQGZ7ootvPE=";
+        };
+      })
       # undotree
       undotree
       # telescope (kept for commands picker)
@@ -88,7 +98,6 @@ let
       # ai
       claudecode-nvim
       copilot-lua
-      avante-nvim
       # review
       review-nvim-plugin
     ]
@@ -117,7 +126,7 @@ let
     pkgs.tree-sitter
     pkgs.fzf
     pkgs.stylua
-    pkgs.nodePackages.prettier
+    pkgs.prettier
     pkgs.black
     pkgs.usort
     pkgs.actionlint
@@ -160,40 +169,43 @@ let
     magick
     tiktoken_core
   ];
-  defaultPlugin = {
-    plugin = null;
-    config = null;
-    optional = false;
-  };
-  normalizedPlugins = map (x: defaultPlugin // (if x ? plugin then x else { plugin = x; })) plugins;
-  neovimConfig = pkgs.neovimUtils.makeNeovimConfig {
-    withNodeJs = true;
-    withRuby = true;
-    withPython3 = true;
-    viAlias = false;
-    vimAlias = false;
-    plugins = normalizedPlugins;
-  };
-
   luaCPaths =
     pkgs.lib.concatMapStringsSep ";" pkgs.neovim-unwrapped.lua.pkgs.getLuaCPath
       extraLuaPackages;
   luaPaths =
     pkgs.lib.concatMapStringsSep ";" pkgs.neovim-unwrapped.lua.pkgs.getLuaPath
       extraLuaPackages;
-  neovimBase = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
-    neovimConfig
-    // {
-      wrapperArgs = builtins.concatStringsSep " " [
-        (pkgs.lib.escapeShellArgs neovimConfig.wrapperArgs)
-        ''--prefix PATH : "${pkgs.lib.makeBinPath extraPackages}"''
-        ''--set LIBSQLITE_CLIB_PATH "${pkgs.sqlite.out}/lib/libsqlite3.so"''
-        ''--set LIBSQLITE "${pkgs.sqlite.out}/lib/libsqlite3.so"''
-        ''--suffix LUA_CPATH ";" "${luaCPaths}"''
-        ''--suffix LUA_PATH ";" "${luaPaths}"''
+  neovimBase =
+    (pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
+      withNodeJs = true;
+      withRuby = true;
+      withPython3 = true;
+      viAlias = false;
+      vimAlias = false;
+      plugins = plugins;
+      wrapRc = false;
+      wrapperArgs = [
+        "--prefix"
+        "PATH"
+        ":"
+        "${pkgs.lib.makeBinPath extraPackages}"
+        "--set"
+        "LIBSQLITE_CLIB_PATH"
+        "${pkgs.sqlite.out}/lib/libsqlite3.so"
+        "--set"
+        "LIBSQLITE"
+        "${pkgs.sqlite.out}/lib/libsqlite3.so"
+        "--suffix"
+        "LUA_CPATH"
+        ";"
+        "${luaCPaths}"
+        "--suffix"
+        "LUA_PATH"
+        ";"
+        "${luaPaths}"
       ];
-    }
-  );
+    }).overrideAttrs
+      { dontStrip = true; };
 
   initLua = pkgs.writeText "init.lua" ''
     vim.opt.rtp:prepend('${../.}')
