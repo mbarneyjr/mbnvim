@@ -10,11 +10,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775048220,
-        "narHash": "sha256-QH6+UERxlK/6Cd/vQlLj5Y8KlIj9vl/MeqPfTScf3e8=",
+        "lastModified": 1775611358,
+        "narHash": "sha256-hNb0yAJpjOkGkFXPodwBh0SEkX4Ua3eKWLVK4YlJKEY=",
         "owner": "mbarneyjr",
         "repo": "aws-iam-language-server",
-        "rev": "de53bbc3fb47dd56f667cb7f3607b4b55750323d",
+        "rev": "3130f70ed35092d874f84f0e78719783ae0c3898",
         "type": "github"
       },
       "original": {
