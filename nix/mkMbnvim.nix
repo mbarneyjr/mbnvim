@@ -159,7 +159,7 @@ let
     pkgs.copilot-language-server
     pkgs.cloudformation-languageserver
     aws-iam-language-server
-    pkgs.gh-actions-language-service
+    pkgs.actions-languageserver
     pkgs.cedar-language-server
     pkgs.tmux-language-server
   ]

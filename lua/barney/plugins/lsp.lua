@@ -33,6 +33,7 @@ vim.lsp.config("*", {
     },
   },
 })
+vim.lsp.inlay_hint.enable(true)
 
 require("barney.plugins.lsp.aws-iam")
 require("barney.plugins.lsp.bash")
