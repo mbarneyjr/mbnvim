@@ -6,11 +6,13 @@ vim.lsp.config("cfn-lsp-server", {
     editor = {
       detectIndentation = true,
     },
-    ["aws.cloudformation"] = {
-      diagnostics = {
-        cfnGuard = {
-          enabled = true,
-          enabledRulePacks = {},
+    aws = {
+      cloudformation = {
+        diagnostics = {
+          cfnGuard = {
+            enabled = true,
+            enabledRulePacks = {},
+          },
         },
       },
     },
