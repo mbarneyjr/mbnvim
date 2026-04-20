@@ -33,7 +33,7 @@ let
       # tmux
       vim-tmux-navigator
       # treesitter
-      nvim-treesitter
+      nvim-treesitter.withAllGrammars
       # nvim-tree
       nvim-tree-lua
       nvim-web-devicons
