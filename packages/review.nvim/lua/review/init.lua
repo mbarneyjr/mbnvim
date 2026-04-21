@@ -89,6 +89,14 @@ function M.setup(opts)
         apply_diagnostics(diag_path)
       end
     end))
+    vim.api.nvim_create_autocmd("VimLeavePre", {
+      callback = function()
+        handle:stop()
+        if not handle:is_closing() then
+          handle:close()
+        end
+      end,
+    })
   end
 
   apply_diagnostics(diag_path)
