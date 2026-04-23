@@ -24,6 +24,7 @@ vim.opt.splitright = true
 vim.opt.autoread = true
 vim.opt.winborder = "bold"
 vim.opt.list = true
+vim.opt.exrc = true
 vim.opt.listchars = {
   tab = "⎸ ",
   trail = "·",
