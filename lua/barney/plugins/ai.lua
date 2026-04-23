@@ -11,7 +11,7 @@ require("copilot").setup({
 vim.api.nvim_create_autocmd("VimLeavePre", {
   callback = function()
     for _, client in ipairs(vim.lsp.get_clients({ name = "copilot" })) do
-      client.stop(true)
+      client:stop(true)
     end
   end,
   desc = "Force-stop copilot LSP to prevent slow exit",
