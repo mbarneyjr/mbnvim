@@ -1,7 +1,9 @@
 -- notify
 require("barney.plugins.notify")
--- notify
+-- fold
 require("barney.plugins.fold")
+-- csv
+require("barney.plugins.csv")
 -- colorscheme
 require("barney.plugins.tokyonight")
 -- lualine

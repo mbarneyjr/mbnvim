@@ -21,6 +21,8 @@ let
       nvim-notify
       # fold
       nvim-ufo
+      # csv
+      csvview-nvim
       # colorscheme
       tokyonight-nvim
       # lualine
