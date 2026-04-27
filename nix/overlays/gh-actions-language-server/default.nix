@@ -16,16 +16,18 @@ let
   packageLock = prev.stdenv.mkDerivation {
     name = "actions-languageserver-package-lock.json";
     inherit src;
-    nativeBuildInputs = [ prev.nodejs prev.jq prev.cacert ];
+    nativeBuildInputs = [
+      prev.nodejs
+      prev.jq
+      prev.cacert
+    ];
     SSL_CERT_FILE = "${prev.cacert}/etc/ssl/certs/ca-bundle.crt";
-    outputHash = "sha256-NBgmTINI4Uozvvbt8jozWeDEXj4BP1u/1Rppz8idf20=";
+    outputHash = "sha256-3hawKw/REPE1qIqVnQihahnhXBN00HzezT+JLyBiCUM=";
     outputHashMode = "flat";
     outputHashAlgo = "sha256";
     dontInstall = true;
     buildPhase = ''
-      # Remove git+ssh dev dep that can't be fetched
       ${jq} 'del(.devDependencies["rest-api-description"])' languageservice/package.json > tmp.json && mv tmp.json languageservice/package.json
-      # Delete existing lock file so npm generates a fresh one with all resolved URLs
       rm package-lock.json
       export HOME=$TMPDIR
       npm install --package-lock-only
@@ -42,7 +44,7 @@ in
       cp ${packageLock} ./package-lock.json
       ${jq} 'del(.devDependencies["rest-api-description"])' languageservice/package.json > tmp.json && mv tmp.json languageservice/package.json
     '';
-    npmDepsHash = "sha256-VmATvqH+pp3Ld0k53vS/lpx9U8DwGLg9XPFviqCQsgs=";
+    npmDepsHash = "sha256-VT2ogGL+ZYNbUJuqxA8dCHkX1PRDnsiz9usYzFgLTwY=";
     npmBuildFlags = [ "--workspaces" ];
     installPhase = ''
       runHook preInstall

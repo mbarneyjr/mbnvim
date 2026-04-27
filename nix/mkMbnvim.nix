@@ -43,16 +43,7 @@ let
       # comment
       comment-nvim
       # nvim-ts-context-commentstring
-      (pkgs.vimUtils.buildVimPlugin {
-        pname = "nvim-ts-context-commentstring";
-        version = "2025-03-26";
-        src = pkgs.fetchFromGitHub {
-          owner = "JoosepAlviste";
-          repo = "nvim-ts-context-commentstring";
-          rev = "a681c2114cbe52e9a6878d09c9d41c35b800ce5a";
-          sha256 = "sha256-W213Sr6o7AV0NlsoI00MShkwINn1CP0hhQGZ7ootvPE=";
-        };
-      })
+      nvim-ts-context-commentstring
       # undotree
       undotree
       # telescope (kept for commands picker)
@@ -87,16 +78,7 @@ let
       nvim-lspconfig
       nvim-lsp-file-operations
       twoslash-queries
-      (pkgs.vimUtils.buildVimPlugin {
-        pname = "lsplinks-nvim";
-        version = "2025-03-26";
-        src = pkgs.fetchFromGitHub {
-          owner = "icholy";
-          repo = "lsplinks.nvim";
-          rev = "94d729170e95298ce86ba41ef66f8756f6062b34";
-          sha256 = "0rx0556br7mngfa2khlkfcw34cwsybdp23zq03w76hd3vqhfvgx3";
-        };
-      })
+      lsplinks
       # ai
       claudecode-nvim
       copilot-lua

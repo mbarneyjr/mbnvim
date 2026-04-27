@@ -1,7 +1,8 @@
 final: prev: {
   vimPlugins = prev.vimPlugins // {
     ts-error-translator = final.vimUtils.buildVimPlugin {
-      name = "ts-error-translator";
+      pname = "ts-error-translator";
+      version = "1.2.0";
       src = prev.fetchFromGitHub {
         owner = "dmmulroy";
         repo = "ts-error-translator.nvim";

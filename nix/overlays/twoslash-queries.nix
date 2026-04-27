@@ -1,7 +1,8 @@
 final: prev: {
   vimPlugins = prev.vimPlugins // {
     twoslash-queries = final.vimUtils.buildVimPlugin {
-      name = "twoslash-queries";
+      pname = "twoslash-queries";
+      version = "unstable-2024-06-10";
       src = prev.fetchFromGitHub {
         owner = "marilari88";
         repo = "twoslash-queries.nvim";
