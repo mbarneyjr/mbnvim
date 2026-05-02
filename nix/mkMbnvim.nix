@@ -17,6 +17,7 @@ let
   plugins =
     with pkgs.vimPlugins;
     [
+      snacks-nvim
       # notify
       nvim-notify
       # fold

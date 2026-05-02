@@ -31,6 +31,8 @@ require("barney.plugins.fff")
 require("barney.plugins.harpoon")
 -- images
 require("barney.plugins.image")
+-- snacks
+require("barney.plugins.snacks")
 -- snippets
 require("barney.plugins.snippets")
 -- cmp
