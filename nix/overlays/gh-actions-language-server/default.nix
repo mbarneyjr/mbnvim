@@ -8,32 +8,6 @@ let
   };
 
   jq = prev.lib.getExe prev.jq;
-
-  # Generate a complete package-lock.json with all resolved URLs and integrity
-  # hashes. The upstream lock file is missing these for many packages, which
-  # breaks nix's npm fetcher. This FOD has network access so npm can resolve
-  # everything properly.
-  packageLock = prev.stdenv.mkDerivation {
-    name = "actions-languageserver-package-lock.json";
-    inherit src;
-    nativeBuildInputs = [
-      prev.nodejs
-      prev.jq
-      prev.cacert
-    ];
-    SSL_CERT_FILE = "${prev.cacert}/etc/ssl/certs/ca-bundle.crt";
-    outputHash = "sha256-3hawKw/REPE1qIqVnQihahnhXBN00HzezT+JLyBiCUM=";
-    outputHashMode = "flat";
-    outputHashAlgo = "sha256";
-    dontInstall = true;
-    buildPhase = ''
-      ${jq} 'del(.devDependencies["rest-api-description"])' languageservice/package.json > tmp.json && mv tmp.json languageservice/package.json
-      rm package-lock.json
-      export HOME=$TMPDIR
-      npm install --package-lock-only
-      cp package-lock.json $out
-    '';
-  };
 in
 {
   actions-languageserver = prev.buildNpmPackage {
@@ -41,10 +15,10 @@ in
     inherit src;
     nativeBuildInputs = [ prev.jq ];
     postPatch = ''
-      cp ${packageLock} ./package-lock.json
+      cp ${./package-lock.json} ./package-lock.json
       ${jq} 'del(.devDependencies["rest-api-description"])' languageservice/package.json > tmp.json && mv tmp.json languageservice/package.json
     '';
-    npmDepsHash = "sha256-VT2ogGL+ZYNbUJuqxA8dCHkX1PRDnsiz9usYzFgLTwY=";
+    npmDepsHash = "sha256-SkgAdJQ87nA5OUGRzbg5Dh+6xFgS+hZNeqJoVb2U8mU=";
     npmBuildFlags = [ "--workspaces" ];
     installPhase = ''
       runHook preInstall
