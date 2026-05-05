@@ -36,9 +36,22 @@ function M.moves()
   return state.refactor.moves
 end
 
+function M.mark_pending_create(template_path)
+  state.refactor.pending_creates[template_path] = true
+end
+
+function M.is_pending_create(template_path)
+  return state.refactor.pending_creates[template_path] == true
+end
+
+function M.has_pending_creates()
+  return next(state.refactor.pending_creates) ~= nil
+end
+
 function M.clear()
   state.refactor.scope = {}
   state.refactor.moves = {}
+  state.refactor.pending_creates = {}
 end
 
 local function read_file(path)

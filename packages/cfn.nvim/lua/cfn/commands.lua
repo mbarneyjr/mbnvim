@@ -5,6 +5,15 @@ local helper = require("cfn.helper")
 local lsp = require("cfn.lsp")
 local registrations = require("cfn.registrations")
 local refactor = require("cfn.refactor")
+local progress = require("cfn.progress")
+
+local function sleep(ms)
+  local co = coroutine.running()
+  vim.defer_fn(function()
+    coroutine.resume(co)
+  end, ms)
+  coroutine.yield()
+end
 
 local function ui_select(items, opts)
   local co = coroutine.running()
@@ -23,6 +32,64 @@ local function ui_input(opts)
       coroutine.resume(co, input)
     end)
   end)
+  return coroutine.yield()
+end
+
+local function review_window(title, lines)
+  local co = coroutine.running()
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.api.nvim_set_option_value("modifiable", false, { buf = buf })
+  vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf })
+  vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
+
+  local width = math.min(100, vim.o.columns - 4)
+  local height = math.min(#lines + 2, vim.o.lines - 4)
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = width,
+    height = height,
+    row = math.floor((vim.o.lines - height) / 2),
+    col = math.floor((vim.o.columns - width) / 2),
+    style = "minimal",
+    border = "rounded",
+    title = " " .. title .. " ",
+    title_pos = "center",
+  })
+  vim.api.nvim_set_option_value("cursorline", true, { win = win })
+  vim.api.nvim_set_option_value("wrap", false, { win = win })
+
+  local resumed = false
+  local function resume(value)
+    if resumed then
+      return
+    end
+    resumed = true
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+    vim.schedule(function()
+      coroutine.resume(co, value)
+    end)
+  end
+
+  vim.keymap.set("n", "<CR>", function()
+    resume("execute")
+  end, { buffer = buf, nowait = true, silent = true })
+  vim.keymap.set("n", "q", function()
+    resume("cancel")
+  end, { buffer = buf, nowait = true, silent = true })
+  vim.keymap.set("n", "<Esc>", function()
+    resume("cancel")
+  end, { buffer = buf, nowait = true, silent = true })
+  vim.api.nvim_create_autocmd("BufWinLeave", {
+    buffer = buf,
+    once = true,
+    callback = function()
+      resume("cancel")
+    end,
+  })
+
   return coroutine.yield()
 end
 
@@ -125,27 +192,29 @@ function M.register()
         table.insert(args, region_override)
       end
 
+      local p = progress.start("Resolving credentials for " .. profile .. "...")
       local out, err = helper.run(args)
       if err then
-        vim.notify("CfnSetProfile failed: " .. err, vim.log.levels.ERROR)
+        progress.finish(p, "CfnSetProfile failed: " .. err, vim.log.levels.ERROR)
         return
       end
 
       local result = vim.json.decode(out)
       if not result or not result.jwe then
-        vim.notify("CfnSetProfile: invalid response from helper", vim.log.levels.ERROR)
+        progress.finish(p, "CfnSetProfile: invalid response from helper", vim.log.levels.ERROR)
         return
       end
 
       if not lsp.push_credentials_jwe(result.jwe) then
-        vim.notify("CfnSetProfile: no LSP client attached", vim.log.levels.WARN)
+        progress.finish(p, "CfnSetProfile: no LSP client attached", vim.log.levels.WARN)
         return
       end
 
       state.active_profile = profile
       state.active_region = result.region
       state.active_account = result.account
-      vim.notify(
+      progress.finish(
+        p,
         "cfn.nvim: using "
           .. profile
           .. " ("
@@ -392,6 +461,7 @@ function M.register()
       local stack_name = opts.fargs[1]
       if not stack_name then
         local existing = registrations.get(template_path)
+        local p = progress.start("Listing stacks in " .. state.active_region .. "...")
         local out, err = helper.run({
           "stacks",
           "list",
@@ -401,10 +471,11 @@ function M.register()
           state.active_region,
         })
         if err then
-          vim.notify("Failed to list stacks: " .. err, vim.log.levels.ERROR)
+          progress.finish(p, "Failed to list stacks: " .. err, vim.log.levels.ERROR)
           return
         end
         local stack_list = vim.json.decode(out) or {}
+        progress.finish(p, "Found " .. #stack_list .. " stacks")
 
         local choices = { { label = "[New Stack]", new = true } }
         for _, s in ipairs(stack_list) do
@@ -573,9 +644,10 @@ function M.register()
         "--region",
         state.active_region,
       }
+      local p = progress.start("Creating import change set for " .. stack_name .. "...")
       local out, err = helper.run(args, vim.json.encode(payload))
       if err then
-        vim.notify("CfnImportSubmit failed: " .. err, vim.log.levels.ERROR)
+        progress.finish(p, "CfnImportSubmit failed: " .. err, vim.log.levels.ERROR)
         return
       end
 
@@ -588,10 +660,10 @@ function M.register()
           result.stackId,
           result.changeSetId
         )
-        vim.notify("Created change set: " .. (result.changeSetName or "") .. "\n" .. url)
+        progress.finish(p, "Created change set: " .. (result.changeSetName or "") .. "\n" .. url)
         vim.ui.open(url)
       else
-        vim.notify("Created change set")
+        progress.finish(p, "Created change set")
       end
       state.pending_imports[template_path] = nil
     end)()
@@ -643,23 +715,28 @@ function M.register()
       end
 
       local all = registrations.list()
-      local choices = {}
+      local choices = { { new = true } }
       for path, reg in pairs(all) do
         if path ~= source_path then
           table.insert(choices, { path = path, stack = reg.stack, account = reg.account })
         end
       end
-      if #choices == 0 then
-        vim.notify("No other registered templates available", vim.log.levels.WARN)
-        return
-      end
       table.sort(choices, function(a, b)
+        if a.new then
+          return true
+        end
+        if b.new then
+          return false
+        end
         return a.stack < b.stack
       end)
 
       local choice = ui_select(choices, {
         prompt = "Move " .. resource.logicalId .. " to:",
         format_item = function(item)
+          if item.new then
+            return "[New Stack]"
+          end
           return item.stack .. "  (" .. vim.fn.fnamemodify(item.path, ":~:.") .. ")"
         end,
       })
@@ -667,37 +744,76 @@ function M.register()
         return
       end
 
-      if choice.account ~= source_reg.account then
-        vim.notify(
-          "Cannot move across accounts: source "
-            .. source_reg.account
-            .. ", destination "
-            .. choice.account,
-          vim.log.levels.ERROR
-        )
-        return
+      local dest_path, dest_stack
+      if choice.new then
+        local stack_name = ui_input({ prompt = "New stack name: " })
+        if not stack_name or stack_name == "" then
+          return
+        end
+        local default_path = vim.fn.fnamemodify(source_path, ":h") .. "/" .. stack_name .. ".yaml"
+        local template_path = ui_input({ prompt = "Template path: ", default = default_path })
+        if not template_path or template_path == "" then
+          return
+        end
+        template_path = vim.fn.fnamemodify(template_path, ":p")
+        if registrations.get(template_path) then
+          vim.notify(
+            "Template " .. vim.fn.fnamemodify(template_path, ":~:.") .. " is already registered",
+            vim.log.levels.ERROR
+          )
+          return
+        end
+        if vim.fn.filereadable(template_path) == 0 then
+          local f, ferr = io.open(template_path, "w")
+          if not f then
+            vim.notify("Failed to create template: " .. ferr, vim.log.levels.ERROR)
+            return
+          end
+          f:write("AWSTemplateFormatVersion: '2010-09-09'\nResources:\n")
+          f:close()
+        end
+        registrations.set(template_path, {
+          stack = stack_name,
+          account = state.active_account,
+          profile = state.active_profile,
+          region = state.active_region,
+        })
+        refactor.mark_pending_create(template_path)
+        dest_path = template_path
+        dest_stack = stack_name
+      else
+        if choice.account ~= source_reg.account then
+          vim.notify(
+            "Cannot move across accounts: source "
+              .. source_reg.account
+              .. ", destination "
+              .. choice.account,
+            vim.log.levels.ERROR
+          )
+          return
+        end
+        dest_path = choice.path
+        dest_stack = choice.stack
       end
 
-      local ok, err = refactor.move_resource(source_path, choice.path, resource.logicalId)
+      local ok, err = refactor.move_resource(source_path, dest_path, resource.logicalId)
       if not ok then
         vim.notify("Move failed: " .. err, vim.log.levels.ERROR)
         return
       end
 
       refactor.scope_add(source_path)
-      refactor.scope_add(choice.path)
+      refactor.scope_add(dest_path)
       refactor.add_move({
         sourceTemplate = source_path,
         sourceStack = source_reg.stack,
         sourceLogicalId = resource.logicalId,
-        destTemplate = choice.path,
-        destStack = choice.stack,
+        destTemplate = dest_path,
+        destStack = dest_stack,
         destLogicalId = resource.logicalId,
         resourceType = resource.resourceType,
       })
-      vim.notify(
-        "Moved " .. resource.logicalId .. " from " .. source_reg.stack .. " to " .. choice.stack
-      )
+      vim.notify("Moved " .. resource.logicalId .. " from " .. source_reg.stack .. " to " .. dest_stack)
     end)()
   end, { desc = "Move resource at cursor to another registered template" })
 
@@ -789,81 +905,167 @@ function M.register()
       local payload = {
         stackDefinitions = stack_definitions,
         resourceMappings = mappings,
+        enableStackCreation = refactor.has_pending_creates(),
       }
 
-      local args = {
-        "refactor",
-        "create",
+      local profile_args = {
         "--profile",
         state.active_profile,
         "--region",
         state.active_region,
       }
-      local out, err = helper.run(args, vim.json.encode(payload))
+
+      local p = progress.start("Submitting refactor...")
+      local create_args = { "refactor", "create" }
+      vim.list_extend(create_args, profile_args)
+      local out, err = helper.run(create_args, vim.json.encode(payload))
       if err then
-        vim.notify("CfnRefactorSubmit failed: " .. err, vim.log.levels.ERROR)
+        progress.finish(p, "CfnRefactorSubmit failed: " .. err, vim.log.levels.ERROR)
+        return
+      end
+      local create_result = vim.json.decode(out)
+      if not create_result or not create_result.refactorId then
+        progress.finish(p, "CfnRefactorSubmit: invalid response from helper", vim.log.levels.ERROR)
+        return
+      end
+      local refactor_id = create_result.refactorId
+
+      local function describe()
+        local desc_args = { "refactor", "describe", "--id", refactor_id }
+        vim.list_extend(desc_args, profile_args)
+        local desc_out, desc_err = helper.run(desc_args)
+        if desc_err then
+          return nil, desc_err
+        end
+        return vim.json.decode(desc_out), nil
+      end
+
+      progress.update(p, "Refactor " .. refactor_id .. " — analyzing...")
+      while true do
+        local desc, derr = describe()
+        if not desc then
+          progress.finish(p, "Refactor describe failed: " .. derr, vim.log.levels.ERROR)
+          return
+        end
+        if desc.status == "CREATE_COMPLETE" then
+          break
+        end
+        if desc.status == "CREATE_FAILED" then
+          progress.finish(
+            p,
+            "Refactor failed: " .. (desc.statusReason or desc.status),
+            vim.log.levels.ERROR
+          )
+          return
+        end
+        progress.update(p, "Refactor " .. refactor_id .. " — " .. desc.status)
+        sleep(2000)
+      end
+
+      local actions_args = { "refactor", "list-actions", "--id", refactor_id }
+      vim.list_extend(actions_args, profile_args)
+      local actions_out, actions_err = helper.run(actions_args)
+      if actions_err then
+        progress.finish(p, "Refactor list-actions failed: " .. actions_err, vim.log.levels.ERROR)
+        return
+      end
+      local actions = vim.json.decode(actions_out) or {}
+      progress.finish(p, "Refactor " .. refactor_id .. " ready")
+
+      if #actions == 0 then
+        vim.notify("Refactor produced no actions; nothing to execute", vim.log.levels.WARN)
         return
       end
 
-      local result = vim.json.decode(out)
-      if not result or not result.refactorId then
-        vim.notify("CfnRefactorSubmit: invalid response from helper", vim.log.levels.ERROR)
-        return
+      local function strip_arn(name)
+        if not name or name == "" then
+          return name
+        end
+        local stripped = name:match("stack/([^/]+)/")
+        return stripped or name
       end
 
-      local lines = {
-        string.format("Refactor %s — status %s", result.refactorId, result.status or "?"),
-        "Proposed actions:",
-      }
-      for _, a in ipairs(result.actions or {}) do
+      local lines = { "Refactor " .. refactor_id, "" }
+      for _, a in ipairs(actions) do
         local src = a.source or {}
         local dst = a.destination or {}
+        local src_stack = strip_arn(src.stackName)
+        local dst_stack = strip_arn(dst.stackName)
+        local src_id = src.logicalResourceId or ""
+        local dst_id = dst.logicalResourceId or ""
+
+        local logical_part
+        if dst_id == "" then
+          logical_part = src_id
+        elseif src_id == "" or src_id == dst_id then
+          logical_part = dst_id
+        else
+          logical_part = src_id .. " -> " .. dst_id
+        end
+
+        local phys = a.physicalResourceId
+        if phys == nil or phys == "" then
+          phys = "?"
+        end
+
+        local stack_part
+        if (src_stack or "") == "" then
+          stack_part = dst_stack or ""
+        elseif (dst_stack or "") == "" then
+          stack_part = src_stack or ""
+        elseif src_stack == dst_stack then
+          stack_part = src_stack
+        else
+          stack_part = src_stack .. " -> " .. dst_stack
+        end
+
+        local detection = string.lower(a.detection or "?")
         table.insert(
           lines,
-          string.format(
-            "  [%s/%s] %s/%s → %s/%s",
-            a.action or "?",
-            a.detection or "?",
-            src.stackName or "?",
-            src.logicalResourceId or "?",
-            dst.stackName or "?",
-            dst.logicalResourceId or "?"
-          )
+          string.format("%s (%s): %s %s", logical_part, phys, detection, stack_part)
         )
       end
-      vim.notify(table.concat(lines, "\n"))
+      table.insert(lines, "")
+      table.insert(lines, "<CR> execute    q/<Esc> cancel")
 
-      if result.status ~= "CREATE_COMPLETE" then
-        vim.notify(
-          "Refactor not in CREATE_COMPLETE state (got " .. (result.status or "?") .. "); not executing.",
-          vim.log.levels.ERROR
-        )
-        return
-      end
-
-      local confirm = ui_select({ "Execute", "Cancel" }, { prompt = "Execute refactor?" })
-      if confirm ~= "Execute" then
+      local choice = review_window("Refactor Review", lines)
+      if choice ~= "execute" then
         vim.notify("Refactor not executed; state retained")
         return
       end
 
-      local exec_args = {
-        "refactor",
-        "execute",
-        "--profile",
-        state.active_profile,
-        "--region",
-        state.active_region,
-        "--id",
-        result.refactorId,
-      }
-      local exec_out, exec_err = helper.run(exec_args)
+      local p2 = progress.start("Executing refactor " .. refactor_id .. "...")
+      local exec_args = { "refactor", "execute", "--id", refactor_id }
+      vim.list_extend(exec_args, profile_args)
+      local _, exec_err = helper.run(exec_args)
       if exec_err then
-        vim.notify("Refactor execute failed: " .. exec_err, vim.log.levels.ERROR)
+        progress.finish(p2, "Refactor execute failed: " .. exec_err, vim.log.levels.ERROR)
         return
       end
-      local exec_result = vim.json.decode(exec_out) or {}
-      vim.notify("Refactor finished — status " .. (exec_result.status or "?"))
+
+      while true do
+        local desc, derr = describe()
+        if not desc then
+          progress.finish(p2, "Refactor describe failed: " .. derr, vim.log.levels.ERROR)
+          return
+        end
+        local es = desc.executionStatus
+        if es == "EXECUTE_COMPLETE" then
+          progress.finish(p2, "Refactor " .. refactor_id .. " complete")
+          break
+        end
+        if es == "EXECUTE_FAILED" or es == "ROLLBACK_COMPLETE" or es == "ROLLBACK_FAILED" then
+          progress.finish(
+            p2,
+            "Refactor " .. es .. ": " .. (desc.executionStatusReason or ""),
+            vim.log.levels.ERROR
+          )
+          return
+        end
+        progress.update(p2, "Executing refactor — " .. (es or "?"))
+        sleep(5000)
+      end
+
       refactor.clear()
     end)()
   end, { desc = "Submit the current refactor scope as a CloudFormation stack refactor" })

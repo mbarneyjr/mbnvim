@@ -8,6 +8,7 @@ M.pending_imports = {}
 M.refactor = {
   scope = {},
   moves = {},
+  pending_creates = {},
 }
 
 return M

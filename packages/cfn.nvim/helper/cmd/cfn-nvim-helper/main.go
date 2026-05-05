@@ -171,7 +171,7 @@ func refactorCmd() *cobra.Command {
 
 	create := &cobra.Command{
 		Use:   "create",
-		Short: "Create a stack refactor from a JSON payload on stdin",
+		Short: "Create a stack refactor from a JSON payload on stdin (non-blocking)",
 		Long: `Reads a JSON payload from stdin describing the refactor:
   {
     "stackDefinitions": [{"stackName": "...", "templatePath": "..."}],
@@ -182,8 +182,8 @@ func refactorCmd() *cobra.Command {
     "description": "...",
     "enableStackCreation": false
   }
-Polls until CREATE_COMPLETE/CREATE_FAILED, then lists actions.
-Emits JSON: { "refactorId":"...", "status":"...", "actions":[...] }`,
+Returns immediately after CreateStackRefactor; poll status with 'refactor describe'.
+Emits JSON: { "refactorId":"..." }`,
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			profile, _ := cmd.Flags().GetString("profile")
 			region, _ := cmd.Flags().GetString("region")
@@ -209,19 +209,62 @@ Emits JSON: { "refactorId":"...", "status":"...", "actions":[...] }`,
 	_ = create.MarkFlagRequired("profile")
 	_ = create.MarkFlagRequired("region")
 
-	execute := &cobra.Command{
-		Use:   "execute",
-		Short: "Execute a previously-created stack refactor",
+	describe := &cobra.Command{
+		Use:   "describe",
+		Short: "Describe the current status of a stack refactor",
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			profile, _ := cmd.Flags().GetString("profile")
 			region, _ := cmd.Flags().GetString("region")
 			id, _ := cmd.Flags().GetString("id")
 
-			resp, err := refactor.Execute(context.Background(), profile, region, id)
+			resp, err := refactor.Describe(context.Background(), profile, region, id)
 			if err != nil {
 				return err
 			}
 			return json.NewEncoder(os.Stdout).Encode(resp)
+		},
+	}
+	describe.Flags().String("profile", "", "AWS profile name (required)")
+	describe.Flags().String("region", "", "AWS region (required)")
+	describe.Flags().String("id", "", "Stack refactor ID (required)")
+	_ = describe.MarkFlagRequired("profile")
+	_ = describe.MarkFlagRequired("region")
+	_ = describe.MarkFlagRequired("id")
+
+	listActions := &cobra.Command{
+		Use:   "list-actions",
+		Short: "List the proposed actions of a stack refactor",
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			profile, _ := cmd.Flags().GetString("profile")
+			region, _ := cmd.Flags().GetString("region")
+			id, _ := cmd.Flags().GetString("id")
+
+			actions, err := refactor.ListActions(context.Background(), profile, region, id)
+			if err != nil {
+				return err
+			}
+			return json.NewEncoder(os.Stdout).Encode(actions)
+		},
+	}
+	listActions.Flags().String("profile", "", "AWS profile name (required)")
+	listActions.Flags().String("region", "", "AWS region (required)")
+	listActions.Flags().String("id", "", "Stack refactor ID (required)")
+	_ = listActions.MarkFlagRequired("profile")
+	_ = listActions.MarkFlagRequired("region")
+	_ = listActions.MarkFlagRequired("id")
+
+	execute := &cobra.Command{
+		Use:   "execute",
+		Short: "Execute a previously-created stack refactor (non-blocking)",
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			profile, _ := cmd.Flags().GetString("profile")
+			region, _ := cmd.Flags().GetString("region")
+			id, _ := cmd.Flags().GetString("id")
+
+			if err := refactor.Execute(context.Background(), profile, region, id); err != nil {
+				return err
+			}
+			return nil
 		},
 	}
 	execute.Flags().String("profile", "", "AWS profile name (required)")
@@ -231,7 +274,7 @@ Emits JSON: { "refactorId":"...", "status":"...", "actions":[...] }`,
 	_ = execute.MarkFlagRequired("region")
 	_ = execute.MarkFlagRequired("id")
 
-	cmd.AddCommand(create, execute)
+	cmd.AddCommand(create, describe, listActions, execute)
 	return cmd
 }
 
