@@ -50,7 +50,7 @@ require("barney.plugins.linting")
 -- lsp
 require("barney.plugins.lsp")
 require("barney.plugins.lsplinks")
--- aws
-require("barney.plugins.awsuse")
+-- cfn (cloudformation)
+require("barney.plugins.cfn")
 -- ai
 require("barney.plugins.ai")

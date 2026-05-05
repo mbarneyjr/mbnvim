@@ -42,11 +42,13 @@
           packages = {
             review-nvim-vim-plugin = pkgs.callPackage ./packages/review.nvim/vimPlugin.nix { };
             review-nvim-claude-plugin = pkgs.callPackage ./packages/review.nvim/claudePlugin.nix { };
+            cfn-nvim-plugin = pkgs.callPackage ./packages/cfn.nvim/vimPlugin.nix { };
             mbnvim = mkMbnvim {
               inherit system inputs;
               aws-iam-language-server = inputs.aws-iam-language-server.packages.${system}.default;
               fff-nvim-plugin = inputs.fff-nvim.packages.${system}.fff-nvim;
               review-nvim-plugin = self'.packages.review-nvim-vim-plugin;
+              cfn-nvim-plugin = self'.packages.cfn-nvim-plugin;
             };
             default = pkgs.symlinkJoin {
               name = "mbnvim-full";
