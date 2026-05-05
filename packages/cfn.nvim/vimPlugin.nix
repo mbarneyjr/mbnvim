@@ -3,12 +3,12 @@
   buildGoModule,
 }:
 let
-  cfntool = buildGoModule {
-    pname = "cfntool";
+  cfn-nvim-helper = buildGoModule {
+    pname = "cfn-nvim-helper";
     version = "0.0.0";
     src = ./helper;
-    vendorHash = "sha256-YgTwUKAidarYzoFkdpnlgFVfldmP++deCuSXQQCHzcU=";
-    subPackages = [ "cmd/cfntool" ];
+    vendorHash = "sha256-0avAH6V0+YuzUvL5n2mxT8GkjWr5esvkYUZNY0ENpRI=";
+    subPackages = [ "cmd/cfn-nvim-helper" ];
   };
 in
 vimUtils.buildVimPlugin {
@@ -17,6 +17,6 @@ vimUtils.buildVimPlugin {
   src = ./.;
   postInstall = ''
     mkdir -p $out/bin
-    cp ${cfntool}/bin/cfntool $out/bin/cfntool
+    cp ${cfn-nvim-helper}/bin/cfn-nvim-helper $out/bin/cfn-nvim-helper
   '';
 }

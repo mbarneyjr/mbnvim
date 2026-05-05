@@ -12,11 +12,13 @@ import (
 	"github.com/mbarney/cfn.nvim/helper/internal/changeset"
 	"github.com/mbarney/cfn.nvim/helper/internal/credentials"
 	"github.com/mbarney/cfn.nvim/helper/internal/jwe"
+	"github.com/mbarney/cfn.nvim/helper/internal/refactor"
+	"github.com/mbarney/cfn.nvim/helper/internal/stacks"
 )
 
 func main() {
 	root := &cobra.Command{
-		Use:           "cfntool",
+		Use:           "cfn-nvim-helper",
 		Short:         "Helper binary for cfn.nvim",
 		SilenceUsage:  true,
 		SilenceErrors: true,
@@ -25,6 +27,8 @@ func main() {
 	root.AddCommand(jweCmd())
 	root.AddCommand(credentialsCmd())
 	root.AddCommand(changesetCmd())
+	root.AddCommand(refactorCmd())
+	root.AddCommand(stacksCmd())
 
 	if err := root.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -159,5 +163,103 @@ Emits JSON on stdout: { "changeSetId": "...", "stackId": "...", "changeSetName":
 	_ = importCmd.MarkFlagRequired("region")
 
 	cmd.AddCommand(importCmd)
+	return cmd
+}
+
+func refactorCmd() *cobra.Command {
+	cmd := &cobra.Command{Use: "refactor", Short: "CloudFormation stack refactor operations"}
+
+	create := &cobra.Command{
+		Use:   "create",
+		Short: "Create a stack refactor from a JSON payload on stdin",
+		Long: `Reads a JSON payload from stdin describing the refactor:
+  {
+    "stackDefinitions": [{"stackName": "...", "templatePath": "..."}],
+    "resourceMappings": [
+      {"source": {"stackName":"...","logicalResourceId":"..."},
+       "destination": {"stackName":"...","logicalResourceId":"..."}}
+    ],
+    "description": "...",
+    "enableStackCreation": false
+  }
+Polls until CREATE_COMPLETE/CREATE_FAILED, then lists actions.
+Emits JSON: { "refactorId":"...", "status":"...", "actions":[...] }`,
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			profile, _ := cmd.Flags().GetString("profile")
+			region, _ := cmd.Flags().GetString("region")
+
+			data, err := io.ReadAll(os.Stdin)
+			if err != nil {
+				return fmt.Errorf("read stdin: %w", err)
+			}
+			var req refactor.CreateRequest
+			if err := json.Unmarshal(data, &req); err != nil {
+				return fmt.Errorf("parse request: %w", err)
+			}
+
+			resp, err := refactor.Create(context.Background(), profile, region, req)
+			if err != nil {
+				return err
+			}
+			return json.NewEncoder(os.Stdout).Encode(resp)
+		},
+	}
+	create.Flags().String("profile", "", "AWS profile name (required)")
+	create.Flags().String("region", "", "AWS region (required)")
+	_ = create.MarkFlagRequired("profile")
+	_ = create.MarkFlagRequired("region")
+
+	execute := &cobra.Command{
+		Use:   "execute",
+		Short: "Execute a previously-created stack refactor",
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			profile, _ := cmd.Flags().GetString("profile")
+			region, _ := cmd.Flags().GetString("region")
+			id, _ := cmd.Flags().GetString("id")
+
+			resp, err := refactor.Execute(context.Background(), profile, region, id)
+			if err != nil {
+				return err
+			}
+			return json.NewEncoder(os.Stdout).Encode(resp)
+		},
+	}
+	execute.Flags().String("profile", "", "AWS profile name (required)")
+	execute.Flags().String("region", "", "AWS region (required)")
+	execute.Flags().String("id", "", "Stack refactor ID (required)")
+	_ = execute.MarkFlagRequired("profile")
+	_ = execute.MarkFlagRequired("region")
+	_ = execute.MarkFlagRequired("id")
+
+	cmd.AddCommand(create, execute)
+	return cmd
+}
+
+func stacksCmd() *cobra.Command {
+	cmd := &cobra.Command{Use: "stacks", Short: "CloudFormation stack queries"}
+
+	list := &cobra.Command{
+		Use:   "list",
+		Short: "List CloudFormation stacks in the active account/region (excludes DELETE_COMPLETE)",
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			profile, _ := cmd.Flags().GetString("profile")
+			region, _ := cmd.Flags().GetString("region")
+
+			summaries, err := stacks.List(context.Background(), profile, region)
+			if err != nil {
+				return err
+			}
+			if summaries == nil {
+				summaries = []stacks.Summary{}
+			}
+			return json.NewEncoder(os.Stdout).Encode(summaries)
+		},
+	}
+	list.Flags().String("profile", "", "AWS profile name (required)")
+	list.Flags().String("region", "", "AWS region (required)")
+	_ = list.MarkFlagRequired("profile")
+	_ = list.MarkFlagRequired("region")
+
+	cmd.AddCommand(list)
 	return cmd
 }

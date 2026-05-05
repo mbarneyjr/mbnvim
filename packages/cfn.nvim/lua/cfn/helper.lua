@@ -6,7 +6,7 @@ local function plugin_root()
 end
 
 local function binary_path()
-  return plugin_root() .. "/bin/cfntool"
+  return plugin_root() .. "/bin/cfn-nvim-helper"
 end
 
 function M.run(args, stdin)
@@ -22,12 +22,12 @@ function M.run(args, stdin)
     return vim.system(cmd, opts):wait()
   end)
   if not ok then
-    return nil, "failed to invoke cfntool: " .. tostring(result)
+    return nil, "failed to invoke cfn-nvim-helper: " .. tostring(result)
   end
   if result.code ~= 0 then
     local err = vim.trim(result.stderr or "")
     if err == "" then
-      err = "cfntool exited " .. tostring(result.code)
+      err = "cfn-nvim-helper exited " .. tostring(result.code)
     end
     return nil, err
   end
