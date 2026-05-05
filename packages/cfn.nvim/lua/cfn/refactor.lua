@@ -28,8 +28,32 @@ function M.scope_add(template_path)
   state.refactor.scope[template_path] = true
 end
 
-function M.add_move(move)
-  table.insert(state.refactor.moves, move)
+function M.find_op_by_current(stack, logical_id)
+  for _, m in ipairs(state.refactor.moves) do
+    if m.destStack == stack and m.destLogicalId == logical_id then
+      return m
+    end
+  end
+  return nil
+end
+
+function M.record_op(spec)
+  local existing = M.find_op_by_current(spec.current_stack, spec.current_logical_id)
+  if existing then
+    existing.destTemplate = spec.new_template
+    existing.destStack = spec.new_stack
+    existing.destLogicalId = spec.new_logical_id
+    return
+  end
+  table.insert(state.refactor.moves, {
+    sourceTemplate = spec.current_template,
+    sourceStack = spec.current_stack,
+    sourceLogicalId = spec.current_logical_id,
+    destTemplate = spec.new_template,
+    destStack = spec.new_stack,
+    destLogicalId = spec.new_logical_id,
+    resourceType = spec.resource_type,
+  })
 end
 
 function M.moves()
@@ -226,6 +250,71 @@ local function reindent(block_lines, from_indent, to_indent)
     end
   end
   return out
+end
+
+local function escape_pattern(s)
+  return (s:gsub("([%-%+%*%?%(%)%[%]%%%^%$%.])", "%%%1"))
+end
+
+local function replace_references(line, old_id, new_id)
+  local old = escape_pattern(old_id)
+  local patterns = {
+    -- !Ref OldName (followed by non-word or end of line)
+    { "(!Ref%s+)" .. old .. "(%W)", "%1" .. new_id .. "%2" },
+    { "(!Ref%s+)" .. old .. "$", "%1" .. new_id },
+    -- !GetAtt OldName.Attr / !GetAtt OldName
+    { "(!GetAtt%s+)" .. old .. "(%.)", "%1" .. new_id .. "%2" },
+    { "(!GetAtt%s+)" .. old .. "(%W)", "%1" .. new_id .. "%2" },
+    { "(!GetAtt%s+)" .. old .. "$", "%1" .. new_id },
+    -- ${OldName} / ${OldName.Attr} (inside !Sub strings)
+    { "(%${)" .. old .. "([%.}])", "%1" .. new_id .. "%2" },
+    -- Ref: OldName (long form)
+    { "(Ref:%s*)" .. old .. "(%W)", "%1" .. new_id .. "%2" },
+    { "(Ref:%s*)" .. old .. "$", "%1" .. new_id },
+    -- DependsOn: OldName (single value)
+    { "(DependsOn:%s*)" .. old .. "(%W)", "%1" .. new_id .. "%2" },
+    { "(DependsOn:%s*)" .. old .. "$", "%1" .. new_id },
+    -- Fn::GetAtt: [OldName, Attr] (inline list form)
+    { "(Fn::GetAtt:%s*%[%s*)" .. old .. "(%W)", "%1" .. new_id .. "%2" },
+  }
+  for _, p in ipairs(patterns) do
+    line = line:gsub(p[1], p[2])
+  end
+  return line
+end
+
+function M.rename_resource(template_path, old_id, new_id)
+  if old_id == new_id then
+    return nil, "old and new ids are identical"
+  end
+  local lines, bufnr, err = get_lines(template_path)
+  if not lines then
+    return nil, "read: " .. (err or "unknown")
+  end
+
+  if find_resource_block(lines, new_id) then
+    return nil, new_id .. " already exists in " .. template_path
+  end
+
+  local block = find_resource_block(lines, old_id)
+  if not block then
+    return nil, "could not locate " .. old_id .. " in " .. template_path
+  end
+
+  local first_line = lines[block.start_line]
+  local trailing = first_line:match("^%s*[%w_-]+:(.*)$") or ""
+  lines[block.start_line] = string.rep(" ", block.indent) .. new_id .. ":" .. trailing
+
+  for i = 1, #lines do
+    if i ~= block.start_line then
+      lines[i] = replace_references(lines[i], old_id, new_id)
+    end
+  end
+
+  if not set_lines(template_path, lines, bufnr) then
+    return nil, "write"
+  end
+  return true
 end
 
 function M.move_resource(source_path, dest_path, logical_id)

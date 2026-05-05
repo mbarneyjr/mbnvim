@@ -804,18 +804,68 @@ function M.register()
 
       refactor.scope_add(source_path)
       refactor.scope_add(dest_path)
-      refactor.add_move({
-        sourceTemplate = source_path,
-        sourceStack = source_reg.stack,
-        sourceLogicalId = resource.logicalId,
-        destTemplate = dest_path,
-        destStack = dest_stack,
-        destLogicalId = resource.logicalId,
-        resourceType = resource.resourceType,
+      refactor.record_op({
+        current_template = source_path,
+        current_stack = source_reg.stack,
+        current_logical_id = resource.logicalId,
+        new_template = dest_path,
+        new_stack = dest_stack,
+        new_logical_id = resource.logicalId,
+        resource_type = resource.resourceType,
       })
       vim.notify("Moved " .. resource.logicalId .. " from " .. source_reg.stack .. " to " .. dest_stack)
     end)()
   end, { desc = "Move resource at cursor to another registered template" })
+
+  vim.api.nvim_create_user_command("CfnRefactorRename", function()
+    coroutine.wrap(function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      local template_path = vim.api.nvim_buf_get_name(bufnr)
+      if template_path == "" then
+        vim.notify("Buffer has no file path", vim.log.levels.ERROR)
+        return
+      end
+      local reg = registrations.get(template_path)
+      if not reg then
+        vim.notify("Current template is not registered. Run :CfnRegister <stack>.", vim.log.levels.ERROR)
+        return
+      end
+
+      local client = lsp.client()
+      if not client then
+        vim.notify("No CFN LSP client attached", vim.log.levels.WARN)
+        return
+      end
+      local resource = get_resource_at_cursor(client, bufnr)
+      if not resource then
+        vim.notify("No resource at cursor", vim.log.levels.WARN)
+        return
+      end
+
+      local new_id = ui_input({ prompt = "Rename " .. resource.logicalId .. " to: " })
+      if not new_id or new_id == "" or new_id == resource.logicalId then
+        return
+      end
+
+      local ok, err = refactor.rename_resource(template_path, resource.logicalId, new_id)
+      if not ok then
+        vim.notify("Rename failed: " .. err, vim.log.levels.ERROR)
+        return
+      end
+
+      refactor.scope_add(template_path)
+      refactor.record_op({
+        current_template = template_path,
+        current_stack = reg.stack,
+        current_logical_id = resource.logicalId,
+        new_template = template_path,
+        new_stack = reg.stack,
+        new_logical_id = new_id,
+        resource_type = resource.resourceType,
+      })
+      vim.notify("Renamed " .. resource.logicalId .. " → " .. new_id .. " in " .. reg.stack)
+    end)()
+  end, { desc = "Rename the logical id of the resource at cursor" })
 
   vim.api.nvim_create_user_command("CfnRefactorList", function()
     local scope = refactor.scope_list()
