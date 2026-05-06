@@ -179,7 +179,6 @@ func refactorCmd() *cobra.Command {
       {"source": {"stackName":"...","logicalResourceId":"..."},
        "destination": {"stackName":"...","logicalResourceId":"..."}}
     ],
-    "description": "...",
     "enableStackCreation": false
   }
 Returns immediately after CreateStackRefactor; poll status with 'refactor describe'.

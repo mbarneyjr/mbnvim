@@ -29,7 +29,6 @@ type Mapping struct {
 type CreateRequest struct {
 	StackDefinitions    []StackDef `json:"stackDefinitions"`
 	ResourceMappings    []Mapping  `json:"resourceMappings"`
-	Description         string     `json:"description,omitempty"`
 	EnableStackCreation bool       `json:"enableStackCreation,omitempty"`
 }
 
@@ -102,9 +101,6 @@ func Create(ctx context.Context, profile, region string, req CreateRequest) (*Cr
 	input := &cloudformation.CreateStackRefactorInput{
 		StackDefinitions: defs,
 		ResourceMappings: mappings,
-	}
-	if req.Description != "" {
-		input.Description = aws.String(req.Description)
 	}
 	if req.EnableStackCreation {
 		input.EnableStackCreation = aws.Bool(true)

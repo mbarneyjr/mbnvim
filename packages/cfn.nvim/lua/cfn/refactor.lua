@@ -1,6 +1,7 @@
 local M = {}
 
 local state = require("cfn.state")
+local fs = require("cfn.fs")
 
 function M.scope_list()
   local list = {}
@@ -9,10 +10,6 @@ function M.scope_list()
   end
   table.sort(list)
   return list
-end
-
-function M.scope_contains(template_path)
-  return state.refactor.scope[template_path] == true
 end
 
 function M.scope_toggle(template_path)
@@ -60,42 +57,9 @@ function M.moves()
   return state.refactor.moves
 end
 
-function M.mark_pending_create(template_path)
-  state.refactor.pending_creates[template_path] = true
-end
-
-function M.is_pending_create(template_path)
-  return state.refactor.pending_creates[template_path] == true
-end
-
-function M.has_pending_creates()
-  return next(state.refactor.pending_creates) ~= nil
-end
-
 function M.clear()
   state.refactor.scope = {}
   state.refactor.moves = {}
-  state.refactor.pending_creates = {}
-end
-
-local function read_file(path)
-  local f, err = io.open(path, "r")
-  if not f then
-    return nil, err
-  end
-  local content = f:read("*a")
-  f:close()
-  return content
-end
-
-local function write_file(path, content)
-  local f, err = io.open(path, "w")
-  if not f then
-    return false, err
-  end
-  f:write(content)
-  f:close()
-  return true
 end
 
 local function buffer_for_path(path)
@@ -112,7 +76,7 @@ local function get_lines(path)
   if bufnr then
     return vim.api.nvim_buf_get_lines(bufnr, 0, -1, false), bufnr
   end
-  local content, err = read_file(path)
+  local content, err = fs.read_text(path)
   if not content then
     return nil, nil, err
   end
@@ -127,7 +91,7 @@ local function set_lines(path, lines, bufnr)
     end)
     return true
   end
-  return write_file(path, table.concat(lines, "\n"))
+  return fs.write_text(path, table.concat(lines, "\n"))
 end
 
 local function find_resource_block(lines, logical_id)
