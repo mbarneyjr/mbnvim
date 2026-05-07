@@ -8,6 +8,9 @@ vim.lsp.config("lua_ls", {
       diagnostics = {
         globals = { "vim" },
       },
+      hint = {
+        enable = false,
+      },
       telemetry = {
         enable = false,
       },
