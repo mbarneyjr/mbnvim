@@ -8,14 +8,14 @@
 
 buildNpmPackage rec {
   pname = "aws-cloudformation-languageserver";
-  version = "1.4.0";
+  version = "1.7.0";
   src = fetchFromGitHub {
     owner = "aws-cloudformation";
     repo = "cloudformation-languageserver";
     rev = "v${version}";
-    sha256 = "sha256-cPI6cRuLSFbL3G3peLkIeF+9BBJye7oURBQtuErs4gQ=";
+    sha256 = "sha256-Oh9fuA3cDd9XWT0FaD4Anadx0CFTL6ggryYhP5pUAKk=";
   };
-  npmDepsHash = "sha256-f7x+yXov2qswX7WEiWT6k0p4hVYF79iXStGHM8FkRBg=";
+  npmDepsHash = "sha256-Qd6F5og3DwboWHq1t1bIqYsUUfS68f+e19L23t8/AqU=";
   dontNpmBuild = true;
 
   nativeBuildInputs = [
@@ -41,7 +41,7 @@ buildNpmPackage rec {
         "'tmp-node-modules/package.json'" \
         "'package.json'"
 
-    ./node_modules/.bin/webpack --env mode=production --env env=prod
+    ./node_modules/.bin/webpack --env mode=production --env env=prod --env skipWheels=true
 
     runHook postBuild
   '';
@@ -71,7 +71,7 @@ buildNpmPackage rec {
       "aarch64-darwin"
     ];
     sourceProvenance = with lib.sourceTypes; [
-      binaryNativeCode
+      fromSource
     ];
     maintainers = with lib.maintainers; [
       mbarneyjr
