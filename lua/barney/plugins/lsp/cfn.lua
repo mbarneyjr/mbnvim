@@ -16,6 +16,9 @@ vim.lsp.config("cfn_lsp", {
     aws = {
       cloudformation = {
         diagnostics = {
+          cfnLint = {
+            path = "cfn-lint",
+          },
           cfnGuard = {
             enabled = true,
             enabledRulePacks = {},
