@@ -3,7 +3,6 @@
   inputs,
   fff-nvim-plugin,
   review-nvim-plugin,
-  cfn-nvim-plugin,
   aws-iam-language-server,
 }:
 
@@ -86,8 +85,6 @@ let
       copilot-lua
       # review
       review-nvim-plugin
-      # cfn (cloudformation)
-      cfn-nvim-plugin
     ]
     ++ [
       # fff (from flake input, requires nightly Rust)
