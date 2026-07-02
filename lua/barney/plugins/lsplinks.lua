@@ -4,13 +4,11 @@ lsplinks.setup()
 vim.keymap.set("n", "gx", function()
   local urls = {}
 
-  -- get lsplinks document link under cursor
   local link = lsplinks.current()
   if link then
     table.insert(urls, link)
   end
 
-  -- get default urls (extmarks, cfile, etc.)
   for _, url in ipairs(require("vim.ui")._get_urls()) do
     if not vim.tbl_contains(urls, url) then
       table.insert(urls, url)

@@ -61,16 +61,13 @@ let
       vim-flog
       # code
       trouble-nvim
-      nvim-coverage
       nvim-dap
       nvim-dap-view
-      nvim-nio
       nvim-dap-virtual-text
       conform-nvim
       nvim-lint
       # language-specific tools
       tsc-nvim
-      ts-error-translator
       # cmp, snippets
       blink-cmp
       blink-copilot
@@ -78,10 +75,8 @@ let
       # lsp
       nvim-lspconfig
       nvim-lsp-file-operations
-      twoslash-queries
       lsplinks
       # ai
-      claudecode-nvim
       copilot-lua
       # review
       review-nvim-plugin
@@ -140,7 +135,6 @@ let
     pkgs.tailwindcss-language-server
     pkgs.glsl_analyzer
     pkgs.python3Packages.cfn-lint
-    # pkgs.python3Packages.cfn-lsp-extra
     pkgs.copilot-language-server
     pkgs.cloudformation-languageserver
     aws-iam-language-server

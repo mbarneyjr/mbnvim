@@ -42,7 +42,6 @@ require("barney.plugins.fugitive")
 require("barney.plugins.gitsigns")
 -- code
 require("barney.plugins.trouble")
-require("barney.plugins.coverage")
 require("barney.plugins.dap")
 require("barney.plugins.formatting")
 require("barney.plugins.linting")
