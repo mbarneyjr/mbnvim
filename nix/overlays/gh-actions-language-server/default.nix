@@ -1,11 +1,6 @@
-final: prev:
+inputs: final: prev:
 let
-  src = prev.fetchFromGitHub {
-    owner = "actions";
-    repo = "languageservices";
-    rev = "cc316ab9dea2d77763691fd3d7cd5e120fe15724";
-    hash = "sha256-21di43NuUEa/EQydwbhIYRpeGoWN0oRgRBeRuxZ+AlU=";
-  };
+  src = inputs.actions-languageservices;
 
   jq = prev.lib.getExe prev.jq;
 in
@@ -18,7 +13,7 @@ in
       cp ${./package-lock.json} ./package-lock.json
       ${jq} 'del(.devDependencies["rest-api-description"])' languageservice/package.json > tmp.json && mv tmp.json languageservice/package.json
     '';
-    npmDepsHash = "sha256-SkgAdJQ87nA5OUGRzbg5Dh+6xFgS+hZNeqJoVb2U8mU=";
+    npmDepsHash = "sha256-pm4kmXTE2zoCKvxjgo98b8tQitdU8S/myt0U10nLSa4=";
     npmBuildFlags = [ "--workspaces" ];
     installPhase = ''
       runHook preInstall

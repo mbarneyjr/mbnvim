@@ -3,18 +3,13 @@
   buildNpmPackage,
   nodejs,
   makeWrapper,
-  fetchFromGitHub,
+  src,
 }:
 
-buildNpmPackage rec {
+buildNpmPackage {
   pname = "aws-cloudformation-languageserver";
-  version = "1.7.0";
-  src = fetchFromGitHub {
-    owner = "aws-cloudformation";
-    repo = "cloudformation-languageserver";
-    rev = "v${version}";
-    sha256 = "sha256-Oh9fuA3cDd9XWT0FaD4Anadx0CFTL6ggryYhP5pUAKk=";
-  };
+  version = src.shortRev or "unstable";
+  inherit src;
   npmDepsHash = "sha256-Qd6F5og3DwboWHq1t1bIqYsUUfS68f+e19L23t8/AqU=";
   dontNpmBuild = true;
 

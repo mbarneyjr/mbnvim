@@ -4,11 +4,16 @@
 set -euo pipefail
 
 OVERLAY_DIR="$(cd "$(dirname "$0")" && pwd)"
-NIX_FILE="$OVERLAY_DIR/default.nix"
+FLAKE_DIR="$(git -C "$OVERLAY_DIR" rev-parse --show-toplevel)"
+LOCK_FILE="$FLAKE_DIR/flake.lock"
 
-owner=$(grep 'owner =' "$NIX_FILE" | head -1 | sed 's/.*"\(.*\)".*/\1/')
-repo=$(grep 'repo =' "$NIX_FILE" | head -1 | sed 's/.*"\(.*\)".*/\1/')
-rev=$(grep 'rev =' "$NIX_FILE" | head -1 | sed 's/.*"\(.*\)".*/\1/')
+# The source is now a bare flake input pinned in flake.lock. Run
+# `nix flake update actions-languageservices` first to bump it, then this
+# script regenerates package-lock.json against the newly-locked revision.
+locked=$(jq -r '.nodes["actions-languageservices"].locked' "$LOCK_FILE")
+owner=$(jq -r '.owner' <<<"$locked")
+repo=$(jq -r '.repo' <<<"$locked")
+rev=$(jq -r '.rev' <<<"$locked")
 
 echo "Fetching $owner/$repo@$rev"
 

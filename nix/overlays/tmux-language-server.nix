@@ -1,28 +1,18 @@
-final: prev: {
-  tree-sitter-tmux = prev.python3Packages.buildPythonPackage rec {
+inputs: final: prev: {
+  tree-sitter-tmux = prev.python3Packages.buildPythonPackage {
     name = "tree-sitter-tmux";
-    version = "0.0.4";
-    src = prev.fetchFromGitHub {
-      owner = "Freed-Wu";
-      repo = "tree-sitter-tmux";
-      rev = version;
-      sha256 = "sha256-8f78qYxqoiOAnl3HzEbF4Rci3rFy0SnELoU+QP7pUlk=";
-    };
+    version = "0+${inputs.tree-sitter-tmux.shortRev or "unstable"}";
+    src = inputs.tree-sitter-tmux;
     pyproject = true;
     disabled = prev.python3Packages.pythonOlder "3.6";
     build-system = [
       prev.python3Packages.setuptools
     ];
   };
-  tmux-language-server = prev.python3Packages.buildPythonApplication rec {
+  tmux-language-server = prev.python3Packages.buildPythonApplication {
     name = "tmux-language-server";
-    version = "0.0.17";
-    src = prev.fetchFromGitHub {
-      owner = "Freed-Wu";
-      repo = "tmux-language-server";
-      rev = version;
-      sha256 = "sha256-FQaSJ+KuwOmsQBHWrsPkHOdwCD8M8pzUfZK6zeMNlLU=";
-    };
+    version = "0+${inputs.tmux-language-server.shortRev or "unstable"}";
+    src = inputs.tmux-language-server;
     pyproject = true;
     disabled = prev.python3Packages.pythonOlder "3.6";
     build-system = [

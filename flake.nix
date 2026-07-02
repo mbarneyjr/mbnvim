@@ -15,6 +15,38 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
+    lsplinks-nvim = {
+      url = "github:icholy/lsplinks.nvim";
+      flake = false;
+    };
+    nvim-ts-context-commentstring = {
+      url = "github:JoosepAlviste/nvim-ts-context-commentstring";
+      flake = false;
+    };
+    cedar = {
+      url = "github:cedar-policy/cedar";
+      flake = false;
+    };
+    cfn-lint = {
+      url = "github:aws-cloudformation/cfn-lint";
+      flake = false;
+    };
+    tree-sitter-tmux = {
+      url = "github:Freed-Wu/tree-sitter-tmux";
+      flake = false;
+    };
+    tmux-language-server = {
+      url = "github:Freed-Wu/tmux-language-server";
+      flake = false;
+    };
+    actions-languageservices = {
+      url = "github:actions/languageservices";
+      flake = false;
+    };
+    cloudformation-languageserver = {
+      url = "github:aws-cloudformation/cloudformation-languageserver";
+      flake = false;
+    };
   };
 
   outputs =
@@ -35,7 +67,7 @@
           mkMbnvim = import ./nix/mkMbnvim.nix;
           pkgs = import inputs.nixpkgs {
             inherit system;
-            overlays = import ./nix/overlays;
+            overlays = import ./nix/overlays inputs;
           };
         in
         {

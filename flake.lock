@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "actions-languageservices": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781213744,
+        "narHash": "sha256-jvCxEtGIi1DJLXwKGnTbvegEDsyuTN5Box0rWsSPgM8=",
+        "owner": "actions",
+        "repo": "languageservices",
+        "rev": "d431e52c7ed1f07af63de9dfd0b0673fa8579bdf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "actions",
+        "repo": "languageservices",
+        "type": "github"
+      }
+    },
     "aws-iam-language-server": {
       "inputs": {
         "flake-parts": [
@@ -20,6 +36,54 @@
       "original": {
         "owner": "mbarneyjr",
         "repo": "aws-iam-language-server",
+        "type": "github"
+      }
+    },
+    "cedar": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1783014668,
+        "narHash": "sha256-WdWXXaw947CfIuSRBjUKlBeOd6s6Jzdnr+IPIlanL58=",
+        "owner": "cedar-policy",
+        "repo": "cedar",
+        "rev": "8c091eef6fb2a06db1bfb029206ecd880f16697f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cedar-policy",
+        "repo": "cedar",
+        "type": "github"
+      }
+    },
+    "cfn-lint": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782758185,
+        "narHash": "sha256-B+3ggSD3zeVFEMGaIa+KEpCieWcstQdwf8usYv5VaVE=",
+        "owner": "aws-cloudformation",
+        "repo": "cfn-lint",
+        "rev": "a936e5a22ee70e28e97d36cd5f964424001d8224",
+        "type": "github"
+      },
+      "original": {
+        "owner": "aws-cloudformation",
+        "repo": "cfn-lint",
+        "type": "github"
+      }
+    },
+    "cloudformation-languageserver": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778696343,
+        "narHash": "sha256-Oh9fuA3cDd9XWT0FaD4Anadx0CFTL6ggryYhP5pUAKk=",
+        "owner": "aws-cloudformation",
+        "repo": "cloudformation-languageserver",
+        "rev": "4336efa310429dd1355d7d30ae779d06462dea7c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "aws-cloudformation",
+        "repo": "cloudformation-languageserver",
         "type": "github"
       }
     },
@@ -114,6 +178,22 @@
         "type": "github"
       }
     },
+    "lsplinks-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1736178628,
+        "narHash": "sha256-o7/tIN6jQXP4APgPcdvymjMyOHOTwimUe7aevEwpoGc=",
+        "owner": "icholy",
+        "repo": "lsplinks.nvim",
+        "rev": "94d729170e95298ce86ba41ef66f8756f6062b34",
+        "type": "github"
+      },
+      "original": {
+        "owner": "icholy",
+        "repo": "lsplinks.nvim",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1782918843,
@@ -145,12 +225,36 @@
         "type": "github"
       }
     },
+    "nvim-ts-context-commentstring": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775325282,
+        "narHash": "sha256-UsfhWgOJ+SpqyA8D6Pckq5w1n+qVjK51K0rXYQvjqMw=",
+        "owner": "JoosepAlviste",
+        "repo": "nvim-ts-context-commentstring",
+        "rev": "6141a40173c6efa98242dc951ed4b6f892c97027",
+        "type": "github"
+      },
+      "original": {
+        "owner": "JoosepAlviste",
+        "repo": "nvim-ts-context-commentstring",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
+        "actions-languageservices": "actions-languageservices",
         "aws-iam-language-server": "aws-iam-language-server",
+        "cedar": "cedar",
+        "cfn-lint": "cfn-lint",
+        "cloudformation-languageserver": "cloudformation-languageserver",
         "fff-nvim": "fff-nvim",
         "flake-parts": "flake-parts",
-        "nixpkgs": "nixpkgs"
+        "lsplinks-nvim": "lsplinks-nvim",
+        "nixpkgs": "nixpkgs",
+        "nvim-ts-context-commentstring": "nvim-ts-context-commentstring",
+        "tmux-language-server": "tmux-language-server",
+        "tree-sitter-tmux": "tree-sitter-tmux"
       }
     },
     "rust-overlay": {
@@ -202,6 +306,38 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tmux-language-server": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1763452180,
+        "narHash": "sha256-FQaSJ+KuwOmsQBHWrsPkHOdwCD8M8pzUfZK6zeMNlLU=",
+        "owner": "Freed-Wu",
+        "repo": "tmux-language-server",
+        "rev": "a31be64d854faa6a651cfb8058882e58c60bb44f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Freed-Wu",
+        "repo": "tmux-language-server",
+        "type": "github"
+      }
+    },
+    "tree-sitter-tmux": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1761219351,
+        "narHash": "sha256-LdXPdijcsfPYIrbTMDIy46wqOaJfxwVBVpOVVfXrJIg=",
+        "owner": "Freed-Wu",
+        "repo": "tree-sitter-tmux",
+        "rev": "75d1b995b0c23400ac8e49db757a2e0386f9fa8f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Freed-Wu",
+        "repo": "tree-sitter-tmux",
         "type": "github"
       }
     },
