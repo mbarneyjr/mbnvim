@@ -16,12 +16,12 @@ final: prev: {
   };
   tmux-language-server = prev.python3Packages.buildPythonApplication rec {
     name = "tmux-language-server";
-    version = "0.0.11";
+    version = "0.0.17";
     src = prev.fetchFromGitHub {
       owner = "Freed-Wu";
       repo = "tmux-language-server";
       rev = version;
-      sha256 = "sha256-zSpAn4mtOCfH1JMA2QbCXiL93xF9gmPpE0Ns8WC5guE=";
+      sha256 = "sha256-FQaSJ+KuwOmsQBHWrsPkHOdwCD8M8pzUfZK6zeMNlLU=";
     };
     pyproject = true;
     disabled = prev.python3Packages.pythonOlder "3.6";
