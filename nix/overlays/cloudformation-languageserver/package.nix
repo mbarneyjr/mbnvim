@@ -49,6 +49,7 @@ buildNpmPackage {
 
     mkdir -p $out/bin
     makeWrapper ${nodejs}/bin/node $out/bin/cfn-lsp-server \
+      --set CFN_LINT_PATH cfn-lint \
       --add-flags "$out/lib/aws-cloudformation-languageserver/cfn-lsp-server-standalone.js"
 
     runHook postInstall
