@@ -75,16 +75,8 @@ vim.lsp.config("actionsls", {
       },
     },
   },
-  init_options = get_init_options(),
-})
-vim.lsp.enable("actionsls")
-
--- Refresh token and repo config when actionsls restarts (e.g. via :LspRestart)
-vim.api.nvim_create_autocmd("LspDetach", {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client and client.name == "actionsls" then
-      vim.lsp.config("actionsls", { init_options = get_init_options() })
-    end
+  before_init = function(init_params, _)
+    init_params.initializationOptions = get_init_options()
   end,
 })
+vim.lsp.enable("actionsls")
