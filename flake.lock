@@ -178,6 +178,21 @@
         "type": "github"
       }
     },
+    "import-tree": {
+      "locked": {
+        "lastModified": 1778781969,
+        "narHash": "sha256-Jjuz5CmSkur8KvLDoGa+vylEp+RkQtv4mt/qcMznpH0=",
+        "owner": "vic",
+        "repo": "import-tree",
+        "rev": "d321337efd0f23a9eb14a42adb7b2c29313ab274",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "import-tree",
+        "type": "github"
+      }
+    },
     "lsplinks-nvim": {
       "flake": false,
       "locked": {
@@ -250,6 +265,7 @@
         "cloudformation-languageserver": "cloudformation-languageserver",
         "fff-nvim": "fff-nvim",
         "flake-parts": "flake-parts",
+        "import-tree": "import-tree",
         "lsplinks-nvim": "lsplinks-nvim",
         "nixpkgs": "nixpkgs",
         "nvim-ts-context-commentstring": "nvim-ts-context-commentstring",
