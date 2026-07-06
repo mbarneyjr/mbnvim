@@ -29,10 +29,6 @@
       url = "github:cedar-policy/cedar";
       flake = false;
     };
-    cfn-lint = {
-      url = "github:aws-cloudformation/cfn-lint";
-      flake = false;
-    };
     tree-sitter-tmux = {
       url = "github:Freed-Wu/tree-sitter-tmux";
       flake = false;

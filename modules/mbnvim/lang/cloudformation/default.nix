@@ -4,7 +4,12 @@
     python3Packages = prev.python3Packages // {
       cfn-lint = (
         prev.python3Packages.cfn-lint.overridePythonAttrs (old: {
-          src = inputs.cfn-lint;
+          version = "1.52.1";
+          src = prev.python3Packages.fetchPypi {
+            pname = "cfn_lint";
+            version = "1.52.1";
+            hash = "sha256-aWz5P8PCDCV+t8XORiJiG8j1sII8teDqLQQuHrDCzQw=";
+          };
           nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
             prev.python3Packages.setuptools
           ];

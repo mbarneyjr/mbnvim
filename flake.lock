@@ -55,22 +55,6 @@
         "type": "github"
       }
     },
-    "cfn-lint": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1782758185,
-        "narHash": "sha256-B+3ggSD3zeVFEMGaIa+KEpCieWcstQdwf8usYv5VaVE=",
-        "owner": "aws-cloudformation",
-        "repo": "cfn-lint",
-        "rev": "a936e5a22ee70e28e97d36cd5f964424001d8224",
-        "type": "github"
-      },
-      "original": {
-        "owner": "aws-cloudformation",
-        "repo": "cfn-lint",
-        "type": "github"
-      }
-    },
     "cloudformation-languageserver": {
       "flake": false,
       "locked": {
@@ -261,7 +245,6 @@
         "actions-languageservices": "actions-languageservices",
         "aws-iam-language-server": "aws-iam-language-server",
         "cedar": "cedar",
-        "cfn-lint": "cfn-lint",
         "cloudformation-languageserver": "cloudformation-languageserver",
         "fff-nvim": "fff-nvim",
         "flake-parts": "flake-parts",
