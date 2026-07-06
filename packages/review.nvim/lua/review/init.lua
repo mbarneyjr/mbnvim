@@ -18,7 +18,8 @@ M.config = {}
 local function get_diagnostics_path()
   local cwd = vim.fn.getcwd()
   local hash = vim.fn.sha256(cwd):sub(1, 16)
-  local dir = M.config.cache_dir .. "/" .. hash
+  local cache_dir = M.config.cache_dir or defaults.cache_dir
+  local dir = cache_dir .. "/" .. hash
   return dir, dir .. "/diagnostics.json"
 end
 
@@ -68,7 +69,8 @@ end
 
 function M.clear()
   vim.diagnostic.reset(ns)
-  local _, path = get_diagnostics_path()
+  local dir, path = get_diagnostics_path()
+  vim.fn.mkdir(dir, "p")
   vim.fn.writefile({ "[]" }, path)
   vim.notify("review.nvim: diagnostics cleared", vim.log.levels.INFO)
 end
@@ -84,11 +86,15 @@ function M.setup(opts)
 
   local handle = vim.uv.new_fs_event()
   if handle then
-    handle:start(diag_path, {}, vim.schedule_wrap(function(err)
-      if not err then
-        apply_diagnostics(diag_path)
-      end
-    end))
+    handle:start(
+      diag_path,
+      {},
+      vim.schedule_wrap(function(err)
+        if not err then
+          apply_diagnostics(diag_path)
+        end
+      end)
+    )
     vim.api.nvim_create_autocmd("VimLeavePre", {
       callback = function()
         handle:stop()
