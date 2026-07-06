@@ -1,6 +1,8 @@
 local key = require("barney.lib.keymap")
 local trouble = require("trouble")
-trouble.setup()
+trouble.setup({
+  auto_preview = false,
+})
 key.nmap("<leader>dl", "<cmd>Trouble<cr>", "[d]iagnostics [l]ist")
 key.nmap("<leader>dJ", function()
   trouble.next({ jump = true })

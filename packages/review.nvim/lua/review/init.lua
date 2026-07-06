@@ -57,7 +57,6 @@ local function apply_diagnostics(path)
     local bufnr = vim.fn.bufnr(fp)
     if bufnr == -1 then
       bufnr = vim.fn.bufadd(fp)
-      vim.fn.bufload(bufnr)
     end
     vim.diagnostic.set(ns, bufnr, diags)
   end

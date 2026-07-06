@@ -51,3 +51,5 @@ require("barney.plugins.lsp")
 require("barney.plugins.lsplinks")
 -- ai
 require("barney.plugins.ai")
+-- review
+require("barney.plugins.review")
