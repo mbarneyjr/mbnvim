@@ -60,6 +60,10 @@ local function apply_diagnostics(path)
     end
     if not vim.api.nvim_buf_is_loaded(bufnr) then
       vim.fn.bufload(bufnr)
+      local ft = vim.filetype.match({ buf = bufnr, filename = fp })
+      if ft then
+        vim.bo[bufnr].filetype = ft
+      end
     end
     local line_count = vim.api.nvim_buf_line_count(bufnr)
     for _, d in ipairs(diags) do
