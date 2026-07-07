@@ -1,0 +1,13 @@
+{
+  "name": "asl-language-server",
+  "version": "1.16.1",
+  "description": "Amazon States Language server wrapping amazon-states-language-service",
+  "license": "MIT",
+  "bin": {
+    "asl-language-server": "server.js"
+  },
+  "dependencies": {
+    "amazon-states-language-service": "1.16.1",
+    "vscode-languageserver": "^9.0.1"
+  }
+}
