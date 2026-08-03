@@ -22,10 +22,25 @@ local function toggle_fugitive()
   vim.api.nvim_buf_delete(bufnr, { force = true })
 end
 
+local function review_branch_diff()
+  local branches = vim.fn.systemlist("git branch --all --format='%(refname:short)'")
+  branches = vim.tbl_filter(function(branch)
+    return branch ~= "" and not branch:match("HEAD")
+  end, branches)
+
+  vim.ui.select(branches, { prompt = "Diff against branch:" }, function(branch)
+    if not branch then
+      return
+    end
+    vim.cmd("G difftool -y " .. branch)
+  end)
+end
+
 key.nmap("gD", ":Gvdiffsplit!<CR>", "git diff conflict")
 key.nmap("<c-g>", toggle_fugitive, "Toggle vim-fugitive")
 key.nmap("<leader>gs", toggle_fugitive, "Toggle vim-fugitive")
 key.nmap("<leader>gl", ":Flog<CR>", "Toggle vim-fugitive")
+key.nmap("<leader>gr", review_branch_diff, "git review: difftool against selected branch")
 vim.cmd(":set diffopt=filler,context:1000000,vertical")
 vim.cmd(":set fillchars=diff:\\ ")
 vim.cmd(":autocmd FileType git set foldmethod=syntax")
