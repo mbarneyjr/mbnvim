@@ -40,6 +40,7 @@ require("barney.plugins.cmp")
 -- git
 require("barney.plugins.fugitive")
 require("barney.plugins.gitsigns")
+require("barney.plugins.gh-review")
 -- code
 require("barney.plugins.trouble")
 require("barney.plugins.dap")

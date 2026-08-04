@@ -162,6 +162,22 @@
         "type": "github"
       }
     },
+    "gh-review-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785604569,
+        "narHash": "sha256-+aZfWAgG4QETbTiiu+VHp7jgaubRqctv+86HxVjwMNA=",
+        "owner": "gh-tui-tools",
+        "repo": "gh-review.nvim",
+        "rev": "e4626457657902a94e14656ae34c32a0aee359d6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gh-tui-tools",
+        "repo": "gh-review.nvim",
+        "type": "github"
+      }
+    },
     "import-tree": {
       "locked": {
         "lastModified": 1778781969,
@@ -248,6 +264,7 @@
         "cloudformation-languageserver": "cloudformation-languageserver",
         "fff-nvim": "fff-nvim",
         "flake-parts": "flake-parts",
+        "gh-review-nvim": "gh-review-nvim",
         "import-tree": "import-tree",
         "lsplinks-nvim": "lsplinks-nvim",
         "nixpkgs": "nixpkgs",

@@ -45,6 +45,10 @@
       url = "github:aws-cloudformation/cloudformation-languageserver";
       flake = false;
     };
+    gh-review-nvim = {
+      url = "github:gh-tui-tools/gh-review.nvim";
+      flake = false;
+    };
   };
 
   outputs =
