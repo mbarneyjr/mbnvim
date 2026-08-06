@@ -4,7 +4,10 @@ require("copilot").setup({
   filetypes = {
     ["*"] = true,
   },
-  copilot_node_command = "node",
+  server = {
+    type = "binary",
+    custom_server_filepath = "copilot-language-server",
+  },
   server_opts_overrides = {},
 })
 
