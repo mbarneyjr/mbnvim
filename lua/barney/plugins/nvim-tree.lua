@@ -58,9 +58,9 @@ nvim_tree.setup({
     side = "right",
   },
   filesystem_watchers = {
-    enable = not large_repo,
-    debounce_delay = 500,
-    ignore_dirs = { "node_modules", ".git", ".worktree" },
+    enable = false,
+    -- debounce_delay = 500,
+    -- ignore_dirs = { "node_modules", ".git", ".worktree" },
   },
   renderer = {
     add_trailing = true,
