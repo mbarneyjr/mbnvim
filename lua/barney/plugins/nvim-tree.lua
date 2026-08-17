@@ -127,3 +127,24 @@ nvim_tree.setup({
 -- set <leader>t to toggle nvim-tree
 local key = require("barney.lib.keymap")
 key.nmap("<leader>t", api.tree.toggle, "[t]oggle nvim-tree")
+
+local Event = api.events.Event
+local refresh_timer
+local function stop_refresh_timer()
+  if refresh_timer then
+    refresh_timer:stop()
+    refresh_timer:close()
+    refresh_timer = nil
+  end
+end
+api.events.subscribe(Event.TreeOpen, function()
+  if refresh_timer then
+    return
+  end
+  refresh_timer = vim.uv.new_timer()
+  refresh_timer:start(0, 5000, function()
+    vim.schedule(api.tree.reload)
+  end)
+end)
+api.events.subscribe(Event.TreeClose, stop_refresh_timer)
+vim.api.nvim_create_autocmd("VimLeavePre", { callback = stop_refresh_timer })
