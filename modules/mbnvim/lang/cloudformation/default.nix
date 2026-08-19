@@ -24,9 +24,7 @@
   };
 
   flake.overlays.cloudformation-languageserver = final: prev: {
-    cloudformation-languageserver = prev.callPackage ./_package.nix {
-      src = inputs.cloudformation-languageserver;
-    };
+    cloudformation-languageserver = prev.callPackage ./_package.nix { };
   };
 
   perSystem =

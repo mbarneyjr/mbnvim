@@ -41,16 +41,11 @@
       url = "github:actions/languageservices";
       flake = false;
     };
-    cloudformation-languageserver = {
-      url = "github:aws-cloudformation/cloudformation-languageserver";
-      flake = false;
-    };
     gh-review-nvim = {
       url = "github:gh-tui-tools/gh-review.nvim";
       flake = false;
     };
   };
 
-  outputs =
-    inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }

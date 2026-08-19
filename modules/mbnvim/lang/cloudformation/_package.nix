@@ -3,20 +3,26 @@
   buildNpmPackage,
   nodejs,
   makeWrapper,
-  src,
+  fetchFromGitHub,
 }:
 
-buildNpmPackage {
+buildNpmPackage rec {
   pname = "aws-cloudformation-languageserver";
-  version = src.shortRev or "unstable";
-  inherit src;
-  npmDepsHash = "sha256-Qd6F5og3DwboWHq1t1bIqYsUUfS68f+e19L23t8/AqU=";
-  dontNpmBuild = true;
+  version = "1.8.0";
 
+  src = fetchFromGitHub {
+    owner = "aws-cloudformation";
+    repo = "cloudformation-languageserver";
+    rev = "v${version}";
+    sha256 = "sha256-uRXHw1ECx6miDyUC9tbe4+VqpvkxZbxxjvcxRqtCU8A=";
+  };
+
+  npmDepsHash = "sha256-c9xPBrBOdzsprdg2BpTwK+RuRRkUtglfNZ0KIP9W8IQ=";
+
+  dontNpmBuild = true;
   nativeBuildInputs = [
     makeWrapper
   ];
-
   buildPhase = ''
     runHook preBuild
 
@@ -49,26 +55,19 @@ buildNpmPackage {
 
     mkdir -p $out/bin
     makeWrapper ${nodejs}/bin/node $out/bin/cfn-lsp-server \
-      --set CFN_LINT_PATH cfn-lint \
       --add-flags "$out/lib/aws-cloudformation-languageserver/cfn-lsp-server-standalone.js"
 
     runHook postInstall
   '';
+
+  __structuredAttrs = true;
 
   meta = {
     description = "CloudFormation Language Server";
     mainProgram = "cfn-lsp-server";
     homepage = "https://github.com/aws-cloudformation/cloudformation-languageserver";
     license = lib.licenses.asl20;
-    platforms = [
-      "x86_64-linux"
-      "aarch64-linux"
-      "x86_64-darwin"
-      "aarch64-darwin"
-    ];
-    sourceProvenance = with lib.sourceTypes; [
-      fromSource
-    ];
+    platforms = with lib.platforms; linux ++ darwin;
     maintainers = with lib.maintainers; [
       mbarneyjr
     ];
