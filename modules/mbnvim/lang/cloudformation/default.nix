@@ -28,11 +28,15 @@
   };
 
   perSystem =
-    { pkgs, ... }:
+    { pkgs, inputs', ... }:
     {
+      mbnvim.plugins = [
+        inputs'.cfn-nvim.packages.vim-plugin
+      ];
       mbnvim.extraPackages = [
         pkgs.python3Packages.cfn-lint
         pkgs.cloudformation-languageserver
+        inputs'.cfn-nvim.packages.cfn-nvim
       ];
     };
 }

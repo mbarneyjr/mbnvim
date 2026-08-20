@@ -50,6 +50,8 @@ require("barney.plugins.linting")
 -- lsp
 require("barney.plugins.lsp")
 require("barney.plugins.lsplinks")
+-- cloudformation
+require("barney.plugins.cfn")
 -- ai
 require("barney.plugins.ai")
 -- review

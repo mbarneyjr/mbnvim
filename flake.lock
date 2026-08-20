@@ -55,6 +55,31 @@
         "type": "github"
       }
     },
+    "cfn-nvim": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "import-tree": "import-tree",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787183199,
+        "narHash": "sha256-Zp1fwS8KlNZLz4AJ/J9oI4UBdzLXtDrZxmCWKgEnslc=",
+        "owner": "mbarneyjr",
+        "repo": "cfn.nvim",
+        "rev": "f6dce54788c2cdcfe0b652a37fa3316d4adddbc1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mbarneyjr",
+        "ref": "v0.0.0",
+        "repo": "cfn.nvim",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1773857772,
@@ -164,6 +189,21 @@
     },
     "import-tree": {
       "locked": {
+        "lastModified": 1784254960,
+        "narHash": "sha256-iI88R3wHz8wTKQb5orvpc51L/Xr64AJyxid/0MKa/b8=",
+        "owner": "vic",
+        "repo": "import-tree",
+        "rev": "4ebb10ae17d5f1ad366e7aef5b92cb8eecf24f69",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "import-tree",
+        "type": "github"
+      }
+    },
+    "import-tree_2": {
+      "locked": {
         "lastModified": 1778781969,
         "narHash": "sha256-Jjuz5CmSkur8KvLDoGa+vylEp+RkQtv4mt/qcMznpH0=",
         "owner": "vic",
@@ -245,10 +285,11 @@
         "actions-languageservices": "actions-languageservices",
         "aws-iam-language-server": "aws-iam-language-server",
         "cedar": "cedar",
+        "cfn-nvim": "cfn-nvim",
         "fff-nvim": "fff-nvim",
         "flake-parts": "flake-parts",
         "gh-review-nvim": "gh-review-nvim",
-        "import-tree": "import-tree",
+        "import-tree": "import-tree_2",
         "lsplinks-nvim": "lsplinks-nvim",
         "nixpkgs": "nixpkgs",
         "nvim-ts-context-commentstring": "nvim-ts-context-commentstring",

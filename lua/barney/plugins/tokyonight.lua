@@ -24,4 +24,4 @@ local swap_colorscheme = function()
     vim.o.background = "light"
   end
 end
-key.nmap("<leader>cs", swap_colorscheme, "[c]olor [s]wap")
+key.nmap("<leader>CS", swap_colorscheme, "[C]olor [S]wap")
