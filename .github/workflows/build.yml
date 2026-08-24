@@ -8,7 +8,18 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    name: build (${{ matrix.system }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - system: x86_64-linux
+            runs-on: ubuntu-latest
+          - system: aarch64-linux
+            runs-on: ubuntu-24.04-arm
+          - system: aarch64-darwin
+            runs-on: macos-latest
+    runs-on: ${{ matrix.runs-on }}
     permissions:
       id-token: write
       contents: read
