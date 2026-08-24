@@ -18,7 +18,7 @@
       inputs.flake-parts.follows = "flake-parts";
     };
     cfn-nvim = {
-      url = "github:mbarneyjr/cfn.nvim/v0.0.4";
+      url = "github:mbarneyjr/cfn.nvim/v0.0.5";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };

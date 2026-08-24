@@ -66,16 +66,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1787581205,
-        "narHash": "sha256-lixllzBc5T0EqI1tDoOMUUKFSRoFAedig65GgOiH0VA=",
+        "lastModified": 1787611195,
+        "narHash": "sha256-mMX9X5cFGnFtrg8b/RcC45JkzRK1AC7BqiyeD9KDrLc=",
         "owner": "mbarneyjr",
         "repo": "cfn.nvim",
-        "rev": "aedef8b373cc229468ef5de44ec91e77e562dcb7",
+        "rev": "7e9727e441ba1c29f3407dfa07ef0e3b01877c78",
         "type": "github"
       },
       "original": {
         "owner": "mbarneyjr",
-        "ref": "v0.0.4",
+        "ref": "v0.0.5",
         "repo": "cfn.nvim",
         "type": "github"
       }
