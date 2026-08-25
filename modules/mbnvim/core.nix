@@ -40,7 +40,7 @@
           pkgs.lynx
           pkgs.fzf
         ]
-        ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
+        ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           pkgs.wl-clipboard
           pkgs.xclip
         ];
