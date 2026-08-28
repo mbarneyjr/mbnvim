@@ -32,7 +32,7 @@ local function review_branch_diff()
     if not branch then
       return
     end
-    vim.cmd("G difftool -y " .. branch)
+    vim.cmd("G difftool -y HEAD..." .. branch)
   end)
 end
 
