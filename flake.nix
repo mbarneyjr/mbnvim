@@ -34,14 +34,6 @@
       url = "github:cedar-policy/cedar";
       flake = false;
     };
-    tree-sitter-tmux = {
-      url = "github:Freed-Wu/tree-sitter-tmux";
-      flake = false;
-    };
-    tmux-language-server = {
-      url = "github:Freed-Wu/tmux-language-server";
-      flake = false;
-    };
     actions-languageservices = {
       url = "github:actions/languageservices";
       flake = false;

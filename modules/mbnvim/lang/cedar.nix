@@ -5,7 +5,7 @@
       pname = "cedar";
       version = inputs.cedar.shortRev or "unstable";
       src = inputs.cedar;
-      cargoHash = "sha256-8OABa3HKP0NV1RMnbCTclXBUeSGabEzXsnwKo0i4mLw=";
+      cargoHash = "sha256-gXPBdkO5PhrmkDeTVJoUFQK5ESJ3KiaxIzHL+c7ZxrM=";
       buildAndTestSubdir = "cedar-language-server";
     };
   };
