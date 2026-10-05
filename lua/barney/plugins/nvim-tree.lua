@@ -41,6 +41,8 @@ local function on_attach(bufnr)
     vim.notify(compare.get_compare_status())
   end, { buffer = bufnr, desc = "Show compare status" })
 
+  vim.keymap.set("n", "gx", api.node.run.system, { buffer = bufnr, desc = "Open with system default" })
+
   vim.keymap.set("n", "d", api.fs.trash, { buffer = bufnr, desc = "Trash a file" })
 end
 
