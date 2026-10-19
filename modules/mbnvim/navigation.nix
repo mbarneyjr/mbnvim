@@ -1,6 +1,6 @@
 {
   perSystem =
-    { inputs', pkgs, ... }:
+    { pkgs, ... }:
     let
       nvim-tree-lua = pkgs.vimUtils.buildVimPlugin {
         pname = "nvim-tree.lua";
@@ -21,7 +21,7 @@
         nvim-web-devicons
         mini-icons
         # fuzzy finder
-        inputs'.fff-nvim.packages.fff-nvim
+        fff-nvim
       ];
     };
 }

@@ -8,10 +8,6 @@
 
     import-tree.url = "github:vic/import-tree";
 
-    fff-nvim = {
-      url = "github:dmtrKovalenko/fff.nvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     aws-iam-language-server = {
       url = "github:mbarneyjr/aws-iam-language-server";
       inputs.nixpkgs.follows = "nixpkgs";
