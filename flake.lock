@@ -39,6 +39,22 @@
         "type": "github"
       }
     },
+    "cedar": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792429267,
+        "narHash": "sha256-teWpTp0dHM2ODN4bc32Gn1wvh22LWZTqum1REX7V+18=",
+        "owner": "cedar-policy",
+        "repo": "cedar",
+        "rev": "bf15eb3718a291834c403f104aa56d064a72504e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cedar-policy",
+        "repo": "cedar",
+        "type": "github"
+      }
+    },
     "cfn-nvim": {
       "inputs": {
         "flake-parts": [
@@ -195,6 +211,7 @@
       "inputs": {
         "actions-languageservices": "actions-languageservices",
         "aws-iam-language-server": "aws-iam-language-server",
+        "cedar": "cedar",
         "cfn-nvim": "cfn-nvim",
         "flake-parts": "flake-parts",
         "gh-review-nvim": "gh-review-nvim",
