@@ -1,4 +1,4 @@
-local M = {}
+local key = require("barney.lib.keymap")
 
 local function resolve_reference()
   local name = vim.api.nvim_buf_get_name(0)
@@ -18,7 +18,7 @@ local function resolve_reference()
   return "@" .. vim.fn.fnamemodify(name, ":.") .. ":" .. lines
 end
 
-function M.copy()
+local function copy()
   local reference = resolve_reference()
   if not reference then
     vim.notify("agent_prompt: buffer has no file", vim.log.levels.ERROR)
@@ -33,4 +33,5 @@ function M.copy()
   end)
 end
 
-return M
+key.nmap("<leader>ap", copy, "[a]i [p]rompt copy")
+key.vmap("<leader>ap", copy, "[a]i [p]rompt copy")
