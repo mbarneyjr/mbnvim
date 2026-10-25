@@ -56,3 +56,5 @@ require("barney.plugins.cfn")
 require("barney.plugins.ai")
 -- review
 require("barney.plugins.review")
+-- agent prompt
+require("barney.plugins.agent-prompt")
