@@ -26,10 +26,10 @@
       url = "github:JoosepAlviste/nvim-ts-context-commentstring";
       flake = false;
     };
-    cedar = {
-      url = "github:cedar-policy/cedar";
-      flake = false;
-    };
+    # cedar = {
+    #   url = "github:cedar-policy/cedar";
+    #   flake = false;
+    # };
     actions-languageservices = {
       url = "github:actions/languageservices";
       flake = false;
