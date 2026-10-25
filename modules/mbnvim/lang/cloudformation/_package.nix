@@ -6,18 +6,18 @@
   fetchFromGitHub,
 }:
 
-buildNpmPackage rec {
+buildNpmPackage (finalAttrs: {
   pname = "aws-cloudformation-languageserver";
-  version = "1.9.0";
+  version = "1.12.0";
 
   src = fetchFromGitHub {
     owner = "aws-cloudformation";
     repo = "cloudformation-languageserver";
-    rev = "v${version}";
-    sha256 = "sha256-ilFXxnaDIMI7QYrU6LkZDtrvxBDXujB09F509A4wp3Q=";
+    tag = "v${finalAttrs.version}";
+    sha256 = "sha256-wQ8KOoXe4p+k3qJBxeuRmRibqy8kUgM9NLX8S3wb9Mc=";
   };
 
-  npmDepsHash = "sha256-5LK17ID6JUVowy6UcxzCgfTr85OwGCl4t8diWsYkaqQ=";
+  npmDepsHash = "sha256-Hw1u5LFZ0+Ls1xZD1FInAJdAbtdjEhL8DWLTxxkJkW4=";
 
   dontNpmBuild = true;
   nativeBuildInputs = [
@@ -61,6 +61,9 @@ buildNpmPackage rec {
   '';
 
   __structuredAttrs = true;
+  # buildNpmPackage's hooks read these as plain env vars; under
+  # __structuredAttrs they are bash variables that need to be exported.
+  prePatch = "export npmDeps";
 
   meta = {
     description = "CloudFormation Language Server";
@@ -72,4 +75,4 @@ buildNpmPackage rec {
       mbarneyjr
     ];
   };
-}
+})
