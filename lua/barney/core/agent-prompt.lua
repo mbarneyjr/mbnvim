@@ -1,6 +1,10 @@
 local key = require("barney.lib.keymap")
 
 local function resolve_reference()
+  if vim.bo.filetype == "NvimTree" then
+    local node = require("nvim-tree.api").tree.get_node_under_cursor()
+    return node and "@" .. vim.fn.fnamemodify(node.absolute_path, ":.")
+  end
   local name = vim.api.nvim_buf_get_name(0)
   if name == "" then
     return nil
@@ -24,14 +28,9 @@ local function copy()
     vim.notify("agent_prompt: buffer has no file", vim.log.levels.ERROR)
     return
   end
-  vim.ui.input({ prompt = "Agent Prompt" }, function(input)
-    if not input or input == "" then
-      return
-    end
-    vim.fn.setreg("+", reference .. "\n\n" .. input)
-    vim.notify("Prompt copied to clipboard")
-  end)
+  vim.fn.setreg("+", reference)
+  vim.notify("Reference copied to clipboard")
 end
 
-key.nmap("<leader>ap", copy, "[a]i [p]rompt copy")
-key.vmap("<leader>ap", copy, "[a]i [p]rompt copy")
+key.nmap("<leader>ap", copy, "[a]i [p]rompt reference copy")
+key.vmap("<leader>ap", copy, "[a]i [p]rompt reference copy")
