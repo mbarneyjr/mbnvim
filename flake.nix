@@ -17,6 +17,7 @@
       url = "github:mbarneyjr/cfn.nvim/v0.0.7";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
+      inputs.import-tree.follows = "import-tree";
     };
     lsplinks-nvim = {
       url = "github:icholy/lsplinks.nvim";

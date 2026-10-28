@@ -44,7 +44,9 @@
         "flake-parts": [
           "flake-parts"
         ],
-        "import-tree": "import-tree",
+        "import-tree": [
+          "import-tree"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -99,21 +101,6 @@
       }
     },
     "import-tree": {
-      "locked": {
-        "lastModified": 1784254960,
-        "narHash": "sha256-iI88R3wHz8wTKQb5orvpc51L/Xr64AJyxid/0MKa/b8=",
-        "owner": "vic",
-        "repo": "import-tree",
-        "rev": "4ebb10ae17d5f1ad366e7aef5b92cb8eecf24f69",
-        "type": "github"
-      },
-      "original": {
-        "owner": "vic",
-        "repo": "import-tree",
-        "type": "github"
-      }
-    },
-    "import-tree_2": {
       "locked": {
         "lastModified": 1788467110,
         "narHash": "sha256-ljEMTXP/rH0tOvDzc9gzwww6KcHRPRnEHzd9lK48V7s=",
@@ -198,7 +185,7 @@
         "cfn-nvim": "cfn-nvim",
         "flake-parts": "flake-parts",
         "gh-review-nvim": "gh-review-nvim",
-        "import-tree": "import-tree_2",
+        "import-tree": "import-tree",
         "lsplinks-nvim": "lsplinks-nvim",
         "nixpkgs": "nixpkgs",
         "nvim-ts-context-commentstring": "nvim-ts-context-commentstring"
