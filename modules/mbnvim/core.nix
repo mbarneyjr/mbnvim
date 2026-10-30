@@ -10,7 +10,6 @@
       };
     in
     {
-      packages = { inherit rex-navigator-nvim; };
       mbnvim = {
         plugins = with pkgs.vimPlugins; [
           rex-navigator-nvim
