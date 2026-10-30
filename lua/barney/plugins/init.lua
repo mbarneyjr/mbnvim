@@ -15,6 +15,7 @@ require("barney.plugins.bigfile")
 require("barney.plugins.hex")
 -- tmux
 require("barney.plugins.vim-tmux-navigator")
+require("barney.plugins.rex-navigator")
 -- treesitter
 require("barney.plugins.treesitter")
 -- nvim-tree

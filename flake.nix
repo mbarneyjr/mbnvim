@@ -51,6 +51,10 @@
       url = "github:actions/languageservices";
       flake = false;
     };
+    rex-navigator-nvim = {
+      url = "github:baggiponte/rex-navigator.nvim";
+      flake = false;
+    };
     gh-review-nvim = {
       url = "github:gh-tui-tools/gh-review.nvim";
       flake = false;

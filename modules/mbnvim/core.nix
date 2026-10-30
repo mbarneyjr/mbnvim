@@ -1,9 +1,19 @@
+{ inputs, ... }:
 {
   perSystem =
     { pkgs, ... }:
+    let
+      rex-navigator-nvim = pkgs.vimUtils.buildVimPlugin {
+        pname = "rex-navigator.nvim";
+        version = inputs.rex-navigator-nvim.shortRev or "unstable";
+        src = inputs.rex-navigator-nvim;
+      };
+    in
     {
+      packages = { inherit rex-navigator-nvim; };
       mbnvim = {
         plugins = with pkgs.vimPlugins; [
+          rex-navigator-nvim
           # misc
           snacks-nvim
           # notify

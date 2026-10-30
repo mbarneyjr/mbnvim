@@ -224,6 +224,22 @@
         "type": "github"
       }
     },
+    "rex-navigator-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793054068,
+        "narHash": "sha256-la/7BqqaskJeXz6D0WEQJB4Bmj9AvBOKSg2chtZ3cZ4=",
+        "owner": "baggiponte",
+        "repo": "rex-navigator.nvim",
+        "rev": "09c8da1c2696bdabbf37a773fbe8ee8779c9b8c1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "baggiponte",
+        "repo": "rex-navigator.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "actions-languageservices": "actions-languageservices",
@@ -237,6 +253,7 @@
         "nvim-ts-context-commentstring": "nvim-ts-context-commentstring",
         "pyproject-build-systems": "pyproject-build-systems",
         "pyproject-nix": "pyproject-nix",
+        "rex-navigator-nvim": "rex-navigator-nvim",
         "uv2nix": "uv2nix"
       }
     },
