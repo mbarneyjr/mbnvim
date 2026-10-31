@@ -11,7 +11,7 @@ key.nmap("<leader>sx", "<cmd>close<CR>", "Close current split")
 key.nmap("<leader>bp", "<cmd>bprevious<CR>", "Previous buffer")
 key.nmap("<leader>bn", "<cmd>bnext<CR>", "Next buffer")
 
-key.nmap("<c-_>", "<cmd>noh<cr>", "Clear search highlight")
+key.nmap("<c-/>", "<cmd>noh<cr>", "Clear search highlight")
 
 key.nmap("<leader>w", "<cmd>set wrap!<CR>", "Toggle wrap")
 
