@@ -4,7 +4,7 @@ lualine.setup({
   options = {
     component_separators = "|",
     section_separators = "",
-    theme = "tokyonight",
+    theme = "auto",
     globalstatus = false,
   },
   sections = {
