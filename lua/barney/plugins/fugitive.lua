@@ -46,6 +46,22 @@ vim.cmd(":set fillchars=diff:\\ ")
 vim.cmd(":autocmd FileType git set foldmethod=syntax")
 
 vim.api.nvim_create_autocmd("FileType", {
+  pattern = "fugitive",
+  callback = function(event)
+    local original = vim.fn.maparg("<CR>", "n", false, true)
+    local command = original.rhs:gsub("<SID>", "<SNR>" .. original.sid .. "_"):match("^:<C%-U>(.*)<CR>$")
+    vim.keymap.set("n", "<CR>", function()
+      vim.cmd(command)
+      if vim.api.nvim_buf_get_name(0):match("^fugitive://.*//[0-9a-f]+/") then
+        local line = vim.fn.line(".")
+        vim.cmd("Gedit")
+        pcall(vim.api.nvim_win_set_cursor, 0, { line, 0 })
+      end
+    end, { buffer = event.buf, desc = "Open work tree file" })
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
   pattern = "floggraph",
   callback = function(event)
     vim.keymap.set("n", "<CR>", ":Flogsplitcommit<CR> | :resize 10<CR>", { buffer = event.buf })
