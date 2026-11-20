@@ -41,7 +41,7 @@ key.nmap("<c-g>", toggle_fugitive, "Toggle vim-fugitive")
 key.nmap("<leader>gs", toggle_fugitive, "Toggle vim-fugitive")
 key.nmap("<leader>gl", ":Flog<CR>", "Toggle vim-fugitive")
 key.nmap("<leader>gr", review_branch_diff, "git review: difftool against selected branch")
-vim.cmd(":set diffopt=filler,context:1000000,vertical")
+vim.cmd(":set diffopt=filler,context:1000000,vertical,iwhite")
 vim.cmd(":set fillchars=diff:\\ ")
 vim.cmd(":autocmd FileType git set foldmethod=syntax")
 
